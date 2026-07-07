@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aDevantgarde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Archivo:wght@400;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- GLOBAL RESET ---------- */
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  a{ text-decoration:none; }
+  .page{ display:none; }
+  .page.active{ display:block; }
+
+  /* =========================================================
+     PAGE: FESTIVAL 2027 (comic/magazine style)
+     ========================================================= */
+  #page-festival{
+    --purple:#B9A6E8; --purple-deep:#9C82DD; --mint:#7FDFC4; --pink:#F5A8D0;
+    --sky:#8ED2F5; --ink:#14121A; --cream:#FBF8FF; --line:3px;
+    background:var(--cream); color:var(--ink);
+    font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased;
+  }
+  #page-festival h1, #page-festival h2, #page-festival h3, #page-festival .display{
+    font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em; margin:0;
+  }
+  #page-festival .mono{ font-family:'IBM Plex Mono',monospace; }
+  #page-festival a{ color:inherit; }
+  #page-festival header{
+    position:sticky; top:0; z-index:50; background:var(--cream);
+    border-bottom:var(--line) solid var(--ink);
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 28px; gap:20px; flex-wrap:wrap;
+  }
+  #page-festival .logo{ font-size:26px; white-space:nowrap; }
+  #page-festival .logo .big{ font-size:36px; position:relative; top:3px; }
+  #page-festival .logo .a-lower{ color:var(--ink); }
+  #page-festival .logo .D{ color:var(--cream); -webkit-text-stroke:2px var(--ink); }
+  #page-festival .logo .e{ color:var(--mint); -webkit-text-stroke:2px var(--ink); }
+  #page-festival .years{ display:flex; gap:8px; }
+  #page-festival .year-pill{
+    font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:14px;
+    border:2px solid var(--ink); border-radius:999px; padding:6px 14px;
+    background:var(--cream); cursor:pointer; transition:transform .12s ease;
+  }
+  #page-festival .year-pill:hover{ transform:translateY(-2px); }
+  #page-festival .year-pill.active{ background:var(--ink); color:var(--cream); }
+  #page-festival nav.main-nav{ display:flex; gap:22px; align-items:center; font-size:15px; font-weight:600; }
+  #page-festival nav.main-nav a{ text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; }
+  #page-festival nav.main-nav a:hover{ border-bottom:2px solid var(--ink); }
+  #page-festival nav.main-nav .verein-link{ font-weight:400; font-size:13px; opacity:0.55; font-family:'IBM Plex Mono',monospace; }
+  #page-festival nav.main-nav .verein-link:hover{ opacity:1; }
+
+  #page-festival .hero{ position:relative; background:var(--purple); border-bottom:var(--line) solid var(--ink); overflow:hidden; padding:70px 28px 90px; }
+  #page-festival .tiled-bg{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; opacity:0.16; pointer-events:none; user-select:none; transform:rotate(-6deg) scale(1.2); }
+  #page-festival .tiled-bg .row{ white-space:nowrap; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:64px; color:var(--ink); letter-spacing:0.02em; }
+  #page-festival .hero-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:48px; flex-wrap:wrap; }
+  #page-festival .hero-text{ flex:1 1 380px; }
+  #page-festival .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; background:var(--ink); color:var(--cream); display:inline-block; padding:4px 10px; border-radius:4px; margin-bottom:18px; }
+  #page-festival .hero-text h1{ font-size:clamp(48px,8vw,92px); line-height:0.92; margin-bottom:20px; }
+  #page-festival .hero-text p{ font-size:18px; line-height:1.5; max-width:440px; margin-bottom:26px; }
+  #page-festival .hero-dates{ font-family:'IBM Plex Mono',monospace; font-size:15px; margin-bottom:26px; }
+  #page-festival .cta{ display:inline-block; background:var(--ink); color:var(--cream); border:var(--line) solid var(--ink); padding:12px 24px; border-radius:999px; font-weight:700; text-decoration:none; transition:transform .12s ease; }
+  #page-festival .cta:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); background:var(--pink); color:var(--ink); }
+  #page-festival .hero-illustration{ flex:1 1 320px; display:flex; justify-content:center; }
+  #page-festival .hero-illustration svg{ width:100%; max-width:380px; height:auto; }
+
+  #page-festival section.block{ padding:64px 28px; max-width:1100px; margin:0 auto; }
+  #page-festival .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
+  #page-festival .section-head h2{ font-size:34px; }
+  #page-festival .section-head .tag{ font-family:'IBM Plex Mono',monospace; font-size:13px; border:2px solid var(--ink); border-radius:999px; padding:3px 10px; }
+
+  #page-festival .cal-nav{ display:flex; align-items:center; gap:14px; margin-bottom:18px; font-family:'IBM Plex Mono',monospace; }
+  #page-festival .cal-nav button{ border:2px solid var(--ink); background:var(--cream); border-radius:8px; width:32px; height:32px; cursor:pointer; font-size:16px; font-weight:700; }
+  #page-festival .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
+  #page-festival .cal-dow{ font-family:'IBM Plex Mono',monospace; font-size:12px; text-align:center; opacity:0.6; padding-bottom:4px; }
+  #page-festival .cal-day{ border:2.5px solid var(--ink); border-radius:10px; min-height:78px; padding:8px; background:var(--cream); position:relative; cursor:default; display:flex; flex-direction:column; justify-content:space-between; }
+  #page-festival .cal-day.empty{ border:none; background:transparent; }
+  #page-festival .cal-day .num{ font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; }
+  #page-festival .cal-day.has-event{ cursor:pointer; }
+  #page-festival .cal-day.has-event:hover{ transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink); }
+  #page-festival .cal-day .tag-dot{ align-self:flex-start; font-size:10.5px; font-weight:700; font-family:'Archivo',sans-serif; padding:2px 7px; border-radius:999px; border:1.5px solid var(--ink); }
+  #page-festival .cal-day.mint .tag-dot{ background:var(--mint); }
+  #page-festival .cal-day.pink .tag-dot{ background:var(--pink); }
+  #page-festival .cal-day.sky .tag-dot{ background:var(--sky); }
+  #page-festival .cal-day.active-day{ background:var(--ink); }
+  #page-festival .cal-day.active-day .num, #page-festival .cal-day.active-day .tag-dot{ color:var(--cream); }
+  #page-festival .event-detail{ display:none; margin-top:20px; border:var(--line) solid var(--ink); border-radius:14px; background:var(--pink); padding:22px 26px; }
+  #page-festival .event-detail.open{ display:block; }
+  #page-festival .event-detail .ev-time{ font-family:'IBM Plex Mono',monospace; font-size:13px; margin-bottom:6px; }
+  #page-festival .event-detail h3{ font-size:24px; margin-bottom:8px; }
+  #page-festival .event-detail p{ margin:0 0 14px; line-height:1.5; max-width:640px; }
+  #page-festival .event-detail .participants{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+  #page-festival .event-detail .chip{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; background:var(--cream); border:2px solid var(--ink); border-radius:999px; padding:4px 10px; }
+  #page-festival .event-detail .ticket{ display:inline-block; background:var(--ink); color:var(--cream); padding:8px 18px; border-radius:999px; font-weight:700; text-decoration:none; font-size:14px; }
+
+  #page-festival .people-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; }
+  #page-festival .person-card{ border:2.5px solid var(--ink); border-radius:14px; overflow:hidden; background:var(--cream); }
+  #page-festival .person-photo{ height:160px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; border-bottom:2.5px solid var(--ink); }
+  #page-festival .person-card:nth-child(4n+1) .person-photo{ background:var(--mint); }
+  #page-festival .person-card:nth-child(4n+2) .person-photo{ background:var(--pink); }
+  #page-festival .person-card:nth-child(4n+3) .person-photo{ background:var(--sky); }
+  #page-festival .person-card:nth-child(4n+4) .person-photo{ background:var(--purple); }
+  #page-festival .person-info{ padding:14px 16px; }
+  #page-festival .person-info h3{ font-size:17px; margin-bottom:4px; }
+  #page-festival .person-info p{ font-size:13.5px; line-height:1.45; margin:0; opacity:0.8; }
+
+  #page-festival footer{ border-top:var(--line) solid var(--ink); background:var(--ink); color:var(--cream); padding:48px 28px 28px; position:relative; overflow:hidden; }
+  #page-festival footer .tiled-bg .row{ color:var(--cream); }
+  #page-festival .footer-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; }
+  #page-festival .footer-col h4{ font-family:'IBM Plex Mono',monospace; font-size:13px; opacity:0.6; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.05em; }
+  #page-festival .footer-col a{ display:block; text-decoration:none; font-size:14px; margin-bottom:6px; }
+  #page-festival .footer-col a:hover{ text-decoration:underline; }
+  #page-festival .footer-bottom{ margin-top:36px; font-family:'IBM Plex Mono',monospace; font-size:12px; opacity:0.55; position:relative; z-index:2; }
+  @media (max-width:640px){
+    #page-festival nav.main-nav{ display:none; }
+    #page-festival .hero-inner{ flex-direction:column; }
+  }
+
+  /* =========================================================
+     SHARED MINIMAL STYLE (Über uns / records)
+     ========================================================= */
+  #page-ueber-uns, #page-records{
+    --bg:#F6F5F1; --ink2:#17171B; --gray:#68666B; --line2:#DDDAD2; --accent:#2B2E4A; --card:#FFFFFF;
+    background:var(--bg); color:var(--ink2);
+    font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5;
+  }
+  #page-ueber-uns h1, #page-ueber-uns h2, #page-ueber-uns h3, #page-ueber-uns .serif,
+  #page-records h1, #page-records h2, #page-records h3, #page-records .serif{
+    font-family:'Newsreader',serif; font-weight:500; margin:0;
+  }
+  #page-ueber-uns .mono, #page-records .mono{ font-family:'IBM Plex Mono',monospace; }
+  #page-ueber-uns a, #page-records a{ color:inherit; text-decoration:none; }
+  #page-ueber-uns .wrap, #page-records .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+
+  #page-ueber-uns header, #page-records header{ border-bottom:1px solid var(--line2); padding:20px 0; }
+  #page-ueber-uns header .wrap, #page-records header .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
+  #page-ueber-uns .brand, #page-records .brand{ font-size:18px; font-weight:600; letter-spacing:0.01em; }
+  #page-ueber-uns nav, #page-records nav{ display:flex; gap:28px; font-size:14px; font-weight:500; align-items:center; }
+  #page-ueber-uns nav a, #page-records nav a{ opacity:0.65; border-bottom:1px solid transparent; padding-bottom:2px; }
+  #page-ueber-uns nav a.current, #page-records nav a.current{ opacity:1; border-bottom:1px solid var(--ink2); }
+  #page-ueber-uns nav a.festival-link, #page-records nav a.festival-link{ color:var(--accent); font-weight:600; opacity:1; }
+
+  #page-ueber-uns .hero, #page-records .hero{ padding:90px 0 70px; border-bottom:1px solid var(--line2); }
+  #page-ueber-uns .hero .eyebrow, #page-records .hero .eyebrow{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:18px; display:block; }
+  #page-ueber-uns .hero h1, #page-records .hero h1{ font-size:clamp(36px,5vw,54px); max-width:700px; line-height:1.15; margin-bottom:20px; }
+  #page-ueber-uns .hero p, #page-records .hero p{ max-width:560px; color:var(--gray); font-size:17px; }
+
+  #page-ueber-uns section, #page-records section{ padding:72px 0; border-bottom:1px solid var(--line2); }
+  #page-ueber-uns section:last-of-type, #page-records section:last-of-type{ border-bottom:none; }
+  #page-ueber-uns .section-label, #page-records .section-label{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:14px; display:block; }
+  #page-ueber-uns section h2, #page-records section h2{ font-size:30px; margin-bottom:36px; max-width:600px; }
+
+  #page-ueber-uns footer, #page-records footer{ padding:36px 0; border-top:none; }
+  #page-ueber-uns footer .wrap, #page-records footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--gray); }
+
+  /* Über uns specifics */
+  #page-ueber-uns .team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:32px; }
+  #page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
+  #page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; }
+  #page-ueber-uns .team-card .role{ font-size:13.5px; color:var(--gray); }
+
+  #page-ueber-uns .timeline{ position:relative; padding-left:24px; max-width:680px; }
+  #page-ueber-uns .timeline::before{ content:''; position:absolute; left:0; top:6px; bottom:6px; width:1px; background:var(--line2); }
+  #page-ueber-uns .tl-item{ position:relative; padding-bottom:36px; padding-left:24px; }
+  #page-ueber-uns .tl-item:last-child{ padding-bottom:0; }
+  #page-ueber-uns .tl-item::before{ content:''; position:absolute; left:-24px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--accent); transform:translateX(19.5px); }
+  #page-ueber-uns .tl-item .year{ font-size:13px; margin-bottom:6px; display:block; color:var(--accent); }
+  #page-ueber-uns .tl-item h3{ font-size:18px; margin-bottom:6px; }
+  #page-ueber-uns .tl-item p{ color:var(--gray); font-size:14.5px; max-width:520px; }
+
+  #page-ueber-uns .funder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:20px; }
+  #page-ueber-uns .funder-box{ border:1px solid var(--line2); border-radius:8px; height:80px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:12.5px; background:var(--card); }
+
+  #page-ueber-uns .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  #page-ueber-uns .contact-block h3{ font-size:15px; margin-bottom:10px; }
+  #page-ueber-uns .contact-block p, #page-ueber-uns .contact-block a{ font-size:15px; color:var(--gray); display:block; margin-bottom:4px; }
+  #page-ueber-uns .contact-block a:hover{ color:var(--ink2); }
+  #page-ueber-uns .map-placeholder{ border:1px solid var(--line2); border-radius:8px; height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
+
+  /* Presse (shared look, used on both) */
+  #page-ueber-uns .press-grid, #page-records .press-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
+  #page-ueber-uns .quote-card, #page-records .quote-card{ background:var(--card); border:1px solid var(--line2); border-radius:10px; padding:26px; }
+  #page-ueber-uns .quote-card p, #page-records .quote-card p{ font-family:'Newsreader',serif; font-style:italic; font-size:18px; line-height:1.5; margin-bottom:14px; }
+  #page-ueber-uns .quote-card .source, #page-records .quote-card .source{ font-size:13px; color:var(--gray); }
+
+  /* records specifics */
+  #page-records .release{ display:grid; grid-template-columns:220px 1fr; gap:36px; padding:36px 0; border-bottom:1px solid var(--line2); }
+  #page-records .release:first-of-type{ padding-top:0; }
+  #page-records .release:last-of-type{ border-bottom:none; padding-bottom:0; }
+  #page-records .cover{ aspect-ratio:1; background:var(--line2); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
+  #page-records .release-meta{ font-size:13px; color:var(--gray); margin-bottom:8px; }
+  #page-records .release h3{ font-size:24px; margin-bottom:4px; }
+  #page-records .release .artist{ font-size:15px; color:var(--gray); margin-bottom:14px; }
+  #page-records .release p.desc{ font-size:15px; max-width:560px; margin-bottom:16px; }
+  #page-records .tracklist-toggle{ font-size:13.5px; font-weight:600; color:var(--accent); cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin-bottom:10px; }
+  #page-records .tracklist{ display:none; margin:12px 0 16px; padding-left:0; list-style:none; max-width:480px; }
+  #page-records .tracklist.open{ display:block; }
+  #page-records .tracklist li{ display:flex; justify-content:space-between; font-size:14px; padding:7px 0; border-bottom:1px solid var(--line2); color:var(--gray); }
+  #page-records .tracklist li span:first-child{ color:var(--ink2); }
+  #page-records .stream-links{ display:flex; gap:14px; flex-wrap:wrap; }
+  #page-records .stream-links a{ font-size:13px; border:1px solid var(--line2); border-radius:999px; padding:6px 14px; background:var(--card); }
+  #page-records .stream-links a:hover{ border-color:var(--ink2); }
+
+  @media (max-width:640px){
+    #page-ueber-uns nav, #page-records nav{ display:none; }
+    #page-ueber-uns .contact-grid{ grid-template-columns:1fr; }
+    #page-records .release{ grid-template-columns:1fr; }
+    #page-records .cover{ max-width:220px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE 1: ÜBER UNS (Startseite)
+     ============================================================ -->
+<div class="page" id="page-ueber-uns">
+  <header>
+    <div class="wrap">
+      <div class="brand">aDevantgarde e.V.</div>
+      <nav>
+        <a href="#ueber-uns" class="current">Über uns</a>
+        <a href="#records">aDevantgarde records</a>
+        <a href="#festival" class="festival-link">Festival 2027 →</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero" style="border-bottom:1px solid var(--line2); padding-bottom:70px;">
+    <div class="wrap">
+      <span class="eyebrow">Verein &amp; Trägerschaft</span>
+      <h1>Wir organisieren das aDevantgarde Festival — und alles, was das ganze Jahr dazwischen passiert.</h1>
+      <p>aDevantgarde e.V. ist der Verein hinter dem gleichnamigen Festival für neue Musik in München. Seit 1992 fördern wir zeitgenössisches Komponieren, unabhängig vom Festivalrhythmus.</p>
+    </div>
+  </section>
+
+  <section id="team">
+    <div class="wrap">
+      <span class="section-label">Team</span>
+      <h2>Die Menschen hinter aDevantgarde</h2>
+      <div class="team-grid">
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener">Markus Lehmann-Horn</a></h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://strauchcomposer.de/" target="_blank" rel="noopener">Alexander Strauch</a></h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><div class="photo"><a href="https://drive.google.com/file/d/1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK/view" target="_blank" rel="noopener" style="font-size:12.5px; text-decoration:underline;">Foto ansehen ↗</a></div><h3><a href="https://leonzmelty.de/" target="_blank" rel="noopener">Leon Zmelty</a></h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener">Katrin Klose</a></h3><div class="role">2. Vorstandsvorsitzende</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://christiandieck.com/" target="_blank" rel="noopener">Christian Dieck</a></h3><div class="role">Schatzmeister</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.henrik-ajax.net/" target="_blank" rel="noopener">Henrik Ajax</a></h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://sophiereich.de/" target="_blank" rel="noopener">Sophie Reich</a></h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.abigelvarga.com/" target="_blank" rel="noopener">Abigél Varga</a></h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener">Michael Emanuel Bauer</a></h3><div class="role">Kuratorium</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="geschichte">
+    <div class="wrap">
+      <span class="section-label">Geschichte</span>
+      <h2>Seit 1992, alle zwei Jahre</h2>
+      <div class="timeline">
+        <div class="tl-item"><span class="year mono">1992</span><h3>Gründung</h3><p>Erste Ausgabe des Festivals, entstanden aus studentischer Initiative in München.</p></div>
+        <div class="tl-item"><span class="year mono">2000er</span><h3>Etablierung</h3><p>Kontinuierlicher Ausbau des Programms, feste Partnerschaften mit Münchner Spielstätten.</p></div>
+        <div class="tl-item"><span class="year mono">2010er</span><h3>Gründung des Labels</h3><p>aDevantgarde records entsteht, um Produktionen dauerhaft zugänglich zu machen.</p></div>
+        <div class="tl-item"><span class="year mono">2025</span><h3>18. Ausgabe</h3><p>Platzhalter — letzte Ausgabe vor 2027.</p></div>
+        <div class="tl-item"><span class="year mono">2027</span><h3>19. Ausgabe — URGENT</h3><p>Aktuelle Ausgabe des Festivals.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="presse-verein">
+    <div class="wrap">
+      <span class="section-label">Presse</span>
+      <h2>Stimmen zum Festival</h2>
+      <div class="press-grid">
+        <div class="quote-card"><p>„Platzhalter-Zitat einer Pressestimme über das Festival.“</p><div class="source">Publikation, Jahr</div></div>
+        <div class="quote-card"><p>„Platzhalter-Zitat einer weiteren Pressestimme.“</p><div class="source">Publikation, Jahr</div></div>
+        <div class="quote-card"><p>„Platzhalter-Zitat, drittes Beispiel.“</p><div class="source">Publikation, Jahr</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="foerderer">
+    <div class="wrap">
+      <span class="section-label">Förderer</span>
+      <h2>Möglich gemacht durch</h2>
+      <div class="funder-grid">
+        <div class="funder-box">Logo</div>
+        <div class="funder-box">Logo</div>
+        <div class="funder-box">Logo</div>
+        <div class="funder-box">Logo</div>
+        <div class="funder-box">Logo</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="wrap">
+      <span class="section-label">Kontakt</span>
+      <h2>Schreiben Sie uns</h2>
+      <div class="contact-grid">
+        <div class="contact-block">
+          <h3>aDevantgarde e.V.</h3>
+          <p>Musterstraße 1</p>
+          <p>80331 München</p>
+          <a href="mailto:info@adevantgarde.de">info@adevantgarde.de</a>
+          <a href="#">Presseanfragen</a>
+          <a href="#">Instagram</a>
+        </div>
+        <div class="map-placeholder">Karte / Anfahrt (Platzhalter)</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© aDevantgarde e.V.</span>
+      <span>Mockup-Entwurf, Stand Juli 2026</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PAGE 2: ADEVANTGARDE RECORDS
+     ============================================================ -->
+<div class="page" id="page-records">
+  <header>
+    <div class="wrap">
+      <div class="brand">aDevantgarde e.V.</div>
+      <nav>
+        <a href="#ueber-uns">Über uns</a>
+        <a href="#records" class="current">aDevantgarde records</a>
+        <a href="#festival" class="festival-link">Festival 2027 →</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Label</span>
+      <h1>aDevantgarde records</h1>
+      <p>Unser Label dokumentiert Produktionen aus dem Festivalumfeld dauerhaft — als physische und digitale Veröffentlichungen, unabhängig vom zweijährigen Festivalrhythmus.</p>
+    </div>
+  </section>
+
+  <section id="veroeffentlichungen">
+    <div class="wrap">
+      <span class="section-label">Veröffentlichungen</span>
+      <h2>Alle Releases</h2>
+
+      <div class="release">
+        <div class="cover">Cover</div>
+        <div>
+          <div class="release-meta mono">2024 · LP / DIGITAL</div>
+          <h3>Release-Titel Eins</h3>
+          <div class="artist">Ensemble X · Komponist:in A</div>
+          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
+          <div class="tracklist-toggle" onclick="toggleTracklist('tl1', this)">Tracklist anzeigen ⌄</div>
+          <ul class="tracklist" id="tl1">
+            <li><span>1. Titel eins</span><span>4:12</span></li>
+            <li><span>2. Titel zwei</span><span>6:48</span></li>
+            <li><span>3. Titel drei</span><span>3:57</span></li>
+          </ul>
+          <div class="stream-links"><a href="#">Bandcamp</a><a href="#">Spotify</a><a href="#">Apple Music</a></div>
+        </div>
+      </div>
+
+      <div class="release">
+        <div class="cover">Cover</div>
+        <div>
+          <div class="release-meta mono">2022 · DIGITAL</div>
+          <h3>Release-Titel Zwei</h3>
+          <div class="artist">Ensemble Y · Komponist:in B, Komponist:in C</div>
+          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
+          <div class="tracklist-toggle" onclick="toggleTracklist('tl2', this)">Tracklist anzeigen ⌄</div>
+          <ul class="tracklist" id="tl2">
+            <li><span>1. Titel eins</span><span>5:03</span></li>
+            <li><span>2. Titel zwei</span><span>7:21</span></li>
+          </ul>
+          <div class="stream-links"><a href="#">Bandcamp</a><a href="#">Spotify</a></div>
+        </div>
+      </div>
+
+      <div class="release">
+        <div class="cover">Cover</div>
+        <div>
+          <div class="release-meta mono">2020 · LP</div>
+          <h3>Release-Titel Drei</h3>
+          <div class="artist">Ensemble Z</div>
+          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
+          <div class="tracklist-toggle" onclick="toggleTracklist('tl3', this)">Tracklist anzeigen ⌄</div>
+          <ul class="tracklist" id="tl3">
+            <li><span>1. Titel eins</span><span>8:14</span></li>
+            <li><span>2. Titel zwei</span><span>4:39</span></li>
+            <li><span>3. Titel drei</span><span>6:02</span></li>
+            <li><span>4. Titel vier</span><span>3:11</span></li>
+          </ul>
+          <div class="stream-links"><a href="#">Bandcamp</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="presse-records">
+    <div class="wrap">
+      <span class="section-label">Presse</span>
+      <h2>Stimmen zum Label</h2>
+      <div class="press-grid">
+        <div class="quote-card"><p>„Platzhalter-Zitat einer Pressestimme über eine Veröffentlichung.“</p><div class="source">Publikation, Jahr</div></div>
+        <div class="quote-card"><p>„Platzhalter-Zitat, zweites Beispiel.“</p><div class="source">Publikation, Jahr</div></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© aDevantgarde records</span>
+      <span>Mockup-Entwurf, Stand Juli 2026</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PAGE 3: FESTIVAL 2027 (comic style)
+     ============================================================ -->
+<div class="page" id="page-festival">
+  <header>
+    <div class="logo">
+      <span class="a-lower">a</span><span class="big D">D</span><span class="big e">e</span><span class="a-lower">vantgarde</span>
+    </div>
+    <div class="years" id="yearPills">
+      <div class="year-pill active" data-year="2027">2027</div>
+      <div class="year-pill" data-year="2026">2026</div>
+      <div class="year-pill" data-year="2025">2025</div>
+      <div class="year-pill" data-year="2024">2024</div>
+    </div>
+    <nav class="main-nav">
+      <a href="#festival-kalender">Programm</a>
+      <a href="#festival-komponistinnen">Komponist:innen</a>
+      <a href="#festival-ensembles">Ensembles</a>
+      <a href="#ueber-uns" class="verein-link">Der Verein &amp; Label →</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="tiled-bg">
+      <div class="row">URGENTURGENTURGENTURGENTURGENT</div>
+      <div class="row">GENTURGENTURGENTURGENTURGENTU</div>
+      <div class="row">URGENTURGENTURGENTURGENTURGENT</div>
+      <div class="row">GENTURGENTURGENTURGENTURGENTU</div>
+      <div class="row">URGENTURGENTURGENTURGENTURGENT</div>
+    </div>
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="eyebrow">19. FESTIVAL FÜR NEUE MUSIK</span>
+        <h1>URGENT</h1>
+        <p>Platzhalter-Motto der Ausgabe 2027 — wird ersetzt, sobald Motiv und Text final stehen. Neue Musik, die keinen Aufschub duldet.</p>
+        <div class="hero-dates mono">12.–20. NOVEMBER 2027 · MÜNCHEN</div>
+        <a href="#festival-kalender" class="cta">Zum Programm ↓</a>
+      </div>
+      <div class="hero-illustration">
+        <svg viewBox="0 0 380 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="190" cy="290" rx="140" ry="16" fill="var(--purple-deep)"/>
+          <g stroke="var(--ink)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round">
+            <rect x="60" y="60" width="200" height="140" rx="14" fill="var(--mint)" transform="rotate(-6 160 130)"/>
+            <circle cx="220" cy="90" r="46" fill="var(--pink)"/>
+            <path d="M220 44 L220 20 M254 60 L268 42 M186 60 L172 42" />
+            <circle cx="204" cy="86" r="5" fill="var(--ink)"/>
+            <circle cx="236" cy="86" r="5" fill="var(--ink)"/>
+            <path d="M206 104 Q220 114 234 104" />
+            <path d="M40 230 L340 230" stroke-width="6"/>
+          </g>
+          <text x="120" y="270" font-family="Space Grotesk, sans-serif" font-weight="700" font-size="30" fill="var(--ink)">URGENT!</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="festival-kalender">
+    <div class="section-head">
+      <h2>Kalender</h2>
+      <span class="tag">12.–20.11.2027</span>
+    </div>
+    <div class="cal-nav">
+      <button aria-label="Vorheriger Monat">‹</button>
+      <span>NOVEMBER 2027</span>
+      <button aria-label="Nächster Monat">›</button>
+    </div>
+    <div class="cal-grid" id="calGrid">
+      <div class="cal-dow">MO</div><div class="cal-dow">DI</div><div class="cal-dow">MI</div>
+      <div class="cal-dow">DO</div><div class="cal-dow">FR</div><div class="cal-dow">SA</div><div class="cal-dow">SO</div>
+      <div class="cal-day empty"></div>
+      <div class="cal-day"><span class="num">2</span></div>
+      <div class="cal-day"><span class="num">3</span></div>
+      <div class="cal-day"><span class="num">4</span></div>
+      <div class="cal-day"><span class="num">5</span></div>
+      <div class="cal-day"><span class="num">6</span></div>
+      <div class="cal-day"><span class="num">7</span></div>
+      <div class="cal-day"><span class="num">8</span></div>
+      <div class="cal-day"><span class="num">9</span></div>
+      <div class="cal-day"><span class="num">10</span></div>
+      <div class="cal-day"><span class="num">11</span></div>
+      <div class="cal-day has-event mint" data-event="e1"><span class="num">12</span><span class="tag-dot">ERÖFFNUNG</span></div>
+      <div class="cal-day"><span class="num">13</span></div>
+      <div class="cal-day"><span class="num">14</span></div>
+      <div class="cal-day has-event pink" data-event="e2"><span class="num">15</span><span class="tag-dot">KONZERT</span></div>
+      <div class="cal-day"><span class="num">16</span></div>
+      <div class="cal-day has-event sky" data-event="e3"><span class="num">17</span><span class="tag-dot">KLANG-<br>INSTALL.</span></div>
+      <div class="cal-day"><span class="num">18</span></div>
+      <div class="cal-day has-event mint" data-event="e4"><span class="num">19</span><span class="tag-dot">KONZERT</span></div>
+      <div class="cal-day has-event pink" data-event="e5"><span class="num">20</span><span class="tag-dot">FINALE</span></div>
+      <div class="cal-day"><span class="num">21</span></div>
+    </div>
+
+    <div class="event-detail" id="detail-e1">
+      <div class="ev-time">12.11.2027 · 19:30 UHR · MUFFATHALLE</div>
+      <h3>Eröffnungskonzert — Platzhalter</h3>
+      <p>Kurzbeschreibung des Eröffnungskonzerts. Wird durch echten Programmtext ersetzt.</p>
+      <div class="participants"><span class="chip">Komponist:in A</span><span class="chip">Komponist:in B</span><span class="chip">Ensemble X</span></div>
+      <a href="#" class="ticket">Tickets →</a>
+    </div>
+    <div class="event-detail" id="detail-e2">
+      <div class="ev-time">15.11.2027 · 20:00 UHR · SCHWERE REITER</div>
+      <h3>Kammerkonzert — Platzhalter</h3>
+      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
+      <div class="participants"><span class="chip">Komponist:in C</span><span class="chip">Ensemble Y</span></div>
+      <a href="#" class="ticket">Tickets →</a>
+    </div>
+    <div class="event-detail" id="detail-e3">
+      <div class="ev-time">17.11.2027 · GANZTÄGIG · PINAKOTHEK DER MODERNE</div>
+      <h3>Klanginstallation — Platzhalter</h3>
+      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
+      <div class="participants"><span class="chip">Komponist:in D</span></div>
+      <a href="#" class="ticket">Freier Eintritt →</a>
+    </div>
+    <div class="event-detail" id="detail-e4">
+      <div class="ev-time">19.11.2027 · 20:00 UHR · GASTEIG HP8</div>
+      <h3>Orchesterkonzert — Platzhalter</h3>
+      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
+      <div class="participants"><span class="chip">Komponist:in E</span><span class="chip">Ensemble Z</span></div>
+      <a href="#" class="ticket">Tickets →</a>
+    </div>
+    <div class="event-detail" id="detail-e5">
+      <div class="ev-time">20.11.2027 · 19:00 UHR · MUFFATHALLE</div>
+      <h3>Abschlusskonzert — Platzhalter</h3>
+      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
+      <div class="participants"><span class="chip">Komponist:in F</span><span class="chip">Ensemble X</span></div>
+      <a href="#" class="ticket">Tickets →</a>
+    </div>
+  </section>
+
+  <section class="block" id="festival-komponistinnen">
+    <div class="section-head">
+      <h2>Komponist:innen</h2>
+      <span class="tag">Ausgabe 2027</span>
+    </div>
+    <div class="people-grid">
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in A</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in B</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in C</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in D</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
+    </div>
+  </section>
+
+  <section class="block" id="festival-ensembles">
+    <div class="section-head">
+      <h2>Ensembles</h2>
+      <span class="tag">Ausgabe 2027</span>
+    </div>
+    <div class="people-grid">
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble X</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble Y</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
+      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble Z</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="tiled-bg" style="opacity:0.08;">
+      <div class="row">URGENTURGENTURGENTURGENTURGENT</div>
+      <div class="row">GENTURGENTURGENTURGENTURGENTU</div>
+    </div>
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>Verein &amp; Label</h4>
+        <a href="#ueber-uns">Über aDevantgarde e.V.</a>
+        <a href="#records">Label-Katalog</a>
+        <a href="#ueber-uns">Förderer &amp; Partner</a>
+      </div>
+      <div class="footer-col">
+        <h4>Festival</h4>
+        <a href="#festival-kalender">Programm 2027</a>
+        <a href="#festival-komponistinnen">Komponist:innen</a>
+        <a href="#festival-ensembles">Ensembles</a>
+      </div>
+      <div class="footer-col">
+        <h4>Presse &amp; Kontakt</h4>
+        <a href="#ueber-uns">Pressematerial</a>
+        <a href="#ueber-uns">Kontakt</a>
+        <a href="#">Newsletter</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© aDevantgarde e.V. — Mockup-Entwurf, Stand Juli 2026</div>
+  </footer>
+</div>
+
+<script>
+  // ---- Simple hash-based router across the three "pages" ----
+  const pageIds = ['ueber-uns', 'records', 'festival'];
+  function currentPageFromHash(){
+    const h = (location.hash || '').replace('#','');
+    const matchedPage = pageIds.find(p => h === p || h.startsWith(p + '-'));
+    return matchedPage || 'ueber-uns'; // Über uns is the default/home page
+  }
+  function router(){
+    const page = currentPageFromHash();
+    pageIds.forEach(p => document.getElementById('page-' + p).classList.toggle('active', p === page));
+    // If the hash points at an in-page anchor (e.g. #festival-kalender), scroll to it
+    const h = (location.hash || '').replace('#','');
+    if(h && h !== page){
+      const target = document.getElementById(h);
+      if(target){ setTimeout(() => target.scrollIntoView({behavior:'instant', block:'start'}), 0); }
+    } else {
+      window.scrollTo(0,0);
+    }
+  }
+  window.addEventListener('hashchange', router);
+  window.addEventListener('DOMContentLoaded', router);
+
+  // Year pill switching (visual demo only)
+  document.querySelectorAll('#page-festival .year-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('#page-festival .year-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+
+  // Calendar accordion
+  document.querySelectorAll('#page-festival .cal-day.has-event').forEach(day => {
+    day.addEventListener('click', () => {
+      const id = 'detail-' + day.dataset.event;
+      const detail = document.getElementById(id);
+      const wasOpen = detail.classList.contains('open');
+      document.querySelectorAll('#page-festival .event-detail.open').forEach(d => d.classList.remove('open'));
+      document.querySelectorAll('#page-festival .cal-day.active-day').forEach(d => d.classList.remove('active-day'));
+      if(!wasOpen){
+        detail.classList.add('open');
+        day.classList.add('active-day');
+        detail.scrollIntoView({behavior:'smooth', block:'nearest'});
+      }
+    });
+  });
+
+  // Tracklist toggles
+  function toggleTracklist(id, el){
+    const list = document.getElementById(id);
+    const open = list.classList.toggle('open');
+    el.textContent = open ? 'Tracklist ausblenden ⌃' : 'Tracklist anzeigen ⌄';
+  }
+</script>
+
+</body>
+</html>
