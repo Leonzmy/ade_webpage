@@ -187,19 +187,37 @@
   #page-ueber-uns .quote-card .source, #page-records .quote-card .source{ font-size:13px; color:var(--gray); }
 
   /* records specifics */
-  #page-records .release{ display:grid; grid-template-columns:220px 1fr; gap:36px; padding:36px 0; border-bottom:1px solid var(--line2); }
-  #page-records .release:first-of-type{ padding-top:0; }
-  #page-records .release:last-of-type{ border-bottom:none; padding-bottom:0; }
+  #page-records .release-block{ padding:44px 0; border-bottom:1px solid var(--line2); }
+  #page-records .release-block:first-of-type{ padding-top:0; }
+  #page-records .release-block:last-of-type{ border-bottom:none; padding-bottom:0; }
+  #page-records .release-num{ font-size:13px; font-family:'IBM Plex Mono',monospace; color:var(--accent); margin-bottom:14px; letter-spacing:0.04em; text-transform:uppercase; }
+  #page-records .release{ display:grid; grid-template-columns:280px 1fr; gap:28px; align-items:start; }
+  #page-records .cover{ overflow:hidden; }
+  #page-records .cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #page-records .release-card{ border:1px solid var(--line2); border-radius:10px; background:var(--card); padding:26px 28px; }
   #page-records .cover{ aspect-ratio:1; background:var(--line2); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
   #page-records .release-meta{ font-size:13px; color:var(--gray); margin-bottom:8px; }
   #page-records .release h3{ font-size:24px; margin-bottom:4px; }
   #page-records .release .artist{ font-size:15px; color:var(--gray); margin-bottom:14px; }
   #page-records .release p.desc{ font-size:15px; max-width:560px; margin-bottom:16px; }
-  #page-records .tracklist-toggle{ font-size:13.5px; font-weight:600; color:var(--accent); cursor:pointer; display:inline-flex; align-items:center; gap:6px; margin-bottom:10px; }
-  #page-records .tracklist{ display:none; margin:12px 0 16px; padding-left:0; list-style:none; max-width:480px; }
-  #page-records .tracklist.open{ display:block; }
-  #page-records .tracklist li{ display:flex; justify-content:space-between; font-size:14px; padding:7px 0; border-bottom:1px solid var(--line2); color:var(--gray); }
-  #page-records .tracklist li span:first-child{ color:var(--ink2); }
+  #page-records .stream-list{ display:flex; flex-direction:column; gap:0; }
+  #page-records .stream-list a{ display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid var(--line2); color:var(--ink2); font-size:14.5px; }
+  #page-records .stream-list a:last-child{ border-bottom:none; }
+  #page-records .stream-list a svg{ flex-shrink:0; color:var(--accent); }
+  #page-records .stream-list a:hover{ color:var(--accent); }
+  #page-records .release-tabs{ display:flex; align-items:center; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
+  #page-records .stream-btn{ margin-left:auto; display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; background:var(--accent); color:#fff; }
+  #page-records .stream-btn:hover{ opacity:0.85; }
+  #page-records .tab-btn{ font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; border:1px solid var(--line2); background:var(--card); color:var(--gray); cursor:pointer; }
+  #page-records .tab-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
+  #page-records .tab-panel{ display:none; }
+  #page-records .tab-panel.active{ display:block; }
+  #page-records .tracklist{ margin:0; padding-left:0; list-style:none; max-width:100%; }
+  #page-records .tracklist li{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; font-size:14px; padding:9px 0; border-bottom:1px solid var(--line2); color:var(--gray); }
+  #page-records .track-info{ display:flex; flex-direction:column; gap:2px; }
+  #page-records .track-title{ color:var(--ink2); }
+  #page-records .track-composer{ font-size:12px; color:var(--gray); }
+  #page-records .track-duration{ flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--gray); padding-top:1px; }
   #page-records .stream-links{ display:flex; gap:14px; flex-wrap:wrap; }
   #page-records .stream-links a{ font-size:13px; border:1px solid var(--line2); border-radius:999px; padding:6px 14px; background:var(--card); }
   #page-records .stream-links a:hover{ border-color:var(--ink2); }
@@ -261,6 +279,7 @@
       <div class="contact-grid">
         <div class="contact-block">
           <h3>aDevantgarde e.V.</h3>
+          <a href="mailto:leitung@adevantgarde.de">leitung@adevantgarde.de</a>
           <p>Musterstraße 1</p>
           <p>80331 München</p>
           <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px;">
@@ -272,10 +291,8 @@
         <div class="contact-block">
           <h3>Information</h3>
           <p style="font-size:14px; line-height:1.5; max-width:340px;">Blindbewerbungen von Interpret:innen, Kunstschaffenden und Agenturen sind leider nicht möglich.<br><em>Musicians, further artists and agencies please do not send blind applications!</em></p>
-          <a href="mailto:leitung@adevantgarde.de">leitung@adevantgarde.de</a>
         </div>
       </div>
-      <div class="map-placeholder" style="margin-top:24px;">Karte / Anfahrt (Platzhalter)</div>
     </div>
   </section>
 
@@ -315,54 +332,126 @@
       <span class="section-label">Veröffentlichungen</span>
       <h2>Alle Releases</h2>
 
-      <div class="release">
-        <div class="cover">Cover</div>
-        <div>
-          <div class="release-meta mono">2024 · LP / DIGITAL</div>
-          <h3>Release-Titel Eins</h3>
-          <div class="artist">Ensemble X · Komponist:in A</div>
-          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
-          <div class="tracklist-toggle" onclick="toggleTracklist('tl1', this)">Tracklist anzeigen ⌄</div>
-          <ul class="tracklist" id="tl1">
-            <li><span>1. Titel eins</span><span>4:12</span></li>
-            <li><span>2. Titel zwei</span><span>6:48</span></li>
-            <li><span>3. Titel drei</span><span>3:57</span></li>
-          </ul>
-          <div class="stream-links"><a href="#">Bandcamp</a><a href="#">Spotify</a><a href="#">Apple Music</a></div>
+      <div class="release-block">
+        <div class="release-num">Release #3</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="Cover3.jpg" alt="Cover: Schoeck vs. Bauer"></div>
+          </div>
+          <div class="release-card">
+            <h3>SCHOECK vs. BAUER oder WHAT FUTURES ARE YOU LONGING FOR?</h3>
+            <div class="artist">Stefan Kägi (Klavier) · Michael Emanuel Bauer</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0003" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+            </div>
+            <div class="tab-panel active" id="r3-info">
+              <p class="desc">Im Sommer 2018 gräbt der Schweizer Pianist Stefan Kägi den Liedzyklus Nachhall, op. 70 für Stimme und Orchester des Schweizer Komponisten Othmar Schoeck (1886-1957) aus. Der wegen seiner technischen und interpretatorischen Herausforderung nur selten gespielte Liedzyklus Nachhall, op. 70 liegt hier als Ersteinspielung für Stimme und Klavier vor. Stefan Kägi und Michael Emanuel Bauer, die beide ein großes Faible für k-punk aka Mark Fisher haben, insbesondere für dessen Buch Ghosts of my Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014), finden, dass es doch gar keine schlechte Idee wäre, Schoecks Liedzyklus daher aus dem Geist der Derrida'schen Hauntology neu zu betrachten. Die hier vorliegende Ersteinspielung stellt die beiden Zyklen gegenüber. Unmittelbar nach dem jeweiligen Lied von Othmar Schoeck folgt die entsprechende Fortschreibung von Michael Emanuel Bauer. Bauers Fortschreibung macht auch nicht Halt vor den Texten von Matthias Claudius und Nikolaus Lenau. In der Tradition von Raymond Queneau und der Gruppe Oulipo werden die Texte formal-lettristisch dekonstruiert und neu zusammengesetzt.</p>
+            </div>
+            <div class="tab-panel" id="r3-tracks">
+              <ul class="tracklist">
+                <li><div class="track-info"><span class="track-title">1. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 1, Nachhall</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">3:51</span></li>
+                <li><div class="track-info"><span class="track-title">2. Afterimages: No. 1, Nachhall</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:44</span></li>
+                <li><div class="track-info"><span class="track-title">3. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 2, Einsamkeit</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">4:56</span></li>
+                <li><div class="track-info"><span class="track-title">4. Afterimages: No. 2, Einsamkeit</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">3:28</span></li>
+                <li><div class="track-info"><span class="track-title">5. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 3, Mein Herz</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:34</span></li>
+                <li><div class="track-info"><span class="track-title">6. Afterimages: No. 3, Mein Herz</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:59</span></li>
+                <li><div class="track-info"><span class="track-title">7. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 4, Veränderte Welt</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:20</span></li>
+                <li><div class="track-info"><span class="track-title">8. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 5, Abendheimkehr</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:18</span></li>
+                <li><div class="track-info"><span class="track-title">9. Afterimages: No. 5, Abendheimkehr</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:27</span></li>
+                <li><div class="track-info"><span class="track-title">10. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 6, Auf eine holländische Landschaft</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:05</span></li>
+                <li><div class="track-info"><span class="track-title">11. Afterimages: No. 6, Auf eine holländische Landschaft</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:40</span></li>
+                <li><div class="track-info"><span class="track-title">12. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 7, Stimme des Windes</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:38</span></li>
+                <li><div class="track-info"><span class="track-title">13. Afterimages: No. 7, Stimme des Windes</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:31</span></li>
+                <li><div class="track-info"><span class="track-title">14. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 8, Der falsche Freund</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:15</span></li>
+                <li><div class="track-info"><span class="track-title">15. Afterimages: No. 8, Der falsche Freund</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:24</span></li>
+                <li><div class="track-info"><span class="track-title">16. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 9, Niagara</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">3:27</span></li>
+                <li><div class="track-info"><span class="track-title">17. Afterimages: No. 9, Niagara</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">3:08</span></li>
+                <li><div class="track-info"><span class="track-title">18. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 10, Heimatklang</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:57</span></li>
+                <li><div class="track-info"><span class="track-title">19. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 11, Der Kranich</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:23</span></li>
+                <li><div class="track-info"><span class="track-title">20. Afterimages: No. 12, Der Kranich</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:22</span></li>
+                <li><div class="track-info"><span class="track-title">21. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 12, O du Land</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:13</span></li>
+                <li><div class="track-info"><span class="track-title">22. Afterimages: No. 13, O du Land</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:26</span></li>
+                <li><div class="track-info"><span class="track-title">23. Nachhall Afterimages: Remix_01a Nachhall</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">2:32</span></li>
+                <li><div class="track-info"><span class="track-title">24. Nachhall Afterimages: Remix_01b Nachhall</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:38</span></li>
+                <li><div class="track-info"><span class="track-title">25. Nachhall Afterimages: Remix_02 Einsamkeit</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">3:43</span></li>
+                <li><div class="track-info"><span class="track-title">26. Nachhall Afterimages: Remix_09 Niagara</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">3:27</span></li>
+                <li><div class="track-info"><span class="track-title">27. Nachhall Afterimages: Remix_10 Heimatklang</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:59</span></li>
+                <li><div class="track-info"><span class="track-title">28. Nachhall Afterimages: Remix_11 Der Kranich</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:10</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="release">
-        <div class="cover">Cover</div>
-        <div>
-          <div class="release-meta mono">2022 · DIGITAL</div>
-          <h3>Release-Titel Zwei</h3>
-          <div class="artist">Ensemble Y · Komponist:in B, Komponist:in C</div>
-          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
-          <div class="tracklist-toggle" onclick="toggleTracklist('tl2', this)">Tracklist anzeigen ⌄</div>
-          <ul class="tracklist" id="tl2">
-            <li><span>1. Titel eins</span><span>5:03</span></li>
-            <li><span>2. Titel zwei</span><span>7:21</span></li>
-          </ul>
-          <div class="stream-links"><a href="#">Bandcamp</a><a href="#">Spotify</a></div>
+      <div class="release-block">
+        <div class="release-num">Release #2</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="Cover2.jpg" alt="Cover: An Earth Symphony"></div>
+          </div>
+          <div class="release-card">
+            <h3>AN EARTH SYMPHONY</h3>
+            <div class="artist">Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (Dirigent) · Jung-Eun Shin (Violine)</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r2','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r2','tracks',this)">Tracklist</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+            </div>
+            <div class="tab-panel active" id="r2-info">
+              <p class="desc">Mit der zweiten Veröffentlichung in der Live-Reihe unseres Labels präsentieren wir die Einspielung der Augsburger Philharmoniker unter Domonkos Héja und mit Jung-Eun Shin an der Solo-Violine der 4. Sinfonie („An Earth Symphony") von Tobias PM Schneid. Tobias PM Schneids „Earth Symphony" ist kein verklärender Hymnus auf den Planeten Erde, sondern ein großorchestraler Aufschrei, ein Fanal, um auch im Konzertsaal auf die prekäre Klimasituation und die Dringlichkeit eines bewussten und achtsamen Umgangs mit den Ressourcen dieses Planeten zu verweisen. Die fünf Sätze der Sinfonie – Magma, Water, Tree, Desert und Air – kommentieren auf je eigene Weise das „Aus den Fugen geraten"-Sein unseres Ökosystems, und thematisieren die Zersetzungsprozesse, denen dieses System durch menschliches Handeln ausgesetzt ist. Kein musikalischer Ökothriller, sondern ein Mahnmal mit der Aufforderung verantwortungsbewusst zu handeln.</p>
+            </div>
+            <div class="tab-panel" id="r2-tracks">
+              <ul class="tracklist">
+                <li><span>1. Magma</span><span>—</span></li>
+                <li><span>2. Water</span><span>—</span></li>
+                <li><span>3. Tree</span><span>—</span></li>
+                <li><span>4. Desert</span><span>—</span></li>
+                <li><span>5. Air</span><span>—</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="release">
-        <div class="cover">Cover</div>
-        <div>
-          <div class="release-meta mono">2020 · LP</div>
-          <h3>Release-Titel Drei</h3>
-          <div class="artist">Ensemble Z</div>
-          <p class="desc">Kurzbeschreibung der Veröffentlichung — Platzhaltertext, wird durch echten Infotext ersetzt.</p>
-          <div class="tracklist-toggle" onclick="toggleTracklist('tl3', this)">Tracklist anzeigen ⌄</div>
-          <ul class="tracklist" id="tl3">
-            <li><span>1. Titel eins</span><span>8:14</span></li>
-            <li><span>2. Titel zwei</span><span>4:39</span></li>
-            <li><span>3. Titel drei</span><span>6:02</span></li>
-            <li><span>4. Titel vier</span><span>3:11</span></li>
-          </ul>
-          <div class="stream-links"><a href="#">Bandcamp</a></div>
+      <div class="release-block">
+        <div class="release-num">Release #1</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="Cover1.jpg" alt="Cover: Zentaur – Quartet"></div>
+          </div>
+          <div class="release-card">
+            <h3>ZENTAUR – QUARTET</h3>
+            <div class="artist">string quartets by aDevantgarde composers · Zentaur-Quartett</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r1','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r1','tracks',this)">Tracklist</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+            </div>
+            <div class="tab-panel active" id="r1-info">
+              <p class="desc">Das im Jahr 2023 neu gegründete Label aDevantgarde records aus München widmet sich zeitgenössischer Musik mit vielfältigen Erscheinungsformen und Stilistiken. Das Debütalbum versammelt dreizehn Streichquartette, die zwischen 1997 und 2019 entstanden sind. Die CD ist das erste Produkt dieser neuen Reihe.</p>
+              <p class="desc">Das Zentaur-Quartett spielte Werke von Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch und Bernhard Weidner ein, die einen Querschnitt durch mehr als dreißig Jahre aDevantgarde darstellen.</p>
+              <p class="desc">Annette Fritz (1. Violine), Marc Kaufmann (2. Violine), Katharina Schmauder (Viola) und Caio de Azevedo (Violoncello) stellen mit dieser CD-Produktion einmal mehr ihr herausragendes Können und Engagement für zeitgenössische Kompositionen unter Beweis.</p>
+            </div>
+            <div class="tab-panel" id="r1-tracks">
+              <ul class="tracklist">
+                <li><span>1. Bettendorf</span><span>—</span></li>
+                <li><span>2. de Azevedo</span><span>—</span></li>
+                <li><span>3. Bhagwati</span><span>—</span></li>
+                <li><span>4. Dieck</span><span>—</span></li>
+                <li><span>5. Deuse</span><span>—</span></li>
+                <li><span>6. Eggert</span><span>—</span></li>
+                <li><span>7. Lehmann-Horn</span><span>—</span></li>
+                <li><span>8. Pogatschar</span><span>—</span></li>
+                <li><span>9. Salvatori</span><span>—</span></li>
+                <li><span>10. Schachtner</span><span>—</span></li>
+                <li><span>11. Schmauder</span><span>—</span></li>
+                <li><span>12. Strauch</span><span>—</span></li>
+                <li><span>13. Weidner</span><span>—</span></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -618,10 +707,13 @@
   });
 
   // Tracklist toggles
-  function toggleTracklist(id, el){
-    const list = document.getElementById(id);
-    const open = list.classList.toggle('open');
-    el.textContent = open ? 'Tracklist ausblenden ⌃' : 'Tracklist anzeigen ⌄';
+  function switchTab(releaseId, tab, btn){
+    ['info','tracks','stream'].forEach(t => {
+      const panel = document.getElementById(releaseId + '-' + t);
+      if(panel) panel.classList.toggle('active', t === tab);
+    });
+    btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
   }
 </script>
 
