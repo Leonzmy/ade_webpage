@@ -48,6 +48,10 @@
     white-space:nowrap; scroll-snap-align:start;
   }
   .year-track a:hover{ opacity:0.9; }
+  .year-track .year-disabled{
+    color:#b8b6bd; font-family:'IBM Plex Mono',monospace; font-weight:500;
+    font-size:12.5px; white-space:nowrap; scroll-snap-align:start; cursor:default; user-select:none;
+  }
   .year-dropdown{ display:none; }
   .header-nav{ display:flex; gap:22px; align-items:center; font-size:14px; font-weight:600; white-space:nowrap; }
   .header-nav a{ text-decoration:none; color:#14121A; border-bottom:2px solid transparent; padding-bottom:2px; }
@@ -74,6 +78,10 @@
       color:#14121A; text-decoration:none; white-space:nowrap;
     }
     .year-dropdown-list a:hover{ background:#F6F5F1; }
+    .year-dropdown-list .year-disabled{
+      padding:8px 18px; font-family:'IBM Plex Mono',monospace; font-size:14px;
+      color:#c7c5cb; white-space:nowrap; cursor:default; user-select:none;
+    }
   }
 
   /* =========================================================
@@ -381,14 +389,17 @@
   #page-records .stream-list a svg{ flex-shrink:0; color:var(--accent); }
   #page-records .stream-list a:hover{ color:var(--accent); }
   #page-records .release-tabs{ display:flex; align-items:center; gap:6px; margin-bottom:16px; flex-wrap:wrap; }
-  #page-records .release-actions{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:16px; }
-  #page-records .stream-btn{ display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; background:var(--accent); color:#fff; }
+  #page-records .release-tabs{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
+  #page-records .stream-btn{ display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; background:var(--accent); color:#fff; margin-left:auto; }
   #page-records .details-toggle{ all:unset; display:none; align-items:center; gap:6px; cursor:pointer; font-size:13px; font-weight:600; color:var(--accent); }
   #page-records .details-toggle .arrow{ font-size:11px; transition:transform .2s ease; }
   #page-records .details-toggle.open .arrow{ transform:rotate(180deg); }
   @media (max-width:640px){
-    #page-records .details-toggle{ display:flex; }
-    #page-records .release-details{ display:none; }
+    #page-records .release-tabs{ position:relative; }
+    #page-records .stream-btn{ order:1; margin-left:0; }
+    #page-records .tab-btn{ order:0; }
+    #page-records .details-toggle{ display:flex; order:2; margin-left:auto; }
+    #page-records .release-details{ display:none; flex-basis:100%; }
     #page-records .release-details.open{ display:block; }
   }
   #page-records .stream-btn:hover{ opacity:0.85; }
@@ -424,7 +435,7 @@
 <div class="page" id="page-ueber-uns">
   <header>
     <div class="wrap">
-      <img class="site-logo" src="aDevantgarde-logo.svg" alt="aDevantgarde">
+      <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
       <div class="header-bottom-row">
         <div class="year-block">
           <div class="year-toggle">
@@ -572,7 +583,7 @@
 <div class="page" id="page-records">
   <header>
     <div class="wrap">
-      <img class="site-logo" src="aDevantgarde-logo.svg" alt="aDevantgarde">
+      <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
       <div class="header-bottom-row">
         <div class="year-block">
           <div class="year-toggle">
@@ -625,15 +636,13 @@
           <div class="release-card">
             <h3>SCHOECK vs. BAUER oder WHAT FUTURES ARE YOU LONGING FOR?</h3>
             <div class="artist">Komponisten: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Interpreten: Robert Koller (Bariton), Stefan Kägi (Klavier), Gunnar Geisse (Laptop Guitar)</div>
-            <div class="release-actions">
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0003" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
               <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
             </div>
             <div class="release-details">
-            <div class="release-tabs">
-              <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
-              <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
-            </div>
             <div class="tab-panel active" id="r3-info">
               <p class="desc">Im Sommer 2018 gräbt der Schweizer Pianist Stefan Kägi den Liedzyklus Nachhall, op. 70 für Stimme und Orchester des Schweizer Komponisten Othmar Schoeck (1886-1957) aus. Der wegen seiner technischen und interpretatorischen Herausforderung nur selten gespielte Liedzyklus Nachhall, op. 70 liegt hier als Ersteinspielung für Stimme und Klavier vor. Stefan Kägi und Michael Emanuel Bauer, die beide ein großes Faible für k-punk aka Mark Fisher haben, insbesondere für dessen Buch Ghosts of my Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014), finden, dass es doch gar keine schlechte Idee wäre, Schoecks Liedzyklus daher aus dem Geist der Derrida'schen Hauntology neu zu betrachten. Die hier vorliegende Ersteinspielung stellt die beiden Zyklen gegenüber. Unmittelbar nach dem jeweiligen Lied von Othmar Schoeck folgt die entsprechende Fortschreibung von Michael Emanuel Bauer. Bauers Fortschreibung macht auch nicht Halt vor den Texten von Matthias Claudius und Nikolaus Lenau. In der Tradition von Raymond Queneau und der Gruppe Oulipo werden die Texte formal-lettristisch dekonstruiert und neu zusammengesetzt.</p>
             </div>
@@ -683,16 +692,14 @@
           <div class="release-card">
             <h3>AN EARTH SYMPHONY</h3>
             <div class="artist">Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (Dirigent) · Jung-Eun Shin (Violine)</div>
-            <div class="release-actions">
-              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
-              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
-            </div>
-            <div class="release-details">
             <div class="release-tabs">
               <button class="tab-btn active" onclick="switchTab('r2','info',this)">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r2','tracks',this)">Tracklist</button>
               <button class="tab-btn" onclick="switchTab('r2','trailer',this)">Trailer</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
             </div>
+            <div class="release-details">
             <div class="tab-panel active" id="r2-info">
               <p class="desc">Mit der zweiten Veröffentlichung in der Live-Reihe unseres Labels präsentieren wir die Einspielung der Augsburger Philharmoniker unter Domonkos Héja und mit Jung-Eun Shin an der Solo-Violine der 4. Sinfonie („An Earth Symphony") von Tobias PM Schneid. Tobias PM Schneids „Earth Symphony" ist kein verklärender Hymnus auf den Planeten Erde, sondern ein großorchestraler Aufschrei, ein Fanal, um auch im Konzertsaal auf die prekäre Klimasituation und die Dringlichkeit eines bewussten und achtsamen Umgangs mit den Ressourcen dieses Planeten zu verweisen. Die fünf Sätze der Sinfonie – Magma, Water, Tree, Desert und Air – kommentieren auf je eigene Weise das „Aus den Fugen geraten"-Sein unseres Ökosystems, und thematisieren die Zersetzungsprozesse, denen dieses System durch menschliches Handeln ausgesetzt ist. Kein musikalischer Ökothriller, sondern ein Mahnmal mit der Aufforderung verantwortungsbewusst zu handeln.</p>
             </div>
@@ -722,16 +729,14 @@
           <div class="release-card">
             <h3>ZENTAUR – QUARTET</h3>
             <div class="artist">string quartets by aDevantgarde composers · Zentaur-Quartett</div>
-            <div class="release-actions">
-              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
-              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
-            </div>
-            <div class="release-details">
             <div class="release-tabs">
               <button class="tab-btn active" onclick="switchTab('r1','info',this)">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r1','tracks',this)">Tracklist</button>
               <button class="tab-btn" onclick="switchTab('r1','trailer',this)">Trailer</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
             </div>
+            <div class="release-details">
             <div class="tab-panel active" id="r1-info">
               <p class="desc">Das im Jahr 2023 neu gegründete Label aDevantgarde records aus München widmet sich zeitgenössischer Musik mit vielfältigen Erscheinungsformen und Stilistiken. Das Debütalbum versammelt dreizehn Streichquartette, die zwischen 1997 und 2019 entstanden sind. Die CD ist das erste Produkt dieser neuen Reihe.</p>
               <p class="desc">Das Zentaur-Quartett spielte Werke von Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch und Bernhard Weidner ein, die einen Querschnitt durch mehr als dreißig Jahre aDevantgarde darstellen.</p>
@@ -781,7 +786,7 @@
 <div class="page" id="page-festival">
   <header>
     <div class="wrap">
-      <img class="site-logo" src="aDevantgarde-logo.svg" alt="aDevantgarde">
+      <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
       <div class="header-bottom-row">
         <div class="year-block">
           <div class="year-toggle">
@@ -991,7 +996,7 @@
 <div class="page" id="page-archiv-2025">
   <header>
     <div class="wrap">
-      <img class="site-logo" src="aDevantgarde-logo.svg" alt="aDevantgarde">
+      <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
       <div class="header-bottom-row">
         <div class="year-block" data-default-year="2025">
           <div class="year-toggle">
@@ -1144,7 +1149,7 @@
 <div class="page" id="page-archiv-2023">
   <header>
     <div class="wrap">
-      <img class="site-logo" src="aDevantgarde-logo.svg" alt="aDevantgarde">
+      <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
       <div class="header-bottom-row">
         <div class="year-block" data-default-year="2023">
           <div class="year-toggle">
@@ -1214,6 +1219,7 @@
   const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
   const YEAR_TO_PAGE = {2027:'festival', 2025:'archiv-2025', 2023:'archiv-2023'};
   const PAGE_TO_YEAR = {festival:2027, 'archiv-2025':2025, 'archiv-2023':2023};
+  const ACTIVE_YEARS = [2027, 2025, 2023];
   let currentFestivalYear = 2027;
 
   function hrefForYear(y){ return '#' + (YEAR_TO_PAGE[y] || 'festival'); }
@@ -1226,7 +1232,11 @@
     bigEl.textContent = currentFestivalYear;
     bigEl.setAttribute('href', hrefForYear(currentFestivalYear));
     const rest = ALL_FESTIVAL_YEARS.filter(y => y !== currentFestivalYear);
-    const linksHtml = rest.map(y => `<a href="${hrefForYear(y)}" data-year="${y}">${y}</a>`).join('');
+    const linksHtml = rest.map(y =>
+      ACTIVE_YEARS.includes(y)
+        ? `<a href="${hrefForYear(y)}" data-year="${y}">${y}</a>`
+        : `<span class="year-disabled">${y}</span>`
+    ).join('');
     track.innerHTML = linksHtml;
     dropdownList.innerHTML = linksHtml;
     yearBlock.querySelectorAll('.year-track a, .year-dropdown-list a').forEach(a => {
@@ -1437,7 +1447,7 @@
 
   // Tracklist toggles
   function toggleReleaseDetails(btn){
-    const details = btn.closest('.release-actions').nextElementSibling;
+    const details = btn.closest('.release-tabs').nextElementSibling;
     if(!details) return;
     const willOpen = !details.classList.contains('open');
     details.classList.toggle('open', willOpen);
