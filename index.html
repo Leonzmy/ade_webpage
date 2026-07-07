@@ -72,21 +72,18 @@
   #page-festival .section-head h2{ font-size:34px; }
   #page-festival .section-head .tag{ font-family:'IBM Plex Mono',monospace; font-size:13px; border:2px solid var(--ink); border-radius:999px; padding:3px 10px; }
 
-  #page-festival .cal-nav{ display:flex; align-items:center; gap:14px; margin-bottom:18px; font-family:'IBM Plex Mono',monospace; }
-  #page-festival .cal-nav button{ border:2px solid var(--ink); background:var(--cream); border-radius:8px; width:32px; height:32px; cursor:pointer; font-size:16px; font-weight:700; }
-  #page-festival .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:8px; }
   #page-festival .cal-dow{ font-family:'IBM Plex Mono',monospace; font-size:12px; text-align:center; opacity:0.6; padding-bottom:4px; }
-  #page-festival .cal-day{ border:2.5px solid var(--ink); border-radius:10px; min-height:78px; padding:8px; background:var(--cream); position:relative; cursor:default; display:flex; flex-direction:column; justify-content:space-between; }
-  #page-festival .cal-day.empty{ border:none; background:transparent; }
-  #page-festival .cal-day .num{ font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:500; }
+  #page-festival .cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:10px; width:100%; }
+  #page-festival .cal-day{ border:2.5px solid var(--ink); border-radius:10px; height:100px; padding:10px; background:var(--cream); display:flex; flex-direction:column; justify-content:space-between; align-items:flex-start; cursor:default; }
+  #page-festival .cal-day .num{ font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:600; }
   #page-festival .cal-day.has-event{ cursor:pointer; }
   #page-festival .cal-day.has-event:hover{ transform:translate(-1px,-1px); box-shadow:3px 3px 0 var(--ink); }
-  #page-festival .cal-day .tag-dot{ align-self:flex-start; font-size:10.5px; font-weight:700; font-family:'Archivo',sans-serif; padding:2px 7px; border-radius:999px; border:1.5px solid var(--ink); }
+  #page-festival .cal-day .tag-dot{ font-size:10.5px; font-weight:700; font-family:'Archivo',sans-serif; padding:3px 9px; border-radius:999px; border:1.5px solid var(--ink); line-height:1.3; }
   #page-festival .cal-day.mint .tag-dot{ background:var(--mint); }
   #page-festival .cal-day.pink .tag-dot{ background:var(--pink); }
   #page-festival .cal-day.sky .tag-dot{ background:var(--sky); }
   #page-festival .cal-day.active-day{ background:var(--ink); }
-  #page-festival .cal-day.active-day .num, #page-festival .cal-day.active-day .tag-dot{ color:var(--cream); }
+  #page-festival .cal-day.active-day .num{ color:var(--cream); }
   #page-festival .event-detail{ display:none; margin-top:20px; border:var(--line) solid var(--ink); border-radius:14px; background:var(--pink); padding:22px 26px; }
   #page-festival .event-detail.open{ display:block; }
   #page-festival .event-detail .ev-time{ font-family:'IBM Plex Mono',monospace; font-size:13px; margin-bottom:6px; }
@@ -97,7 +94,34 @@
   #page-festival .event-detail .ticket{ display:inline-block; background:var(--ink); color:var(--cream); padding:8px 18px; border-radius:999px; font-weight:700; text-decoration:none; font-size:14px; }
 
   #page-festival .people-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; }
-  #page-festival .person-card{ border:2.5px solid var(--ink); border-radius:14px; overflow:hidden; background:var(--cream); }
+  #page-festival .composer-widget{ display:grid; grid-template-columns:220px 1fr; align-items:stretch; border:2.5px solid var(--ink); border-radius:14px; background:var(--cream); overflow:hidden; }
+  #page-festival .composer-list{ display:flex; flex-direction:column; align-self:start; max-height:280px; overflow-y:auto; border-right:2.5px solid var(--ink); }
+  #page-festival .composer-list button{ all:unset; font-family:'Archivo',sans-serif; font-size:14.5px; font-weight:600; padding:10px 16px; cursor:pointer; border-bottom:2px solid var(--ink); }
+  #page-festival .composer-list button:last-child{ border-bottom:none; }
+  #page-festival .composer-list button.active{ background:var(--mint); }
+  #page-festival .composer-list button:hover{ background:var(--pink); }
+  #page-festival .composer-detail{ padding:26px; min-height:340px; }
+  #page-festival .composer-photo{ width:180px; height:180px; border:2.5px solid var(--ink); border-radius:12px; background:var(--sky); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; margin-bottom:18px; overflow:hidden; }
+  #page-festival .composer-photo img{ width:100%; height:100%; object-fit:cover; }
+  #page-festival .composer-detail h3{ font-size:24px; margin-bottom:10px; }
+  #page-festival .composer-detail h3 a{ color:inherit; text-decoration:underline; }
+  #page-festival .composer-credit{ font-family:'IBM Plex Mono',monospace; font-size:11px; opacity:0.55; margin-bottom:14px; }
+  #page-festival .composer-detail p{ font-size:15px; line-height:1.6; max-width:640px; margin:0; }
+  @media (max-width:640px){
+    #page-festival .composer-widget{ grid-template-columns:1fr; }
+    #page-festival .composer-list{ border-right:none; border-bottom:2.5px solid var(--ink); max-height:220px; }
+  }
+  #page-festival .person-card{ border:2.5px solid var(--ink); border-radius:14px; overflow:hidden; background:var(--cream); cursor:pointer; transition:transform .12s ease; }
+  #page-festival .person-card:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
+  #page-festival .ensemble-modal{ display:none; position:fixed; inset:0; z-index:200; background:rgba(20,18,26,0.6); align-items:center; justify-content:center; padding:24px; }
+  #page-festival .ensemble-modal.open{ display:flex; }
+  #page-festival .ensemble-modal-card{ position:relative; background:var(--cream); border:3px solid var(--ink); border-radius:16px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; }
+  #page-festival .ensemble-modal-close{ all:unset; position:absolute; top:14px; right:18px; font-size:26px; font-weight:700; cursor:pointer; line-height:1; }
+  #page-festival .ensemble-modal-photo{ width:100%; aspect-ratio:16/9; border:2.5px solid var(--ink); border-radius:10px; background:var(--sky); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:20px; overflow:hidden; }
+  #page-festival .ensemble-modal-photo img{ width:100%; height:100%; object-fit:cover; }
+  #page-festival .ensemble-modal-card h3{ font-size:26px; margin-bottom:12px; }
+  #page-festival .ensemble-modal-card h3 a{ color:inherit; text-decoration:underline; }
+  #page-festival .ensemble-modal-card p{ font-size:15px; line-height:1.6; margin:0; }
   #page-festival .person-photo{ height:160px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; border-bottom:2.5px solid var(--ink); }
   #page-festival .person-card:nth-child(4n+1) .person-photo{ background:var(--mint); }
   #page-festival .person-card:nth-child(4n+2) .person-photo{ background:var(--pink); }
@@ -158,10 +182,20 @@
 
   /* Über uns specifics */
   #page-ueber-uns .team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:32px; }
-  #page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; overflow:hidden; }
-  #page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; }
+  #page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; position:relative; display:block; overflow:hidden; }
+  #page-ueber-uns .team-card .photo-content{ display:flex; align-items:center; justify-content:center; width:100%; height:100%; color:var(--gray); font-size:13px; transition:filter .25s ease; }
+  #page-ueber-uns .team-card .photo-content img{ width:100%; height:100%; object-fit:cover; display:block; }
+  #page-ueber-uns .team-card .photo-overlay{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:10px; background:rgba(23,23,27,0.55); color:#fff; font-size:12.5px; font-weight:600; opacity:0; transition:opacity .25s ease; }
+  #page-ueber-uns .team-card .photo:hover .photo-content{ filter:blur(5px); }
+  #page-ueber-uns .team-card .photo:hover .photo-overlay{ opacity:1; }
+  #page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; font-weight:500; }
   #page-ueber-uns .team-card .role{ font-size:13.5px; color:var(--gray); }
 
+  #page-ueber-uns .social-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
+  #page-ueber-uns .video-embed{ position:relative; width:100%; max-width:800px; padding-top:56.25%; border-radius:8px; overflow:hidden; }
+  #page-ueber-uns .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  #page-ueber-uns #ehrenmitglieder a{ color:var(--ink2); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
+  #page-ueber-uns #ehrenmitglieder a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
   #page-ueber-uns .timeline{ position:relative; padding-left:24px; max-width:680px; }
   #page-ueber-uns .timeline::before{ content:''; position:absolute; left:0; top:6px; bottom:6px; width:1px; background:var(--line2); }
   #page-ueber-uns .tl-item{ position:relative; padding-bottom:36px; padding-left:24px; }
@@ -187,7 +221,10 @@
   #page-ueber-uns .quote-card .source, #page-records .quote-card .source{ font-size:13px; color:var(--gray); }
 
   /* records specifics */
-  #page-records .release-block{ padding:44px 0; border-bottom:1px solid var(--line2); }
+  #page-records .release-quicknav{ display:flex; gap:10px; margin-bottom:32px; }
+  #page-records .release-quicknav a{ width:32px; height:32px; border:1px solid var(--line2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:var(--gray); }
+  #page-records .release-quicknav a:hover{ border-color:var(--accent); color:var(--accent); }
+  #page-records .release-block{ padding:44px 0; border-bottom:1px solid var(--line2); scroll-margin-top:90px; }
   #page-records .release-block:first-of-type{ padding-top:0; }
   #page-records .release-block:last-of-type{ border-bottom:none; padding-bottom:0; }
   #page-records .release-num{ font-size:13px; font-family:'IBM Plex Mono',monospace; color:var(--accent); margin-bottom:14px; letter-spacing:0.04em; text-transform:uppercase; }
@@ -198,7 +235,7 @@
   #page-records .cover{ aspect-ratio:1; background:var(--line2); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
   #page-records .release-meta{ font-size:13px; color:var(--gray); margin-bottom:8px; }
   #page-records .release h3{ font-size:24px; margin-bottom:4px; }
-  #page-records .release .artist{ font-size:15px; color:var(--gray); margin-bottom:14px; }
+  #page-records .release .artist{ font-size:15px; color:var(--gray); margin-bottom:14px; line-height:1.6; }
   #page-records .release p.desc{ font-size:15px; max-width:560px; margin-bottom:16px; }
   #page-records .stream-list{ display:flex; flex-direction:column; gap:0; }
   #page-records .stream-list a{ display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid var(--line2); color:var(--ink2); font-size:14.5px; }
@@ -212,6 +249,8 @@
   #page-records .tab-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
   #page-records .tab-panel{ display:none; }
   #page-records .tab-panel.active{ display:block; }
+  #page-records .video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:8px; overflow:hidden; }
+  #page-records .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
   #page-records .tracklist{ margin:0; padding-left:0; list-style:none; max-width:100%; }
   #page-records .tracklist li{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; font-size:14px; padding:9px 0; border-bottom:1px solid var(--line2); color:var(--gray); }
   #page-records .track-info{ display:flex; flex-direction:column; gap:2px; }
@@ -225,6 +264,7 @@
   @media (max-width:640px){
     #page-ueber-uns nav, #page-records nav{ display:none; }
     #page-ueber-uns .contact-grid{ grid-template-columns:1fr; }
+    #page-ueber-uns .social-grid{ grid-template-columns:1fr; }
     #page-records .release{ grid-template-columns:1fr; }
     #page-records .cover{ max-width:220px; }
   }
@@ -252,15 +292,15 @@
       <span class="section-label">Team</span>
       <h2>Die Menschen hinter aDevantgarde</h2>
       <div class="team-grid">
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener">Markus Lehmann-Horn</a></h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://strauchcomposer.de/" target="_blank" rel="noopener">Alexander Strauch</a></h3><div class="role">Künstlerische Leitung</div></div>
-        <div class="team-card"><div class="photo"><img src="https://drive.google.com/thumbnail?id=1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK&sz=w400" alt="Leon Zmelty" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent='Foto'"></div><h3><a href="https://leonzmelty.de/" target="_blank" rel="noopener">Leon Zmelty</a></h3><div class="role">Künstlerische Leitung</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener">Katrin Klose</a></h3><div class="role">2. Vorstandsvorsitzende</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://christiandieck.com/" target="_blank" rel="noopener">Christian Dieck</a></h3><div class="role">Schatzmeister</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.henrik-ajax.net/" target="_blank" rel="noopener">Henrik Ajax</a></h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://sophiereich.de/" target="_blank" rel="noopener">Sophie Reich</a></h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.abigelvarga.com/" target="_blank" rel="noopener">Abigél Varga</a></h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener">Michael Emanuel Bauer</a></h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><a class="photo" href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Markus Lehmann-Horn</h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
+        <div class="team-card"><a class="photo" href="https://strauchcomposer.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Alexander Strauch</h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><a class="photo" href="https://leonzmelty.de/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK&sz=w400" alt="Leon Zmelty" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Leon Zmelty</h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><a class="photo" href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Katrin Klose</h3><div class="role">2. Vorstandsvorsitzende</div></div>
+        <div class="team-card"><a class="photo" href="https://christiandieck.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Christian Dieck</h3><div class="role">Schatzmeister</div></div>
+        <div class="team-card"><a class="photo" href="https://www.henrik-ajax.net/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Henrik Ajax</h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><a class="photo" href="https://sophiereich.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Sophie Reich</h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><a class="photo" href="https://www.abigelvarga.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Abigél Varga</h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><a class="photo" href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Michael Emanuel Bauer</h3><div class="role">Kuratorium</div></div>
       </div>
     </div>
   </section>
@@ -272,6 +312,36 @@
     </div>
   </section>
 
+  <section id="ehrenmitglieder">
+    <div class="wrap">
+      <span class="section-label">Ehrenmitglieder</span>
+      <p style="font-size:16px; color:var(--gray); line-height:1.8; max-width:680px;">
+        <a href="https://de.schott-music.com/shop/autoren/wilhelm-killmayer" target="_blank" rel="noopener">Wilhelm Killmayer †</a>,
+        <a href="http://www.moritzeggert.de/" target="_blank" rel="noopener">Moritz Eggert</a> (Ehrenvorsitzender),
+        <a href="https://de.wikipedia.org/wiki/Sandeep_Bhagwati" target="_blank" rel="noopener">Sandeep Bhagwati</a>,
+        <a href="http://musikverlag-nickel.eu/Schmitt/" target="_blank" rel="noopener">Markus Schmitt</a> und
+        <a href="http://www.bernhardweidner.de/" target="_blank" rel="noopener">Bernhard Weidner</a>
+      </p>
+    </div>
+  </section>
+
+  <section id="social">
+    <div class="wrap">
+      <div class="social-grid">
+        <div>
+          <span class="section-label">YouTube</span>
+          <h2>Unser Kanal</h2>
+          <div class="video-embed"><iframe src="https://www.youtube.com/embed/videoseries?list=UUiOtSqLfERr76yZ2WJT08tA" title="aDevantgarde YouTube-Kanal" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+        </div>
+        <div>
+          <span class="section-label">Instagram</span>
+          <h2>Reel</h2>
+          <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DH-wqDGo0y_/" data-instgrm-version="14" style="max-width:400px; width:100%; margin:0;"></blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="kontakt">
     <div class="wrap">
       <span class="section-label">Kontakt</span>
@@ -280,11 +350,14 @@
         <div class="contact-block">
           <h3>aDevantgarde e.V.</h3>
           <a href="mailto:leitung@adevantgarde.de">leitung@adevantgarde.de</a>
-          <p>Musterstraße 1</p>
-          <p>80331 München</p>
+          <p>A/DEvantgarde e.V. – Projekte Neuer Musik München, VR 13428</p>
           <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px;">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             Instagram
+          </a>
+          <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+            YouTube
           </a>
           <a href="satzung.pdf" target="_blank" rel="noopener">Vereinssatzung (PDF) ↗</a>
         </div>
@@ -331,8 +404,13 @@
     <div class="wrap">
       <span class="section-label">Veröffentlichungen</span>
       <h2>Alle Releases</h2>
+      <div class="release-quicknav">
+        <a href="#release-1">1</a>
+        <a href="#release-2">2</a>
+        <a href="#release-3">3</a>
+      </div>
 
-      <div class="release-block">
+      <div class="release-block" id="release-3">
         <div class="release-num">Release #3</div>
         <div class="release">
           <div>
@@ -340,7 +418,7 @@
           </div>
           <div class="release-card">
             <h3>SCHOECK vs. BAUER oder WHAT FUTURES ARE YOU LONGING FOR?</h3>
-            <div class="artist">Stefan Kägi (Klavier) · Michael Emanuel Bauer</div>
+            <div class="artist">Komponisten: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Interpreten: Robert Koller (Bariton), Stefan Kägi (Klavier), Gunnar Geisse (Laptop Guitar)</div>
             <div class="release-tabs">
               <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
@@ -385,7 +463,7 @@
         </div>
       </div>
 
-      <div class="release-block">
+      <div class="release-block" id="release-2">
         <div class="release-num">Release #2</div>
         <div class="release">
           <div>
@@ -397,6 +475,7 @@
             <div class="release-tabs">
               <button class="tab-btn active" onclick="switchTab('r2','info',this)">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r2','tracks',this)">Tracklist</button>
+              <button class="tab-btn" onclick="switchTab('r2','trailer',this)">Trailer</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
             </div>
             <div class="tab-panel active" id="r2-info">
@@ -404,18 +483,21 @@
             </div>
             <div class="tab-panel" id="r2-tracks">
               <ul class="tracklist">
-                <li><span>1. Magma</span><span>—</span></li>
-                <li><span>2. Water</span><span>—</span></li>
-                <li><span>3. Tree</span><span>—</span></li>
-                <li><span>4. Desert</span><span>—</span></li>
-                <li><span>5. Air</span><span>—</span></li>
+                <li><span>1. Symphony No. 4 "An Earth": I. Magma - Live</span><span>8:05</span></li>
+                <li><span>2. Symphony No. 4 "An Earth": II. Water - Live</span><span>4:37</span></li>
+                <li><span>3. Symphony No. 4 "An Earth": III. Tree - Live</span><span>6:05</span></li>
+                <li><span>4. Symphony No. 4 "An Earth": IV. Desert - Live</span><span>6:43</span></li>
+                <li><span>5. Symphony No. 4 "An Earth": V. Air - Live</span><span>8:09</span></li>
               </ul>
+            </div>
+            <div class="tab-panel" id="r2-trailer">
+              <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/URCCvxXxok0" title="Trailer: An Earth Symphony" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="release-block">
+      <div class="release-block" id="release-1">
         <div class="release-num">Release #1</div>
         <div class="release">
           <div>
@@ -427,6 +509,7 @@
             <div class="release-tabs">
               <button class="tab-btn active" onclick="switchTab('r1','info',this)">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r1','tracks',this)">Tracklist</button>
+              <button class="tab-btn" onclick="switchTab('r1','trailer',this)">Trailer</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
             </div>
             <div class="tab-panel active" id="r1-info">
@@ -436,34 +519,29 @@
             </div>
             <div class="tab-panel" id="r1-tracks">
               <ul class="tracklist">
-                <li><span>1. Bettendorf</span><span>—</span></li>
-                <li><span>2. de Azevedo</span><span>—</span></li>
-                <li><span>3. Bhagwati</span><span>—</span></li>
-                <li><span>4. Dieck</span><span>—</span></li>
-                <li><span>5. Deuse</span><span>—</span></li>
-                <li><span>6. Eggert</span><span>—</span></li>
-                <li><span>7. Lehmann-Horn</span><span>—</span></li>
-                <li><span>8. Pogatschar</span><span>—</span></li>
-                <li><span>9. Salvatori</span><span>—</span></li>
-                <li><span>10. Schachtner</span><span>—</span></li>
-                <li><span>11. Schmauder</span><span>—</span></li>
-                <li><span>12. Strauch</span><span>—</span></li>
-                <li><span>13. Weidner</span><span>—</span></li>
+                <li><div class="track-info"><span class="track-title">1. Il y a l'Océan (rev. 2007)</span><span class="track-composer">Carl Christian Bettendorf, Zentaur-Quartett</span></div><span class="track-duration">10:30</span></li>
+                <li><div class="track-info"><span class="track-title">2. Scratch – string quartet (rev. 2020): I. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">4:04</span></li>
+                <li><div class="track-info"><span class="track-title">3. Scratch – string quartet (rev. 2020): II. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">2:44</span></li>
+                <li><div class="track-info"><span class="track-title">4. Scratch – string quartet (rev. 2020): III. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">3:48</span></li>
+                <li><div class="track-info"><span class="track-title">5. Skin</span><span class="track-composer">Katharina Schmauder, Zentaur-Quartett</span></div><span class="track-duration">5:59</span></li>
+                <li><div class="track-info"><span class="track-title">6. Clouds &amp; Fragments</span><span class="track-composer">Markus Lehmann-Horn, Zentaur-Quartett</span></div><span class="track-duration">11:17</span></li>
+                <li><div class="track-info"><span class="track-title">7. 1. Streichquartett</span><span class="track-composer">Caio de Azevedo, Zentaur-Quartett</span></div><span class="track-duration">5:27</span></li>
+                <li><div class="track-info"><span class="track-title">8. Bruckner Schemen</span><span class="track-composer">Bernhard Weidner, Zentaur-Quartett</span></div><span class="track-duration">12:09</span></li>
+                <li><div class="track-info"><span class="track-title">9. Streichquartett Nr. 3 "Vor Anker" (rev. 2018)</span><span class="track-composer">Johannes X. Schachtner, Zentaur-Quartett</span></div><span class="track-duration">9:45</span></li>
+                <li><div class="track-info"><span class="track-title">10. Streichquartett Nr. 1 – H-I-A-S</span><span class="track-composer">Alexander Strauch, Zentaur-Quartett</span></div><span class="track-duration">10:48</span></li>
+                <li><div class="track-info"><span class="track-title">11. Pixels</span><span class="track-composer">Jacopo Salvatori, Zentaur-Quartett</span></div><span class="track-duration">7:29</span></li>
+                <li><div class="track-info"><span class="track-title">12. Streichquartett (2019) – I.</span><span class="track-composer">Christian Dieck, Zentaur-Quartett</span></div><span class="track-duration">2:29</span></li>
+                <li><div class="track-info"><span class="track-title">13. Streichquartett (2019) – II.</span><span class="track-composer">Christian Dieck, Zentaur-Quartett</span></div><span class="track-duration">2:46</span></li>
+                <li><div class="track-info"><span class="track-title">14. Stele III for James Tenney</span><span class="track-composer">Sandeep Bhagwati, Zentaur-Quartett</span></div><span class="track-duration">8:35</span></li>
+                <li><div class="track-info"><span class="track-title">15. Scary Meditation (rev. 2019)</span><span class="track-composer">Helga Pogatschar, Zentaur-Quartett</span></div><span class="track-duration">10:37</span></li>
+                <li><div class="track-info"><span class="track-title">16. Et in Arcadia Ego – String quartet No. 2</span><span class="track-composer">Moritz Eggert, Zentaur-Quartett</span></div><span class="track-duration">16:05</span></li>
               </ul>
+            </div>
+            <div class="tab-panel" id="r1-trailer">
+              <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/NKH4M78VCag" title="Trailer: Zentaur – Quartet" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="presse-records">
-    <div class="wrap">
-      <span class="section-label">Presse</span>
-      <h2>Stimmen zum Label</h2>
-      <div class="press-grid">
-        <div class="quote-card"><p>„Platzhalter-Zitat einer Pressestimme über eine Veröffentlichung.“</p><div class="source">Publikation, Jahr</div></div>
-        <div class="quote-card"><p>„Platzhalter-Zitat, zweites Beispiel.“</p><div class="source">Publikation, Jahr</div></div>
       </div>
     </div>
   </section>
@@ -511,7 +589,7 @@
         <span class="eyebrow">19. FESTIVAL FÜR NEUE MUSIK</span>
         <h1>URGENT</h1>
         <p>Platzhalter-Motto der Ausgabe 2027 — wird ersetzt, sobald Motiv und Text final stehen. Neue Musik, die keinen Aufschub duldet.</p>
-        <div class="hero-dates mono">12.–20. NOVEMBER 2027 · MÜNCHEN</div>
+        <div class="hero-dates mono">22. JUNI – 3. JULI 2027 · MÜNCHEN</div>
         <a href="#festival-kalender" class="cta">Zum Programm ↓</a>
       </div>
       <div class="hero-illustration">
@@ -535,73 +613,76 @@
   <section class="block" id="festival-kalender">
     <div class="section-head">
       <h2>Kalender</h2>
-      <span class="tag">12.–20.11.2027</span>
+      <span class="tag">22.06.–03.07.2027</span>
     </div>
-    <div class="cal-nav">
-      <button aria-label="Vorheriger Monat">‹</button>
-      <span>NOVEMBER 2027</span>
-      <button aria-label="Nächster Monat">›</button>
-    </div>
-    <div class="cal-grid" id="calGrid">
+
+    <div class="cal-grid">
       <div class="cal-dow">MO</div><div class="cal-dow">DI</div><div class="cal-dow">MI</div>
       <div class="cal-dow">DO</div><div class="cal-dow">FR</div><div class="cal-dow">SA</div><div class="cal-dow">SO</div>
-      <div class="cal-day empty"></div>
-      <div class="cal-day"><span class="num">2</span></div>
-      <div class="cal-day"><span class="num">3</span></div>
-      <div class="cal-day"><span class="num">4</span></div>
-      <div class="cal-day"><span class="num">5</span></div>
-      <div class="cal-day"><span class="num">6</span></div>
-      <div class="cal-day"><span class="num">7</span></div>
-      <div class="cal-day"><span class="num">8</span></div>
-      <div class="cal-day"><span class="num">9</span></div>
-      <div class="cal-day"><span class="num">10</span></div>
-      <div class="cal-day"><span class="num">11</span></div>
-      <div class="cal-day has-event mint" data-event="e1"><span class="num">12</span><span class="tag-dot">ERÖFFNUNG</span></div>
-      <div class="cal-day"><span class="num">13</span></div>
-      <div class="cal-day"><span class="num">14</span></div>
-      <div class="cal-day has-event pink" data-event="e2"><span class="num">15</span><span class="tag-dot">KONZERT</span></div>
-      <div class="cal-day"><span class="num">16</span></div>
-      <div class="cal-day has-event sky" data-event="e3"><span class="num">17</span><span class="tag-dot">KLANG-<br>INSTALL.</span></div>
-      <div class="cal-day"><span class="num">18</span></div>
-      <div class="cal-day has-event mint" data-event="e4"><span class="num">19</span><span class="tag-dot">KONZERT</span></div>
-      <div class="cal-day has-event pink" data-event="e5"><span class="num">20</span><span class="tag-dot">FINALE</span></div>
-      <div class="cal-day"><span class="num">21</span></div>
+      <div class="cal-day"><span class="num">14.06.</span></div>
+      <div class="cal-day"><span class="num">15.06.</span></div>
+      <div class="cal-day"><span class="num">16.06.</span></div>
+      <div class="cal-day"><span class="num">17.06.</span></div>
+      <div class="cal-day"><span class="num">18.06.</span></div>
+      <div class="cal-day"><span class="num">19.06.</span></div>
+      <div class="cal-day"><span class="num">20.06.</span></div>
+      <div class="cal-day"><span class="num">21.06.</span></div>
+      <div class="cal-day has-event pink" data-event="e1"><span class="num">22.06.</span><span class="tag-dot">UNVOICED</span></div>
+      <div class="cal-day has-event sky" data-event="e2"><span class="num">23.06.</span><span class="tag-dot">VIA NOVA</span></div>
+      <div class="cal-day"><span class="num">24.06.</span></div>
+      <div class="cal-day has-event mint" data-event="e3"><span class="num">25.06.</span><span class="tag-dot">KOLLEKTIV</span></div>
+      <div class="cal-day has-event pink" data-event="e4"><span class="num">26.06.</span><span class="tag-dot">SCHALLFELD</span></div>
+      <div class="cal-day has-event sky" data-event="e5"><span class="num">27.06.</span><span class="tag-dot">AKADEMIE</span></div>
+      <div class="cal-day"><span class="num">28.06.</span></div>
+      <div class="cal-day"><span class="num">29.06.</span></div>
+      <div class="cal-day"><span class="num">30.06.</span></div>
+      <div class="cal-day has-event mint" data-event="e6"><span class="num">01.07.</span><span class="tag-dot">TETRA BRASS</span></div>
+      <div class="cal-day"><span class="num">02.07.</span></div>
+      <div class="cal-day has-event pink" data-event="e7"><span class="num">03.07.</span><span class="tag-dot">ACCENTO</span></div>
+      <div class="cal-day"><span class="num">04.07.</span></div>
+      <div class="cal-day"><span class="num">05.07.</span></div>
+      <div class="cal-day"><span class="num">06.07.</span></div>
+      <div class="cal-day"><span class="num">07.07.</span></div>
+      <div class="cal-day"><span class="num">08.07.</span></div>
+      <div class="cal-day"><span class="num">09.07.</span></div>
+      <div class="cal-day"><span class="num">10.07.</span></div>
+      <div class="cal-day"><span class="num">11.07.</span></div>
     </div>
 
     <div class="event-detail" id="detail-e1">
-      <div class="ev-time">12.11.2027 · 19:30 UHR · MUFFATHALLE</div>
-      <h3>Eröffnungskonzert — Platzhalter</h3>
-      <p>Kurzbeschreibung des Eröffnungskonzerts. Wird durch echten Programmtext ersetzt.</p>
-      <div class="participants"><span class="chip">Komponist:in A</span><span class="chip">Komponist:in B</span><span class="chip">Ensemble X</span></div>
-      <a href="#" class="ticket">Tickets →</a>
+      <div class="ev-time">Di., 22.06.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>UNVOICED – Stimme zwischen Mensch und Maschine</h3>
+      <p>Programmtext folgt.</p>
     </div>
     <div class="event-detail" id="detail-e2">
-      <div class="ev-time">15.11.2027 · 20:00 UHR · SCHWERE REITER</div>
-      <h3>Kammerkonzert — Platzhalter</h3>
-      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
-      <div class="participants"><span class="chip">Komponist:in C</span><span class="chip">Ensemble Y</span></div>
-      <a href="#" class="ticket">Tickets →</a>
+      <div class="ev-time">Mi., 23.06.2027 · BAYERISCHE AKADEMIE DER SCHÖNEN KÜNSTE</div>
+      <h3>ensemble via nova – (Ein-)Dringlich</h3>
+      <p>Programmtext folgt.</p>
     </div>
     <div class="event-detail" id="detail-e3">
-      <div class="ev-time">17.11.2027 · GANZTÄGIG · PINAKOTHEK DER MODERNE</div>
-      <h3>Klanginstallation — Platzhalter</h3>
-      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
-      <div class="participants"><span class="chip">Komponist:in D</span></div>
-      <a href="#" class="ticket">Freier Eintritt →</a>
+      <div class="ev-time">Fr., 25.06.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>Neues Kollektiv München – Annäherungen an Rainer Werner Fassbinder</h3>
+      <p>Programmtext folgt.</p>
     </div>
     <div class="event-detail" id="detail-e4">
-      <div class="ev-time">19.11.2027 · 20:00 UHR · GASTEIG HP8</div>
-      <h3>Orchesterkonzert — Platzhalter</h3>
-      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
-      <div class="participants"><span class="chip">Komponist:in E</span><span class="chip">Ensemble Z</span></div>
-      <a href="#" class="ticket">Tickets →</a>
+      <div class="ev-time">Sa., 26.06.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>Schallfeld Ensemble – Die Illusion des Selbst</h3>
+      <p>Programmtext folgt.</p>
     </div>
     <div class="event-detail" id="detail-e5">
-      <div class="ev-time">20.11.2027 · 19:00 UHR · MUFFATHALLE</div>
-      <h3>Abschlusskonzert — Platzhalter</h3>
-      <p>Kurzbeschreibung. Wird durch echten Programmtext ersetzt.</p>
-      <div class="participants"><span class="chip">Komponist:in F</span><span class="chip">Ensemble X</span></div>
-      <a href="#" class="ticket">Tickets →</a>
+      <div class="ev-time">So., 27.06.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>aDevantgarde-Akademie</h3>
+      <p>Programmtext folgt.</p>
+    </div>
+    <div class="event-detail" id="detail-e6">
+      <div class="ev-time">01.07.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>Tetra Brass – comp|brass</h3>
+      <p>Programmtext folgt.</p>
+    </div>
+    <div class="event-detail" id="detail-e7">
+      <div class="ev-time">Sa., 03.07.2027 · SCHWERE REITER MÜNCHEN, GROSSER SAAL</div>
+      <h3>accento Orchester München</h3>
+      <p>Programmtext folgt.</p>
     </div>
   </section>
 
@@ -610,11 +691,14 @@
       <h2>Komponist:innen</h2>
       <span class="tag">Ausgabe 2027</span>
     </div>
-    <div class="people-grid">
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in A</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in B</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in C</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Komponist:in D</h3><p>Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.</p></div></div>
+    <div class="composer-widget">
+      <div class="composer-list" id="composerList"></div>
+      <div class="composer-detail">
+        <div class="composer-photo" id="composerPhoto">FOTO</div>
+        <div class="composer-credit" id="composerCredit"></div>
+        <h3 id="composerName">—</h3>
+        <p id="composerBio">—</p>
+      </div>
     </div>
   </section>
 
@@ -623,12 +707,17 @@
       <h2>Ensembles</h2>
       <span class="tag">Ausgabe 2027</span>
     </div>
-    <div class="people-grid">
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble X</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble Y</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
-      <div class="person-card"><div class="person-photo">FOTO</div><div class="person-info"><h3>Ensemble Z</h3><p>Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.</p></div></div>
-    </div>
+    <div class="people-grid" id="ensembleGrid"></div>
   </section>
+
+  <div class="ensemble-modal" id="ensembleModal" onclick="if(event.target===this) closeEnsembleModal()">
+    <div class="ensemble-modal-card">
+      <button class="ensemble-modal-close" onclick="closeEnsembleModal()">×</button>
+      <div class="ensemble-modal-photo" id="modalPhoto">FOTO</div>
+      <h3 id="modalName">—</h3>
+      <p id="modalDesc">—</p>
+    </div>
+  </div>
 
   <footer>
     <div class="tiled-bg" style="opacity:0.08;">
@@ -706,9 +795,157 @@
     });
   });
 
+  // Ensembles: live aus Google Sheet geladen (gviz/tq API), Platzhalter als Fallback bis geladen
+  let ensembles = [
+    {name:"Ensemble X", short:"Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.", full:"Ausführliche Beschreibung — Platzhaltertext, wird durch echten Text ersetzt.", photo:"", website:"", credit:"", members:""},
+    {name:"Ensemble Y", short:"Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.", full:"Ausführliche Beschreibung — Platzhaltertext, wird durch echten Text ersetzt.", photo:"", website:"", credit:"", members:""},
+    {name:"Ensemble Z", short:"Kurzbeschreibung — Platzhaltertext, wird durch echte Angaben ersetzt.", full:"Ausführliche Beschreibung — Platzhaltertext, wird durch echten Text ersetzt.", photo:"", website:"", credit:"", members:""}
+  ];
+
+  const ENSEMBLES_SHEET_ID = '1OcVgdzAFx64LExml6JcZJIajAJHu8XYkyWUBMbGucwU';
+
+  async function loadEnsemblesFromSheet(){
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${ENSEMBLES_SHEET_ID}/gviz/tq?tqx=out:json`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      const parsed = rows.map(r => {
+        const c = r.c || [];
+        const val = i => (c[i] && c[i].v != null) ? String(c[i].v).trim() : '';
+        return {
+          name: val(0), short: val(1), full: val(2),
+          website: val(3), photo: val(4), credit: val(5), members: val(6)
+        };
+      }).filter(e => e.name && e.name.toLowerCase() !== 'ensemblename');
+      if(parsed.length){
+        ensembles = parsed;
+        renderEnsembles();
+      }
+    } catch(err){
+      console.error('Ensembles konnten nicht aus dem Sheet geladen werden, Platzhalter bleiben aktiv.', err);
+    }
+  }
+
+  function renderEnsembles(){
+    const grid = document.getElementById('ensembleGrid');
+    if(!grid) return;
+    grid.innerHTML = ensembles.map((e,i) => `
+      <div class="person-card" onclick="openEnsembleModal(${i})">
+        <div class="person-photo">${e.photo ? `<img src="${e.photo}" alt="${e.name}" style="width:100%;height:100%;object-fit:cover;">` : 'FOTO'}</div>
+        <div class="person-info"><h3>${e.name}</h3><p>${e.short}</p></div>
+      </div>
+    `).join('');
+  }
+
+  function openEnsembleModal(index){
+    const e = ensembles[index];
+    document.getElementById('modalPhoto').innerHTML = e.photo ? `<img src="${e.photo}" alt="${e.name}">` : 'FOTO';
+    document.getElementById('modalName').innerHTML = e.website ? `<a href="${e.website}" target="_blank" rel="noopener">${e.name}</a>` : e.name;
+    let descHtml = e.full ? `<p>${e.full}</p>` : '';
+    if(e.members) descHtml += `<p style="margin-top:14px;"><strong>Mitglieder:</strong> ${e.members}</p>`;
+    document.getElementById('modalDesc').innerHTML = descHtml;
+    document.getElementById('ensembleModal').classList.add('open');
+  }
+
+  function closeEnsembleModal(){
+    document.getElementById('ensembleModal').classList.remove('open');
+  }
+  document.addEventListener('keydown', (ev) => { if(ev.key === 'Escape') closeEnsembleModal(); });
+
+  renderEnsembles();
+  loadEnsemblesFromSheet();
+
+  // Komponist:innen-Widget: Liste links, Foto/Bio rechts, Zufallsstart + Auto-Wechsel
+  // Datenmodell passend zum Google Sheet: name, bio, website, photo, credit
+  const composers = [
+    {name:"Komponist:in A", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in B", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in C", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in D", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in E", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in F", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in G", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in H", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in I", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in J", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in K", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in L", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in M", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in N", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in O", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in P", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in Q", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in R", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in S", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in T", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in U", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in V", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in W", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in X", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""},
+    {name:"Komponist:in Y", bio:"Kurzbio — Platzhaltertext, wird durch echte Biografie ersetzt.", website:"", photo:"", credit:""}
+  ].sort((a,b) => a.name.localeCompare(b.name, 'de'));
+
+  let composerAutoTimer = null;
+  let currentComposerIndex = null;
+
+  function renderComposerList(){
+    const list = document.getElementById('composerList');
+    if(!list) return;
+    list.innerHTML = composers.map((c,i) =>
+      `<button data-index="${i}" onclick="selectComposer(${i}, true)">${c.name}</button>`
+    ).join('');
+  }
+
+  function selectComposer(index, manual){
+    currentComposerIndex = index;
+    const c = composers[index];
+    const photoEl = document.getElementById('composerPhoto');
+    const nameEl = document.getElementById('composerName');
+    const bioEl = document.getElementById('composerBio');
+    const creditEl = document.getElementById('composerCredit');
+    if(!photoEl || !nameEl || !bioEl) return;
+    photoEl.innerHTML = c.photo ? `<img src="${c.photo}" alt="${c.name}">` : 'FOTO';
+    nameEl.innerHTML = c.website ? `<a href="${c.website}" target="_blank" rel="noopener">${c.name}</a>` : c.name;
+    bioEl.textContent = c.bio;
+    if(creditEl) creditEl.textContent = c.credit ? `Foto: ${c.credit}` : '';
+    document.querySelectorAll('#composerList button').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`#composerList button[data-index="${index}"]`);
+    if(btn){
+      btn.classList.add('active');
+      if(manual){
+        const list = document.getElementById('composerList');
+        const btnTop = btn.offsetTop;
+        const btnBottom = btnTop + btn.offsetHeight;
+        if(btnTop < list.scrollTop) list.scrollTop = btnTop;
+        else if(btnBottom > list.scrollTop + list.clientHeight) list.scrollTop = btnBottom - list.clientHeight;
+      }
+    }
+    if(manual) restartComposerAutoTimer();
+  }
+
+  function advanceComposerRandomly(){
+    if(composers.length < 2) return;
+    let next;
+    do { next = Math.floor(Math.random() * composers.length); } while(next === currentComposerIndex);
+    selectComposer(next, false);
+  }
+
+  function restartComposerAutoTimer(){
+    if(composerAutoTimer) clearInterval(composerAutoTimer);
+    composerAutoTimer = setInterval(advanceComposerRandomly, 6000);
+  }
+
+  if(document.getElementById('composerList')){
+    renderComposerList();
+    selectComposer(Math.floor(Math.random() * composers.length), false);
+    restartComposerAutoTimer();
+  }
+
   // Tracklist toggles
   function switchTab(releaseId, tab, btn){
-    ['info','tracks','stream'].forEach(t => {
+    ['info','tracks','trailer'].forEach(t => {
       const panel = document.getElementById(releaseId + '-' + t);
       if(panel) panel.classList.toggle('active', t === tab);
     });
@@ -717,5 +954,6 @@
   }
 </script>
 
+<script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
