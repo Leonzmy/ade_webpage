@@ -113,10 +113,24 @@
      ========================================================= */
   #page-archiv-2023{ background:#2b2a30; min-height:100vh; }
   #page-archiv-2023 .flipbook-wrap{ max-width:1000px; margin:0 auto; padding:36px 20px 60px; text-align:center; }
+  #page-archiv-2023 .flipbook-stage{
+    position:relative; width:380px; height:538px; margin:0 auto;
+    perspective:1800px;
+  }
+  #page-archiv-2023 .flip-page-under, #page-archiv-2023 .flip-page-active{
+    position:absolute; inset:0; width:100%; height:100%;
+  }
+  #page-archiv-2023 .flip-page-under{ z-index:1; }
+  #page-archiv-2023 .flip-page-active{
+    z-index:2; transform-style:preserve-3d; transform-origin:right center;
+    transition:transform .45s ease; cursor:pointer;
+  }
+  #page-archiv-2023 .flip-page-under img, #page-archiv-2023 .flip-page-active img{
+    width:100%; height:100%; object-fit:contain; background:#fff;
+    display:block; box-shadow:0 6px 30px rgba(0,0,0,0.5); user-select:none;
+  }
   #page-archiv-2023 .flipbook-title{ color:#fff; font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; margin:0 0 24px; }
   #page-archiv-2023 .flipbook-title span{ color:#F5A8D0; }
-  #page-archiv-2023 .flipbook-container{ display:inline-block; margin:0 auto; }
-  #page-archiv-2023 .flipbook-container .page-flip-page img{ width:100%; height:100%; display:block; user-select:none; }
   #page-archiv-2023 .flipbook-controls{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:22px; }
   #page-archiv-2023 .flipbook-controls button{
     all:unset; cursor:pointer; color:#fff; font-size:26px; font-weight:700;
@@ -206,10 +220,14 @@
   @media (max-width:640px){
     #page-festival .composer-widget{ grid-template-columns:1fr; }
     #page-festival .composer-list{ border-right:none; border-bottom:2.5px solid var(--ink); max-height:220px; }
-    #page-festival .cal-grid{ gap:5px; }
-    #page-festival .cal-day{ height:64px; padding:5px; border-width:2px; border-radius:7px; }
-    #page-festival .cal-day .num{ font-size:11px; }
-    #page-festival .cal-day .tag-dot{ font-size:8.5px; padding:2px 5px; }
+    #page-festival section.block{ padding:40px 12px; }
+    #page-festival .cal-grid{ gap:3px; }
+    #page-festival .cal-day{ height:56px; padding:4px; border-width:1.5px; border-radius:6px; min-width:0; }
+    #page-festival .cal-day .num{ font-size:9.5px; }
+    #page-festival .cal-day .tag-dot{
+      font-size:7px; padding:1px 3px; line-height:1.15;
+      white-space:normal; overflow-wrap:break-word; word-break:break-word; max-width:100%;
+    }
   }
   #page-festival .person-card{ border:2.5px solid var(--ink); border-radius:14px; overflow:hidden; background:var(--cream); cursor:pointer; transition:transform .12s ease; }
   #page-festival .person-card:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
@@ -1152,17 +1170,19 @@
 
   <div class="flipbook-wrap">
     <h1 class="flipbook-title">Programmheft <span>BIEDER_MEIER_X</span></h1>
-    <div id="flipbookContainer" class="flipbook-container"></div>
+    <div class="flipbook-stage">
+      <div class="flip-page-under"><img id="fpImgUnder" alt=""></div>
+      <div class="flip-page-active" id="fpActive" onclick="flipbookNext()"><img id="fpImgActive" alt=""></div>
+    </div>
     <div class="flipbook-controls">
       <button type="button" onclick="flipbookPrev()" aria-label="Vorherige Seite">‹</button>
       <span id="flipbookPageIndicator" class="flipbook-page-indicator">1 / 52</span>
       <button type="button" onclick="flipbookNext()" aria-label="Nächste Seite">›</button>
     </div>
-    <p class="flipbook-hint">Klick auf eine Seitenecke oder nutze die Pfeile zum Umblättern.</p>
+    <p class="flipbook-hint">Klick auf das Bild oder nutze die Pfeile zum Umblättern.</p>
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
 <script>
   // ---- Simple hash-based router across the three "pages" ----
   const pageIds = ['ueber-uns', 'records', 'festival', 'archiv-2025', 'archiv-2023'];
@@ -1174,6 +1194,10 @@
   function router(){
     const page = currentPageFromHash();
     pageIds.forEach(p => document.getElementById('page-' + p).classList.toggle('active', p === page));
+    if(typeof PAGE_TO_YEAR !== 'undefined' && PAGE_TO_YEAR[page] !== undefined){
+      currentFestivalYear = PAGE_TO_YEAR[page];
+    }
+    if(typeof renderAllYearBlocks === 'function') renderAllYearBlocks();
     // If the hash points at an in-page anchor (e.g. #festival-kalender), scroll to it
     const h = (location.hash || '').replace('#','');
     if(h && h !== page){
@@ -1186,37 +1210,40 @@
   window.addEventListener('hashchange', router);
   window.addEventListener('DOMContentLoaded', router);
 
-  // Year switcher (visual demo only, since only 2027 has real content)
+  // Year switcher — synced globally with whichever page/edition is actually loaded
   const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
+  const YEAR_TO_PAGE = {2027:'festival', 2025:'archiv-2025', 2023:'archiv-2023'};
+  const PAGE_TO_YEAR = {festival:2027, 'archiv-2025':2025, 'archiv-2023':2023};
+  let currentFestivalYear = 2027;
 
-  function initYearSwitcher(yearBlock){
-    let current = parseInt(yearBlock.dataset.defaultYear, 10) || 2027;
+  function hrefForYear(y){ return '#' + (YEAR_TO_PAGE[y] || 'festival'); }
+
+  function renderYearBlock(yearBlock){
     const bigEl = yearBlock.querySelector('.year-big');
     const track = yearBlock.querySelector('.year-track');
     const dropdownList = yearBlock.querySelector('.year-dropdown-list');
-    function hrefFor(y){
-      if(y === 2025) return '#archiv-2025';
-      if(y === 2023) return '#archiv-2023';
-      return '#festival';
-    }
-    function render(){
-      bigEl.textContent = current;
-      bigEl.setAttribute('href', hrefFor(current));
-      const rest = ALL_FESTIVAL_YEARS.filter(y => y !== current);
-      const linksHtml = rest.map(y => `<a href="${hrefFor(y)}" data-year="${y}">${y}</a>`).join('');
-      track.innerHTML = linksHtml;
-      dropdownList.innerHTML = linksHtml;
-      yearBlock.querySelectorAll('.year-track a, .year-dropdown-list a').forEach(a => {
-        a.addEventListener('click', () => {
-          current = parseInt(a.dataset.year, 10);
-          render();
-          yearBlock.querySelector('.year-dropdown').classList.remove('open');
-        });
+    if(!bigEl || !track || !dropdownList) return;
+    bigEl.textContent = currentFestivalYear;
+    bigEl.setAttribute('href', hrefForYear(currentFestivalYear));
+    const rest = ALL_FESTIVAL_YEARS.filter(y => y !== currentFestivalYear);
+    const linksHtml = rest.map(y => `<a href="${hrefForYear(y)}" data-year="${y}">${y}</a>`).join('');
+    track.innerHTML = linksHtml;
+    dropdownList.innerHTML = linksHtml;
+    yearBlock.querySelectorAll('.year-track a, .year-dropdown-list a').forEach(a => {
+      a.addEventListener('click', () => {
+        currentFestivalYear = parseInt(a.dataset.year, 10);
+        renderAllYearBlocks();
+        const dd = yearBlock.querySelector('.year-dropdown');
+        if(dd) dd.classList.remove('open');
       });
-    }
-    render();
+    });
   }
-  document.querySelectorAll('.year-block').forEach(initYearSwitcher);
+
+  function renderAllYearBlocks(){
+    document.querySelectorAll('.year-block').forEach(renderYearBlock);
+  }
+
+  renderAllYearBlocks();
 
   function scrollYearWindow(btn, dir){
     const win = btn.parentElement.querySelector('.year-window');
@@ -1429,55 +1456,54 @@
 
 <script async src="https://www.instagram.com/embed.js"></script>
 <script>
-  // Programmheft-Flipbook (Archiv 2023), initialisiert per PageFlip-Bibliothek
-  let heftFlipbook = null;
+  // Programmheft-Flipbook (Archiv 2023) — eigenständig, ohne externe Bibliothek
   const HEFT_PAGE_COUNT = 52;
+  let heftCurrentPage = 1;
+  let heftFlipbookReady = false;
+
+  function heftPad(n){ return String(n).padStart(2, '0'); }
+  function heftPagePath(n){ return `heft2023/page-${heftPad(n)}.jpg`; }
 
   function initHeftFlipbook(){
-    if(heftFlipbook || typeof St === 'undefined') return;
-    const container = document.getElementById('flipbookContainer');
-    if(!container) return;
-
-    heftFlipbook = new St.PageFlip(container, {
-      width: 380,
-      height: 538,
-      size: 'stretch',
-      minWidth: 280,
-      maxWidth: 600,
-      minHeight: 396,
-      maxHeight: 850,
-      showCover: true,
-      usePortrait: window.innerWidth < 700,
-      maxShadowOpacity: 0.5
-    });
-
-    let pagesHtml = '';
-    for(let i = 1; i <= HEFT_PAGE_COUNT; i++){
-      const num = String(i).padStart(2, '0');
-      pagesHtml += `<div class="page-flip-page"><img src="heft2023/page-${num}.jpg" alt="Seite ${i}"></div>`;
-    }
-    container.innerHTML = pagesHtml;
-    heftFlipbook.loadFromHTML(container.querySelectorAll('.page-flip-page'));
-    updateFlipbookIndicator();
-    heftFlipbook.on('flip', updateFlipbookIndicator);
+    if(heftFlipbookReady) return;
+    const activeImg = document.getElementById('fpImgActive');
+    const underImg = document.getElementById('fpImgUnder');
+    if(!activeImg || !underImg) return;
+    heftFlipbookReady = true;
+    renderHeftPage(1);
   }
 
-  function updateFlipbookIndicator(){
+  function renderHeftPage(n){
+    const activeImg = document.getElementById('fpImgActive');
+    const underImg = document.getElementById('fpImgUnder');
     const indicator = document.getElementById('flipbookPageIndicator');
-    if(!indicator || !heftFlipbook) return;
-    indicator.textContent = (heftFlipbook.getCurrentPageIndex() + 1) + ' / ' + HEFT_PAGE_COUNT;
+    if(!activeImg || !underImg) return;
+    heftCurrentPage = n;
+    activeImg.src = heftPagePath(n);
+    underImg.src = n < HEFT_PAGE_COUNT ? heftPagePath(n + 1) : heftPagePath(n);
+    if(indicator) indicator.textContent = n + ' / ' + HEFT_PAGE_COUNT;
   }
 
-  function flipbookPrev(){ if(heftFlipbook) heftFlipbook.flipPrev(); }
-  function flipbookNext(){ if(heftFlipbook) heftFlipbook.flipNext(); }
+  function heftFlipTo(n){
+    if(n < 1 || n > HEFT_PAGE_COUNT) return;
+    const el = document.getElementById('fpActive');
+    if(!el) return;
+    el.style.transform = 'rotateY(-100deg)';
+    setTimeout(() => {
+      renderHeftPage(n);
+      el.style.transition = 'none';
+      el.style.transform = 'rotateY(0deg)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { el.style.transition = 'transform .45s ease'; });
+      });
+    }, 260);
+  }
 
-  // Initialize once the archive page becomes active (and lazily on script load)
-  window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(initHeftFlipbook, 300);
-  });
-  window.addEventListener('hashchange', () => {
-    setTimeout(initHeftFlipbook, 300);
-  });
+  function flipbookPrev(){ heftFlipTo(heftCurrentPage - 1); }
+  function flipbookNext(){ heftFlipTo(heftCurrentPage + 1); }
+
+  window.addEventListener('DOMContentLoaded', initHeftFlipbook);
+  window.addEventListener('hashchange', () => { setTimeout(initHeftFlipbook, 50); });
 </script>
 </body>
 </html>
