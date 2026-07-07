@@ -135,7 +135,7 @@
   #page-ueber-uns a, #page-records a{ color:inherit; text-decoration:none; }
   #page-ueber-uns .wrap, #page-records .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
 
-  #page-ueber-uns header, #page-records header{ border-bottom:1px solid var(--line2); padding:20px 0; }
+  #page-ueber-uns header, #page-records header{ border-bottom:1px solid var(--line2); padding:16px 0; background:#FFFFFF; }
   #page-ueber-uns header .wrap, #page-records header .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; }
   #page-ueber-uns .brand, #page-records .brand{ font-size:18px; font-weight:600; letter-spacing:0.01em; }
   #page-ueber-uns nav, #page-records nav{ display:flex; gap:28px; font-size:14px; font-weight:500; align-items:center; }
@@ -158,7 +158,7 @@
 
   /* Über uns specifics */
   #page-ueber-uns .team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:32px; }
-  #page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
+  #page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; overflow:hidden; }
   #page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; }
   #page-ueber-uns .team-card .role{ font-size:13.5px; color:var(--gray); }
 
@@ -172,7 +172,7 @@
   #page-ueber-uns .tl-item p{ color:var(--gray); font-size:14.5px; max-width:520px; }
 
   #page-ueber-uns .funder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:20px; }
-  #page-ueber-uns .funder-box{ border:1px solid var(--line2); border-radius:8px; height:80px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:12.5px; background:var(--card); }
+  #page-ueber-uns .funder-box{ border:1px solid var(--line2); border-radius:8px; min-height:80px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--gray); font-size:12px; line-height:1.35; background:var(--card); }
 
   #page-ueber-uns .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
   #page-ueber-uns .contact-block h3{ font-size:15px; margin-bottom:10px; }
@@ -220,7 +220,7 @@
 <div class="page" id="page-ueber-uns">
   <header>
     <div class="wrap">
-      <div class="brand">aDevantgarde e.V.</div>
+      <img src="aDevantgarde-logo.jpg" alt="aDevantgarde" style="height:34px; width:auto; display:block;">
       <nav>
         <a href="#ueber-uns" class="current">Über uns</a>
         <a href="#records">aDevantgarde records</a>
@@ -229,20 +229,14 @@
     </div>
   </header>
 
-  <section class="hero" style="border-bottom:1px solid var(--line2); padding:64px 0 56px; text-align:center;">
-    <div class="wrap">
-      <img src="aDevantgarde-logo.jpg" alt="aDevantgarde" style="max-width:420px; width:80%; height:auto;">
-    </div>
-  </section>
-
-  <section id="team" style="padding-top:40px;">
+  <section id="team" style="padding-top:56px;">
     <div class="wrap">
       <span class="section-label">Team</span>
       <h2>Die Menschen hinter aDevantgarde</h2>
       <div class="team-grid">
         <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener">Markus Lehmann-Horn</a></h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
         <div class="team-card"><div class="photo">Foto</div><h3><a href="https://strauchcomposer.de/" target="_blank" rel="noopener">Alexander Strauch</a></h3><div class="role">Künstlerische Leitung</div></div>
-        <div class="team-card"><div class="photo"><a href="https://drive.google.com/file/d/1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK/view" target="_blank" rel="noopener" style="font-size:12.5px; text-decoration:underline;">Foto ansehen ↗</a></div><h3><a href="https://leonzmelty.de/" target="_blank" rel="noopener">Leon Zmelty</a></h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><div class="photo"><img src="https://drive.google.com/thumbnail?id=1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK&sz=w400" alt="Leon Zmelty" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.textContent='Foto'"></div><h3><a href="https://leonzmelty.de/" target="_blank" rel="noopener">Leon Zmelty</a></h3><div class="role">Künstlerische Leitung</div></div>
         <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener">Katrin Klose</a></h3><div class="role">2. Vorstandsvorsitzende</div></div>
         <div class="team-card"><div class="photo">Foto</div><h3><a href="https://christiandieck.com/" target="_blank" rel="noopener">Christian Dieck</a></h3><div class="role">Schatzmeister</div></div>
         <div class="team-card"><div class="photo">Foto</div><h3><a href="https://www.henrik-ajax.net/" target="_blank" rel="noopener">Henrik Ajax</a></h3><div class="role">Kuratorium</div></div>
@@ -255,41 +249,8 @@
 
   <section id="geschichte">
     <div class="wrap">
-      <span class="section-label">Geschichte</span>
-      <h2>Seit 1992, alle zwei Jahre</h2>
-      <div class="timeline">
-        <div class="tl-item"><span class="year mono">1992</span><h3>Gründung</h3><p>Erste Ausgabe des Festivals, entstanden aus studentischer Initiative in München.</p></div>
-        <div class="tl-item"><span class="year mono">2000er</span><h3>Etablierung</h3><p>Kontinuierlicher Ausbau des Programms, feste Partnerschaften mit Münchner Spielstätten.</p></div>
-        <div class="tl-item"><span class="year mono">2010er</span><h3>Gründung des Labels</h3><p>aDevantgarde records entsteht, um Produktionen dauerhaft zugänglich zu machen.</p></div>
-        <div class="tl-item"><span class="year mono">2025</span><h3>18. Ausgabe</h3><p>Platzhalter — letzte Ausgabe vor 2027.</p></div>
-        <div class="tl-item"><span class="year mono">2027</span><h3>19. Ausgabe — URGENT</h3><p>Aktuelle Ausgabe des Festivals.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="presse-verein">
-    <div class="wrap">
-      <span class="section-label">Presse</span>
-      <h2>Stimmen zum Festival</h2>
-      <div class="press-grid">
-        <div class="quote-card"><p>„Platzhalter-Zitat einer Pressestimme über das Festival.“</p><div class="source">Publikation, Jahr</div></div>
-        <div class="quote-card"><p>„Platzhalter-Zitat einer weiteren Pressestimme.“</p><div class="source">Publikation, Jahr</div></div>
-        <div class="quote-card"><p>„Platzhalter-Zitat, drittes Beispiel.“</p><div class="source">Publikation, Jahr</div></div>
-      </div>
-    </div>
-  </section>
-
-  <section id="foerderer">
-    <div class="wrap">
-      <span class="section-label">Förderer</span>
-      <h2>Möglich gemacht durch</h2>
-      <div class="funder-grid">
-        <div class="funder-box">Logo</div>
-        <div class="funder-box">Logo</div>
-        <div class="funder-box">Logo</div>
-        <div class="funder-box">Logo</div>
-        <div class="funder-box">Logo</div>
-      </div>
+      <p style="max-width:680px; font-size:16px; color:var(--gray); line-height:1.6;">aDevantgarde ist ein Zusammenschluss von Komponistinnen und Komponisten, die in München sowie im In- und Ausland leben und wirken. aDevantgarde wurde 1991 auf Initiative Wilhelm Killmayers von dessen Studenten als A/DEvantgarde – Projekte Neuer Musik e.V. gegründet. Seitdem wird alle zwei Jahre das aDevantgarde-Festival durchgeführt.</p>
+      <p style="max-width:680px; font-size:16px; color:var(--gray); line-height:1.6;">aDevantgarde ist eines der wenigen Neue-Musik-Festivals, das von Komponistinnen und Komponisten kuratiert und veranstaltet wird.</p>
     </div>
   </section>
 
@@ -302,12 +263,19 @@
           <h3>aDevantgarde e.V.</h3>
           <p>Musterstraße 1</p>
           <p>80331 München</p>
-          <a href="mailto:info@adevantgarde.de">info@adevantgarde.de</a>
-          <a href="#">Presseanfragen</a>
-          <a href="#">Instagram</a>
+          <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:6px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            Instagram
+          </a>
+          <a href="satzung.pdf" target="_blank" rel="noopener">Vereinssatzung (PDF) ↗</a>
         </div>
-        <div class="map-placeholder">Karte / Anfahrt (Platzhalter)</div>
+        <div class="contact-block">
+          <h3>Information</h3>
+          <p style="font-size:14px; line-height:1.5; max-width:340px;">Blindbewerbungen von Interpret:innen, Kunstschaffenden und Agenturen sind leider nicht möglich.<br><em>Musicians, further artists and agencies please do not send blind applications!</em></p>
+          <a href="mailto:leitung@adevantgarde.de">leitung@adevantgarde.de</a>
+        </div>
       </div>
+      <div class="map-placeholder" style="margin-top:24px;">Karte / Anfahrt (Platzhalter)</div>
     </div>
   </section>
 
@@ -325,7 +293,7 @@
 <div class="page" id="page-records">
   <header>
     <div class="wrap">
-      <div class="brand">aDevantgarde e.V.</div>
+      <img src="aDevantgarde-logo.jpg" alt="aDevantgarde" style="height:34px; width:auto; display:block;">
       <nav>
         <a href="#ueber-uns">Über uns</a>
         <a href="#records" class="current">aDevantgarde records</a>
