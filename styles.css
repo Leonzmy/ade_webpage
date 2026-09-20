@@ -144,12 +144,15 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 
 
 /* =========================================================
-   PAGE: FESTIVAL 2027 (comic/magazine style)
+   PAGE: FESTIVAL 2027 (stamp / ink-mark aesthetic)
    ========================================================= */
 #page-festival{
-  --purple:#B9A6E8; --purple-deep:#9C82DD; --mint:#7FDFC4; --pink:#F5A8D0;
-  --sky:#8ED2F5; --ink:#14121A; --cream:#FBF8FF; --line:3px;
-  background:var(--cream); color:var(--ink);
+  --ink:#17130F; --cream:#F7F1E3; --red:#C22A1E;
+  --tint-mint:#D9ECE2; --tint-lav:#E2DCF0; --line:3px;
+  background:
+    repeating-linear-gradient(115deg, rgba(23,19,15,0) 0px, rgba(23,19,15,0) 38px, rgba(23,19,15,0.035) 38px, rgba(23,19,15,0.035) 39px),
+    var(--cream);
+  color:var(--ink);
   font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased;
 }
 #page-festival h1, #page-festival h2, #page-festival h3, #page-festival .display{
@@ -168,42 +171,69 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
   display:inline-flex; align-items:center; gap:6px; color:var(--ink); opacity:0.4; cursor:default; user-select:none;
 }
 #page-festival .soon-tag{
-  font-family:'IBM Plex Mono',monospace; font-weight:500; font-size:10.5px;
-  border:1.5px solid var(--ink); border-radius:999px; padding:1px 8px; text-transform:uppercase; letter-spacing:0.02em;
+  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:10.5px;
+  border:1.5px solid var(--red); color:var(--red); border-radius:3px 6px 3px 6px;
+  padding:1px 8px; text-transform:uppercase; letter-spacing:0.04em;
+  display:inline-block; transform:rotate(-3deg);
 }
 
-#page-festival .hero{ position:relative; background:var(--purple); border-bottom:var(--line) solid var(--ink); overflow:hidden; padding:70px 28px 90px; }
-#page-festival .tiled-bg{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; opacity:0.16; pointer-events:none; user-select:none; transform:rotate(-6deg) scale(1.2); }
+#page-festival .hero{ position:relative; background:var(--cream); border-bottom:var(--line) solid var(--ink); overflow:hidden; padding:70px 28px 90px; }
+#page-festival .tiled-bg{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; opacity:0.05; pointer-events:none; user-select:none; transform:rotate(-6deg) scale(1.2); }
 #page-festival .tiled-bg .row{ white-space:nowrap; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:64px; color:var(--ink); letter-spacing:0.02em; }
 #page-festival .hero-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:48px; flex-wrap:wrap; }
 #page-festival .hero-text{ flex:1 1 380px; }
-#page-festival .eyebrow{ font-family:'IBM Plex Mono',monospace; font-size:14px; font-weight:500; background:var(--ink); color:var(--cream); display:inline-block; padding:4px 10px; border-radius:4px; margin-bottom:18px; }
-#page-festival .hero-text h1{ font-size:clamp(48px,8vw,92px); line-height:0.92; margin-bottom:20px; }
+#page-festival .eyebrow{
+  font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600; background:none;
+  color:var(--ink); display:inline-block; padding:3px 10px; border:2px solid var(--ink);
+  border-radius:3px 8px 3px 8px; margin-bottom:20px; text-transform:uppercase; letter-spacing:0.06em;
+  transform:rotate(-2deg);
+}
+#page-festival .hero-text h1{
+  display:inline-block; font-size:clamp(38px,6.4vw,72px); line-height:0.95; margin-bottom:24px;
+  border:var(--line) solid var(--ink); border-radius:10px 4px 14px 3px; padding:6px 22px 10px;
+  transform:rotate(-1.5deg); background:var(--cream);
+}
 #page-festival .hero-text p{ font-size:18px; line-height:1.5; max-width:440px; margin-bottom:26px; }
-#page-festival .hero-dates{ font-family:'IBM Plex Mono',monospace; font-size:15px; margin-bottom:26px; }
-#page-festival .cta{ display:inline-block; background:var(--ink); color:var(--cream); border:var(--line) solid var(--ink); padding:12px 24px; border-radius:999px; font-weight:700; text-decoration:none; transition:transform .12s ease; }
-#page-festival .cta:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); background:var(--pink); color:var(--ink); }
+#page-festival .hero-dates{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px; margin-bottom:26px; }
+#page-festival .cta{
+  display:inline-block; background:none; color:var(--ink); border:var(--line) solid var(--ink);
+  padding:11px 24px; border-radius:4px; font-weight:700; text-decoration:none;
+  text-transform:uppercase; letter-spacing:0.04em; font-size:14px;
+  transition:transform .12s ease, background .12s ease, color .12s ease;
+}
+#page-festival .cta:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); background:var(--ink); color:var(--cream); }
 #page-festival .hero-illustration{ flex:1 1 320px; display:flex; justify-content:center; }
 #page-festival .hero-illustration svg{ width:100%; max-width:380px; height:auto; }
 
 #page-festival section.block{ padding:64px 28px; max-width:1100px; margin:0 auto; }
 #page-festival .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
 #page-festival .section-head h2{ font-size:34px; }
-#page-festival .section-head .tag{ font-family:'IBM Plex Mono',monospace; font-size:13px; border:2px solid var(--ink); border-radius:999px; padding:3px 10px; }
+#page-festival .section-head .tag{
+  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px; border:2px solid var(--ink);
+  border-radius:4px 9px 4px 9px; padding:3px 10px; display:inline-block; transform:rotate(-2deg);
+}
 
 #page-festival .festival-intro-text{ font-size:16px; line-height:1.6; max-width:720px; margin:0 0 28px; }
 
 #page-festival .coming-soon-note{
-  border:2px solid var(--ink); border-radius:12px; background:var(--purple);
-  padding:14px 20px; font-size:14.5px; line-height:1.5; max-width:720px; margin:0 0 40px;
+  display:inline-block; border:2px solid var(--red); color:var(--red);
+  border-radius:11px 4px 13px 3px; background:none;
+  padding:13px 20px; font-size:14.5px; line-height:1.5; max-width:720px; margin:0 0 40px;
+  transform:rotate(-1deg);
 }
+#page-festival .coming-soon-note strong{ color:var(--red); }
 
 #page-festival .concerts-heading{ font-size:22px; margin-bottom:20px; }
 #page-festival .concert-list{ display:flex; flex-direction:column; gap:0; }
-#page-festival .concert-item{ padding:20px 0; border-bottom:2px solid var(--ink); }
+#page-festival .concert-item{ padding:20px 0; border-bottom:1.5px dashed rgba(23,19,15,0.35); }
 #page-festival .concert-item:first-child{ padding-top:0; }
 #page-festival .concert-item:last-child{ border-bottom:none; }
-#page-festival .concert-date{ font-size:12.5px; opacity:0.7; margin-bottom:6px; }
+#page-festival .concert-date{
+  font-size:11.5px; font-weight:600; letter-spacing:0.02em; margin-bottom:10px;
+  display:inline-block; border:1.5px solid var(--ink); border-radius:3px 7px 3px 7px;
+  padding:2px 9px; transform:rotate(-1deg);
+}
+#page-festival .concert-item:nth-child(even) .concert-date{ transform:rotate(1deg); }
 #page-festival .concert-item h4{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; margin:0 0 6px; }
 #page-festival .concert-item p{ font-size:14.5px; line-height:1.5; margin:0; opacity:0.85; max-width:640px; }
 
@@ -211,22 +241,20 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 @media (max-width:640px){
   #page-festival section.block{ padding:40px 12px; }
 }
-#page-festival .person-card{ border:2.5px solid var(--ink); border-radius:14px; overflow:hidden; background:var(--cream); cursor:pointer; transition:transform .12s ease; }
-#page-festival .person-card:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); }
-#page-festival .ensemble-modal{ display:none; position:fixed; inset:0; z-index:200; background:rgba(20,18,26,0.6); align-items:center; justify-content:center; padding:24px; }
+#page-festival .person-card{ border:2px solid var(--ink); border-radius:10px 4px 10px 4px; overflow:hidden; background:var(--cream); cursor:pointer; transition:transform .12s ease; }
+#page-festival .person-card:hover{ transform:translate(-2px,-2px) rotate(-0.6deg); box-shadow:4px 4px 0 var(--ink); }
+#page-festival .ensemble-modal{ display:none; position:fixed; inset:0; z-index:200; background:rgba(23,19,15,0.6); align-items:center; justify-content:center; padding:24px; }
 #page-festival .ensemble-modal.open{ display:flex; }
-#page-festival .ensemble-modal-card{ position:relative; background:var(--cream); border:3px solid var(--ink); border-radius:16px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; }
+#page-festival .ensemble-modal-card{ position:relative; background:var(--cream); border:3px solid var(--ink); border-radius:14px 5px 16px 4px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; }
 #page-festival .ensemble-modal-close{ all:unset; position:absolute; top:14px; right:18px; font-size:26px; font-weight:700; cursor:pointer; line-height:1; }
-#page-festival .ensemble-modal-photo{ width:100%; aspect-ratio:16/9; border:2.5px solid var(--ink); border-radius:10px; background:var(--sky); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:20px; overflow:hidden; }
+#page-festival .ensemble-modal-photo{ width:100%; aspect-ratio:16/9; border:2px solid var(--ink); border-radius:8px; background:var(--tint-lav); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:20px; overflow:hidden; }
 #page-festival .ensemble-modal-photo img{ width:100%; height:100%; object-fit:cover; }
 #page-festival .ensemble-modal-card h3{ font-size:26px; margin-bottom:12px; }
 #page-festival .ensemble-modal-card h3 a{ color:inherit; text-decoration:underline; }
 #page-festival .ensemble-modal-card p{ font-size:15px; line-height:1.6; margin:0; }
-#page-festival .person-photo{ height:160px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; border-bottom:2.5px solid var(--ink); }
-#page-festival .person-card:nth-child(4n+1) .person-photo{ background:var(--mint); }
-#page-festival .person-card:nth-child(4n+2) .person-photo{ background:var(--pink); }
-#page-festival .person-card:nth-child(4n+3) .person-photo{ background:var(--sky); }
-#page-festival .person-card:nth-child(4n+4) .person-photo{ background:var(--purple); }
+#page-festival .person-photo{ height:160px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; border-bottom:2px solid var(--ink); }
+#page-festival .person-card:nth-child(odd) .person-photo{ background:var(--tint-mint); }
+#page-festival .person-card:nth-child(even) .person-photo{ background:var(--tint-lav); }
 #page-festival .person-info{ padding:14px 16px; }
 #page-festival .person-info h3{ font-size:17px; margin-bottom:4px; }
 #page-festival .person-info p{ font-size:13.5px; line-height:1.45; margin:0; opacity:0.8; }
