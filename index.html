@@ -93,7 +93,10 @@
         </div>
         <div class="video-carousel-thumbs" id="videoThumbs"></div>
       </div>
-      <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" class="offseason-link">Zum YouTube-Kanal ↗</a>
+      <div class="social-links-row">
+        <a href="#records" class="social-cta-btn">Zu unseren Alben ↗</a>
+        <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" class="offseason-link">Zum YouTube-Kanal ↗</a>
+      </div>
     </div>
   </section>
 
@@ -932,16 +935,13 @@
     if(!thumbsEl) return;
     thumbsEl.innerHTML = videoList.map((v,i) => `
       <button type="button" class="video-carousel-thumb${i === videoIndex ? ' active' : ''}" onclick="goToVideo(${i})" aria-label="Video ${i + 1}">
-        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="" loading="lazy">
+        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.titel}" loading="lazy">
       </button>
     `).join('');
   }
 
-  function renderVideoStage(){
-    const stage = document.getElementById('videoCarousel');
-    if(!stage || !videoList.length) return;
-    const v = videoList[videoIndex];
-    stage.innerHTML = `
+  function buildVideoStageHTML(v){
+    return `
       <div class="video-carousel-stage" onclick="playCurrentVideo()" onmouseenter="pauseVideoTimer()" onmouseleave="restartVideoTimer()">
         <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.titel}" loading="lazy">
         <div class="video-carousel-play">
@@ -950,7 +950,28 @@
         ${v.titel ? `<div class="video-carousel-title">${v.titel}</div>` : ''}
       </div>
     `;
-    renderVideoThumbs();
+  }
+
+  function renderVideoStage(animate){
+    const stage = document.getElementById('videoCarousel');
+    if(!stage || !videoList.length) return;
+    const v = videoList[videoIndex];
+    const existing = stage.querySelector('.video-carousel-stage');
+    const swap = () => {
+      stage.innerHTML = buildVideoStageHTML(v);
+      const el = stage.querySelector('.video-carousel-stage');
+      if(el){
+        el.style.opacity = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; }));
+      }
+      renderVideoThumbs();
+    };
+    if(existing && animate !== false){
+      existing.style.opacity = '0';
+      setTimeout(swap, 300);
+    } else {
+      swap();
+    }
   }
 
   function goToVideo(i){
@@ -981,6 +1002,18 @@
     }, 10000);
   }
 
+  async function fetchYoutubeTitle(id){
+    try{
+      const url = `https://www.youtube.com/oembed?url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}&format=json`;
+      const res = await fetch(url);
+      if(!res.ok) return '';
+      const data = await res.json();
+      return data.title || '';
+    } catch(err){
+      return ''; // Titel bleibt einfach leer, kein Problem für die Anzeige
+    }
+  }
+
   async function loadVideos(){
     const container = document.getElementById('videoCarousel');
     if(!container) return;
@@ -998,6 +1031,9 @@
       }
       renderVideoStage();
       restartVideoTimer();
+      // Titel kommen direkt von YouTube (oEmbed) und werden nachgeladen, sobald verfügbar.
+      await Promise.all(videoList.map(async v => { v.titel = await fetchYoutubeTitle(v.id); }));
+      if(!videoPlaying) renderVideoStage(false);
     } catch(err){
       console.error('Videos konnten nicht geladen werden.', err);
     }
