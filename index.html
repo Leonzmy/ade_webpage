@@ -860,12 +860,12 @@
   }
   loadOffSeasonEvents();
 
-  // YouTube-Videokarussell: Videolinks werden manuell in einem Sheet gepflegt (Spalte A Titel,
-  // Spalte B YouTube-Link — z.B. als weiteres Tab im Konzerttermine-Sheet). Es zeigt jeweils
-  // ein Vorschaubild und wechselt automatisch alle paar Sekunden; ein Klick startet die
+  // YouTube-Videokarussell: Videolinks werden manuell im Tabellenblatt "Videos" gepflegt
+  // (selbes Sheet wie "Team"), Spalte A = YouTube-Link, kein Titel. Es zeigt jeweils ein
+  // Vorschaubild und wechselt automatisch alle paar Sekunden; ein Klick startet die
   // eingebettete Wiedergabe und stoppt den automatischen Wechsel.
   const VIDEOS_SHEET_ID = 'DEINE_SHEET_ID_HIER';
-  const VIDEOS_SHEET_GID = 'DEIN_TAB_GID_HIER';
+  const VIDEOS_SHEET_TAB = 'Videos';
 
   let videoList = [];
   let videoIndex = 0;
@@ -930,13 +930,13 @@
     const container = document.getElementById('videoCarousel');
     if(!container) return;
     try{
-      const url = `https://docs.google.com/spreadsheets/d/${VIDEOS_SHEET_ID}/gviz/tq?tqx=out:json&gid=${VIDEOS_SHEET_GID}`;
+      const url = `https://docs.google.com/spreadsheets/d/${VIDEOS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(VIDEOS_SHEET_TAB)}`;
       const res = await fetch(url);
       const text = await res.text();
       const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
       const rows = json.table.rows || [];
       const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
-      videoList = rows.map(r => ({ titel: val(r,0), id: extractYoutubeId(val(r,1)) })).filter(v => v.id);
+      videoList = rows.map(r => ({ titel: '', id: extractYoutubeId(val(r,0)) })).filter(v => v.id);
       if(!videoList.length){
         container.innerHTML = '<p class="videos-status">Aktuell keine Videos hinterlegt.</p>';
         return;
