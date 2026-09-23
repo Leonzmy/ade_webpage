@@ -351,16 +351,29 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; font-weight:500; }
 #page-ueber-uns .team-card .role{ font-size:13.5px; color:var(--gray); }
 
-#page-ueber-uns .social-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start; }
-#page-ueber-uns .video-embed{ position:relative; width:100%; max-width:800px; padding-top:56.25%; border-radius:8px; overflow:hidden; }
-#page-ueber-uns .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-#page-ueber-uns .youtube-channel-btn{
-  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px;
-  width:100%; max-width:400px; aspect-ratio:16/9; border:1px solid var(--line2); border-radius:10px;
-  background:var(--card); color:var(--ink2); text-decoration:none; transition:border-color .15s ease, color .15s ease;
+#page-ueber-uns .video-carousel-wrap{ max-width:640px; margin-bottom:18px; }
+#page-ueber-uns .video-carousel{
+  position:relative; width:100%; aspect-ratio:16/9; border-radius:8px; overflow:hidden;
+  background:#000;
 }
-#page-ueber-uns .youtube-channel-btn span{ font-size:14px; font-weight:600; }
-#page-ueber-uns .youtube-channel-btn:hover{ border-color:var(--accent); color:var(--accent); }
+#page-ueber-uns .video-carousel .videos-status{
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+  color:var(--gray); font-size:14px; font-style:italic; background:var(--card);
+}
+#page-ueber-uns .video-carousel-stage{ position:absolute; inset:0; cursor:pointer; }
+#page-ueber-uns .video-carousel-stage img{ width:100%; height:100%; object-fit:cover; display:block; }
+#page-ueber-uns .video-carousel-stage iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+#page-ueber-uns .video-carousel-play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+#page-ueber-uns .video-carousel-play svg{ width:60px; height:60px; }
+#page-ueber-uns .video-carousel-title{
+  position:absolute; left:0; right:0; bottom:0; padding:28px 16px 12px;
+  background:linear-gradient(transparent, rgba(0,0,0,0.72)); color:#fff; font-size:14px; font-weight:600;
+}
+#page-ueber-uns .video-carousel-dots{ display:flex; gap:8px; margin:12px 0 20px; }
+#page-ueber-uns .video-carousel-dots button{
+  all:unset; width:7px; height:7px; border-radius:50%; background:var(--line2); cursor:pointer;
+}
+#page-ueber-uns .video-carousel-dots button.active{ background:var(--accent); }
 #page-ueber-uns #ehrenmitglieder a{ color:var(--ink2); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
 #page-ueber-uns #ehrenmitglieder a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
 #page-ueber-uns .timeline{ position:relative; padding-left:24px; max-width:680px; }
@@ -443,7 +456,6 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 
 @media (max-width:640px){
   #page-ueber-uns .contact-grid{ grid-template-columns:1fr; }
-  #page-ueber-uns .social-grid{ grid-template-columns:1fr; }
   #page-records .release{ grid-template-columns:1fr; }
   #page-records .cover{ max-width:220px; }
 }
