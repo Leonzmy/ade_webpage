@@ -854,10 +854,24 @@
           </div>
         </div>
       `).join('');
+      syncOffSeasonPhotoHeights();
     } catch(err){
       console.error('Off-Season-Termine konnten nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
     }
   }
+
+  // Bildhöhe soll sich nach der Höhe der Textspalte rechts richten (nicht umgekehrt) —
+  // dafür Flexbox-"stretch" vermeiden (das würde zirkulär auch von der Bildbreite abhängen)
+  // und die Höhe nach dem Rendern direkt vom Text übernehmen.
+  function syncOffSeasonPhotoHeights(){
+    document.querySelectorAll('#offseasonList .offseason-item').forEach(item => {
+      const photo = item.querySelector('.offseason-photo');
+      const content = item.querySelector('.offseason-content');
+      if(!photo || !content) return;
+      photo.style.height = window.innerWidth > 640 ? content.offsetHeight + 'px' : '';
+    });
+  }
+  window.addEventListener('resize', syncOffSeasonPhotoHeights);
   loadOffSeasonEvents();
 
   // YouTube-Videokarussell: Videolinks werden manuell im Tabellenblatt "Videos" gepflegt
