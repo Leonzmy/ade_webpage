@@ -304,8 +304,8 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns .offseason-item{ display:flex; gap:24px; align-items:flex-start; padding:26px 0; border-bottom:1px solid var(--line2); }
 #page-ueber-uns .offseason-item:first-child{ padding-top:0; }
 #page-ueber-uns .offseason-item:last-child{ border-bottom:none; padding-bottom:0; }
-#page-ueber-uns .offseason-photo{ flex-shrink:0; overflow:hidden; border-radius:6px; }
-#page-ueber-uns .offseason-photo img{ display:block; height:100%; width:auto; max-width:220px; object-fit:cover; }
+#page-ueber-uns .offseason-photo{ flex-shrink:0; overflow:hidden; border-radius:6px; display:flex; align-items:center; justify-content:center; }
+#page-ueber-uns .offseason-photo img{ display:block; height:auto; max-height:100%; width:auto; max-width:220px; object-fit:cover; }
 #page-ueber-uns .offseason-content{ flex:1 1 auto; min-width:0; }
 #page-ueber-uns .offseason-date{
   display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
