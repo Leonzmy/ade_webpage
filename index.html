@@ -66,21 +66,21 @@
 
       <div class="team-grid">
         <div class="team-card"><a class="photo" href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Markus Lehmann-Horn</h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
-        <div class="team-card"><a class="photo" href="https://strauchcomposer.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Alexander Strauch</h3><div class="role">Künstlerische Leitung</div></div>
+        <div class="team-card"><a class="photo" href="https://strauchcomposer.de/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1ohqnsH33PaAt3p3WPxqfJS9aHcc60ChG&sz=w400" alt="Alexander Strauch" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">Privat</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Alexander Strauch</h3><div class="role">Künstlerische Leitung</div></div>
         <div class="team-card"><a class="photo" href="https://leonzmelty.de/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK&sz=w400" alt="Leon Zmelty" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">© Rene Erbstroh</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Leon Zmelty</h3><div class="role">Künstlerische Leitung</div></div>
         <div class="team-card"><a class="photo" href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Katrin Klose</h3><div class="role">2. Vorstandsvorsitzende</div></div>
         <div class="team-card"><a class="photo" href="https://christiandieck.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Christian Dieck</h3><div class="role">Schatzmeister</div></div>
         <div class="team-card"><a class="photo" href="https://www.henrik-ajax.net/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Henrik Ajax</h3><div class="role">Kuratorium</div></div>
         <div class="team-card"><a class="photo" href="https://sophiereich.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Sophie Reich</h3><div class="role">Kuratorium</div></div>
         <div class="team-card"><a class="photo" href="https://www.abigelvarga.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Abigél Varga</h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><a class="photo" href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Michael Emanuel Bauer</h3><div class="role">Kuratorium</div></div>
+        <div class="team-card"><a class="photo" href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1xGYr22Ww-V0nMOC84-W5bTjEQ-14Zp3m&sz=w400" alt="Michael Emanuel Bauer" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">Privat</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Michael Emanuel Bauer</h3><div class="role">Kuratorium</div></div>
       </div>
     </div>
   </section>
 
   <section id="ehrenmitglieder">
     <div class="wrap">
-      <span class="section-label">Ehrenmitglieder</span>
+      <h2>Ehrenmitglieder</h2>
       <p style="font-size:16px; color:var(--gray); line-height:1.8; max-width:680px;">
         <a href="https://de.schott-music.com/shop/autoren/wilhelm-killmayer" target="_blank" rel="noopener">Wilhelm Killmayer †</a>,
         <a href="http://www.moritzeggert.de/" target="_blank" rel="noopener">Moritz Eggert</a> (Ehrenvorsitzender),
@@ -809,7 +809,8 @@
 
   function formatOffSeasonTime(zeit){
     if(!zeit) return '';
-    return /uhr/i.test(zeit) ? zeit : `${zeit} Uhr`;
+    const trimmed = zeit.replace(/^(\d{1,2}:\d{2}):\d{2}$/, '$1');
+    return /uhr/i.test(trimmed) ? trimmed : `${trimmed} Uhr`;
   }
 
   async function loadOffSeasonEvents(){
@@ -821,7 +822,16 @@
       const text = await res.text();
       const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
       const rows = json.table.rows || [];
-      const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
+      // Datum-/Zeit-Zellen liefern in "v" einen rohen Date(...)-Wert (Google-Sheets-Eigenheit
+      // der gviz-API) statt des im Sheet sichtbaren Textes — deshalb bevorzugt die bereits
+      // formatierte Darstellung "f" verwenden, "v" nur als Rückfalloption für reinen Text.
+      const val = (r,i) => {
+        const c = r.c[i];
+        if(!c) return '';
+        if(c.f != null) return String(c.f).trim();
+        if(c.v != null) return String(c.v).trim();
+        return '';
+      };
       const isConfirmed = (r) => {
         const cell = r.c[8];
         if(!cell || cell.v == null) return false;
