@@ -42,6 +42,20 @@
     </div>
   </header>
 
+  <section id="off-season">
+    <div class="wrap">
+      <span class="section-label">Off-Season</span>
+      <div class="offseason-head">
+        <h2>Konzerte zwischen den Festivals</h2>
+        <a href="https://forms.gle/DEIN-FORMULAR-LINK" target="_blank" rel="noopener" class="offseason-submit">Termin einreichen ↗</a>
+      </div>
+      <p class="intro-text" style="margin-bottom:28px;">Auch zwischen den Festivalausgaben sind wir aktiv — mit Konzertprojekten unserer Mitglieder, etwa der Reihe „Neuer Hoargartn".</p>
+      <div class="offseason-list" id="offseasonList">
+        <p class="offseason-empty">Aktuell keine bestätigten Termine — schau bald wieder vorbei.</p>
+      </div>
+    </div>
+  </section>
+
   <section id="intro">
     <div class="wrap">
       <p class="intro-text">Wir sind ein Verein Münchner Komponistinnen und Komponisten mit einer gemeinsamen Leidenschaft für Neue Musik. Uns treibt an, die Szene vor Ort zu stärken und international zu vernetzen.</p>
@@ -813,6 +827,57 @@
     body.classList.toggle('open', willOpen);
     btn.classList.toggle('open', willOpen);
   }
+
+  // Off-Season-Termine: Mitglieder tragen sie per Google-Formular ein, sie landen im Sheet
+  // "Konzerttermine adevantgarde.de (Antworten)". Ein Termin erscheint erst hier, wenn in
+  // Spalte I ("bestätigt") ein Häkchen/Wert gesetzt ist. Tabellenspalten (Stand Formular):
+  // A Zeitstempel · B E-Mail-Adresse (wird NIE angezeigt) · C Konzerttitel · D Datum(?) ·
+  // E Ort(?) · F Kurzbeschreibung · G Link zum Veranstalter · H Foto zur Veranstaltung · I bestätigt
+  // Annahme: Spalte D = Datum, Spalte E = Ort (im Sheet aktuell nur als "Spalte 3"/"Spalte 4"
+  // benannt) — bitte kurz bestätigen, falls das nicht stimmt.
+  const OFFSEASON_SHEET_ID = '13Yr0KSwwBefM3jZM0QxqGlbxc8BWn8B458hm6TCe_iM';
+  const OFFSEASON_SHEET_GID = '134675467';
+
+  function driveImageUrl(link){
+    if(!link) return '';
+    const m = link.match(/[-\w]{25,}/);
+    return m ? `https://drive.google.com/thumbnail?id=${m[0]}&sz=w600` : link;
+  }
+
+  async function loadOffSeasonEvents(){
+    const listEl = document.getElementById('offseasonList');
+    if(!listEl) return;
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${OFFSEASON_SHEET_ID}/gviz/tq?tqx=out:json&gid=${OFFSEASON_SHEET_GID}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
+      const isConfirmed = (r) => {
+        const cell = r.c[8];
+        if(!cell || cell.v == null) return false;
+        if(typeof cell.v === 'boolean') return cell.v;
+        return /^(bestätigt|wahr|true|ja|x)$/i.test(String(cell.v).trim());
+      };
+      const events = rows.map(r => ({
+        titel: val(r,2), datum: val(r,3), ort: val(r,4), beschreibung: val(r,5),
+        link: val(r,6), foto: val(r,7), bestaetigt: isConfirmed(r)
+      })).filter(e => e.titel && e.bestaetigt);
+      if(!events.length) return; // Platzhaltertext bleibt stehen
+      listEl.innerHTML = events.map(e => `
+        <div class="offseason-item">
+          ${e.foto ? `<div class="offseason-photo"><img src="${driveImageUrl(e.foto)}" alt="${e.titel}" loading="lazy"></div>` : ''}
+          <div class="offseason-date mono">${e.datum}${e.ort ? ' · ' + e.ort : ''}</div>
+          <h3>${e.link ? `<a href="${e.link}" target="_blank" rel="noopener">${e.titel} ↗</a>` : e.titel}</h3>
+          ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
+        </div>
+      `).join('');
+    } catch(err){
+      console.error('Off-Season-Termine konnten nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
+    }
+  }
+  loadOffSeasonEvents();
 
   // Tracklist toggles
   function toggleReleaseDetails(btn){
