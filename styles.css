@@ -318,7 +318,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns .offseason-link:hover{ text-decoration-color:var(--accent); }
 #page-ueber-uns .offseason-empty{ font-size:14.5px; color:var(--gray); font-style:italic; margin:0; }
 #page-ueber-uns .offseason-item.is-own{
-  background:rgba(43,46,74,0.07); border-radius:12px; padding:24px 22px; border-bottom:none; margin:6px 0;
+  background:rgba(43,46,74,0.07); border-radius:12px; padding:24px 22px; border-bottom:none; margin:6px -22px;
 }
 #page-ueber-uns .offseason-item.is-own:first-child{ padding-top:24px; }
 #page-ueber-uns .offseason-item.is-own:last-child{ padding-bottom:24px; }
