@@ -301,11 +301,11 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns .intro-text:last-child{ margin-bottom:0; }
 
 #page-ueber-uns .offseason-list{ display:flex; flex-direction:column; }
-#page-ueber-uns .offseason-item{ display:flex; gap:24px; align-items:flex-start; padding:26px 0; border-bottom:1px solid var(--line2); }
+#page-ueber-uns .offseason-item{ display:flex; gap:24px; align-items:stretch; padding:26px 0; border-bottom:1px solid var(--line2); }
 #page-ueber-uns .offseason-item:first-child{ padding-top:0; }
 #page-ueber-uns .offseason-item:last-child{ border-bottom:none; padding-bottom:0; }
-#page-ueber-uns .offseason-photo{ flex-shrink:0; }
-#page-ueber-uns .offseason-photo img{ display:block; height:auto; width:auto; max-height:130px; max-width:220px; border-radius:6px; object-fit:cover; }
+#page-ueber-uns .offseason-photo{ flex-shrink:0; overflow:hidden; border-radius:6px; }
+#page-ueber-uns .offseason-photo img{ display:block; height:100%; width:auto; max-width:220px; object-fit:cover; }
 #page-ueber-uns .offseason-content{ flex:1 1 auto; min-width:0; }
 #page-ueber-uns .offseason-date{
   display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
@@ -328,7 +328,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 }
 @media (max-width:640px){
   #page-ueber-uns .offseason-item{ flex-direction:column; gap:14px; }
-  #page-ueber-uns .offseason-photo img{ max-width:100%; max-height:200px; width:auto; }
+  #page-ueber-uns .offseason-photo img{ max-width:100%; max-height:200px; width:auto; height:auto; }
 }
 
 
