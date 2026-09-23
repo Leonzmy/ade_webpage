@@ -147,8 +147,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
    PAGE: FESTIVAL 2027 (stamp / ink-mark aesthetic)
    ========================================================= */
 #page-festival{
-  --ink:#17130F; --cream:#F7F1E3; --red:#C22A1E;
-  --tint-mint:#D9ECE2; --tint-lav:#E2DCF0; --line:3px;
+  --ink:#17130F; --cream:#F7F1E3; --red:#C22A1E; --line:3px;
   background:
     repeating-linear-gradient(115deg, rgba(23,19,15,0) 0px, rgba(23,19,15,0) 38px, rgba(23,19,15,0.035) 38px, rgba(23,19,15,0.035) 39px),
     var(--cream);
@@ -218,46 +217,48 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-festival .coming-soon-note{
   display:inline-block; border:2px solid var(--red); color:var(--red);
   border-radius:11px 4px 13px 3px; background:none;
-  padding:13px 20px; font-size:14.5px; line-height:1.5; max-width:720px; margin:0 0 40px;
+  padding:13px 20px; font-size:14.5px; line-height:1.5; max-width:720px; margin:0 0 8px;
   transform:rotate(-1deg);
 }
 #page-festival .coming-soon-note strong{ color:var(--red); }
 
-#page-festival .concerts-heading{ font-size:22px; margin-bottom:20px; }
-#page-festival .concert-list{ display:flex; flex-direction:column; gap:0; }
-#page-festival .concert-item{ padding:20px 0; border-bottom:1.5px dashed rgba(23,19,15,0.35); }
-#page-festival .concert-item:first-child{ padding-top:0; }
-#page-festival .concert-item:last-child{ border-bottom:none; }
-#page-festival .concert-date{
-  font-size:11.5px; font-weight:600; letter-spacing:0.02em; margin-bottom:10px;
-  display:inline-block; border:1.5px solid var(--ink); border-radius:3px 7px 3px 7px;
-  padding:2px 9px; transform:rotate(-1deg);
+/* Program Release highlight */
+#page-festival .release-highlight{
+  display:flex; align-items:center; gap:28px; flex-wrap:wrap;
+  border:var(--line) solid var(--red); border-radius:14px 5px 16px 4px;
+  padding:26px 30px; max-width:780px; background:none;
 }
-#page-festival .concert-item:nth-child(even) .concert-date{ transform:rotate(1deg); }
-#page-festival .concert-item h4{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px; margin:0 0 6px; }
-#page-festival .concert-item p{ font-size:14.5px; line-height:1.5; margin:0; opacity:0.85; max-width:640px; }
+#page-festival .release-highlight-date{
+  font-size:26px; font-weight:700; color:var(--red); white-space:nowrap;
+  border:2px solid var(--red); border-radius:8px 3px 10px 3px; padding:8px 18px;
+  transform:rotate(-2deg); flex-shrink:0;
+}
+#page-festival .release-highlight p{ font-size:15.5px; line-height:1.6; margin:0; max-width:440px; }
 
-#page-festival .people-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:22px; }
+/* Static two-month calendar */
+#page-festival .mini-cal-grid{ display:flex; gap:40px; flex-wrap:wrap; }
+#page-festival .mini-cal{ flex:1 1 260px; max-width:320px; }
+#page-festival .mini-cal-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:12px; }
+#page-festival .mini-cal-dow{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px; }
+#page-festival .mini-cal-dow span{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-align:center; opacity:0.55; }
+#page-festival .mini-cal-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+#page-festival .mini-cal-days span{
+  font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-align:center;
+  padding:6px 0; border-radius:3px; opacity:0.65;
+}
+#page-festival .mini-cal-days span.empty{ visibility:hidden; }
+#page-festival .mini-cal-days span.festival-day{
+  opacity:1; font-weight:700; color:var(--red); background:rgba(194,42,30,0.12);
+  border:1.5px solid var(--red); border-radius:3px 7px 3px 7px;
+}
+#page-festival .mini-cal-legend{ display:flex; align-items:center; gap:8px; margin-top:18px; font-size:13px; opacity:0.75; }
+#page-festival .mini-cal-legend .swatch{
+  display:inline-block; width:16px; height:16px; background:rgba(194,42,30,0.12);
+  border:1.5px solid var(--red); border-radius:2px 5px 2px 5px;
+}
 @media (max-width:640px){
   #page-festival section.block{ padding:40px 12px; }
 }
-#page-festival .person-card{ border:2px solid var(--ink); border-radius:10px 4px 10px 4px; overflow:hidden; background:var(--cream); cursor:pointer; transition:transform .12s ease; }
-#page-festival .person-card:hover{ transform:translate(-2px,-2px) rotate(-0.6deg); box-shadow:4px 4px 0 var(--ink); }
-#page-festival .ensemble-modal{ display:none; position:fixed; inset:0; z-index:200; background:rgba(23,19,15,0.6); align-items:center; justify-content:center; padding:24px; }
-#page-festival .ensemble-modal.open{ display:flex; }
-#page-festival .ensemble-modal-card{ position:relative; background:var(--cream); border:3px solid var(--ink); border-radius:14px 5px 16px 4px; max-width:520px; width:100%; max-height:85vh; overflow-y:auto; padding:32px; }
-#page-festival .ensemble-modal-close{ all:unset; position:absolute; top:14px; right:18px; font-size:26px; font-weight:700; cursor:pointer; line-height:1; }
-#page-festival .ensemble-modal-photo{ width:100%; aspect-ratio:16/9; border:2px solid var(--ink); border-radius:8px; background:var(--tint-lav); display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; margin-bottom:20px; overflow:hidden; }
-#page-festival .ensemble-modal-photo img{ width:100%; height:100%; object-fit:cover; }
-#page-festival .ensemble-modal-card h3{ font-size:26px; margin-bottom:12px; }
-#page-festival .ensemble-modal-card h3 a{ color:inherit; text-decoration:underline; }
-#page-festival .ensemble-modal-card p{ font-size:15px; line-height:1.6; margin:0; }
-#page-festival .person-photo{ height:160px; display:flex; align-items:center; justify-content:center; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:14px; border-bottom:2px solid var(--ink); }
-#page-festival .person-card:nth-child(odd) .person-photo{ background:var(--tint-mint); }
-#page-festival .person-card:nth-child(even) .person-photo{ background:var(--tint-lav); }
-#page-festival .person-info{ padding:14px 16px; }
-#page-festival .person-info h3{ font-size:17px; margin-bottom:4px; }
-#page-festival .person-info p{ font-size:13.5px; line-height:1.45; margin:0; opacity:0.8; }
 
 #page-festival footer{ border-top:var(--line) solid var(--ink); background:var(--ink); color:var(--cream); padding:48px 28px 28px; position:relative; overflow:hidden; }
 #page-festival footer .tiled-bg .row{ color:var(--cream); }
@@ -296,6 +297,8 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns section:last-of-type, #page-records section:last-of-type{ border-bottom:none; }
 #page-ueber-uns .section-label, #page-records .section-label{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:14px; display:block; }
 #page-ueber-uns section h2, #page-records section h2{ font-size:30px; margin-bottom:36px; max-width:600px; }
+#page-ueber-uns .intro-text{ max-width:680px; font-size:16px; color:var(--gray); line-height:1.6; margin:0 0 18px; }
+#page-ueber-uns .intro-text:last-child{ margin-bottom:0; }
 
 #page-ueber-uns footer, #page-records footer{ padding:36px 0; border-top:none; }
 #page-ueber-uns footer .wrap, #page-records footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--gray); }
