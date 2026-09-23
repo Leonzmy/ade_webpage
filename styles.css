@@ -276,7 +276,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
    SHARED MINIMAL STYLE (Über uns / records)
    ========================================================= */
 #page-ueber-uns, #page-records{
-  --bg:#F6F5F1; --ink2:#17171B; --gray:#68666B; --line2:#DDDAD2; --accent:#2B2E4A; --card:#FFFFFF;
+  --bg:#F6F5F1; --ink2:#17171B; --gray:#68666B; --line2:#DDDAD2; --accent:#E2622A; --card:#FFFFFF;
   background:var(--bg); color:var(--ink2);
   font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5;
 }
