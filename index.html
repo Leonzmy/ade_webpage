@@ -795,9 +795,12 @@
 
   // Off-Season-Termine: Mitglieder tragen sie per Google-Formular ein, sie landen im Sheet
   // "Konzerttermine adevantgarde.de (Antworten)". Ein Termin erscheint erst hier, wenn in
-  // Spalte I ("bestätigt") ein Häkchen/Wert gesetzt ist. Tabellenspalten:
+  // Spalte I ("bestätigt") ein Häkchen/Wert gesetzt ist. Spalte J ("eigene Veranstaltung")
+  // wird manuell im Sheet gepflegt und markiert Termine, die aDevantgarde selbst veranstaltet
+  // (z.B. Neuer Hoargartn) — die werden auf der Website farblich hervorgehoben. Tabellenspalten:
   // A Zeitstempel · B E-Mail-Adresse (wird NIE angezeigt) · C Konzerttitel · D Datum ·
-  // E Zeit · F Kurzbeschreibung · G Link zum Veranstalter · H Foto zur Veranstaltung · I bestätigt
+  // E Zeit · F Kurzbeschreibung · G Link zum Veranstalter · H Foto zur Veranstaltung ·
+  // I bestätigt · J eigene Veranstaltung (manuell)
   const OFFSEASON_SHEET_ID = '13Yr0KSwwBefM3jZM0QxqGlbxc8BWn8B458hm6TCe_iM';
   const OFFSEASON_SHEET_GID = '134675467';
 
@@ -832,21 +835,22 @@
         if(c.v != null) return String(c.v).trim();
         return '';
       };
-      const isConfirmed = (r) => {
-        const cell = r.c[8];
+      const isChecked = (r,i) => {
+        const cell = r.c[i];
         if(!cell || cell.v == null) return false;
         if(typeof cell.v === 'boolean') return cell.v;
         return /^(bestätigt|wahr|true|ja|x)$/i.test(String(cell.v).trim());
       };
       const events = rows.map(r => ({
         titel: val(r,2), datum: val(r,3), zeit: val(r,4), beschreibung: val(r,5),
-        link: val(r,6), foto: val(r,7), bestaetigt: isConfirmed(r)
+        link: val(r,6), foto: val(r,7), bestaetigt: isChecked(r,8), eigen: isChecked(r,9)
       })).filter(e => e.titel && e.bestaetigt);
       if(!events.length) return; // Platzhaltertext bleibt stehen
       listEl.innerHTML = events.map(e => `
-        <div class="offseason-item">
+        <div class="offseason-item${e.eigen ? ' is-own' : ''}">
           ${e.foto ? `<div class="offseason-photo"><img src="${driveImageUrl(e.foto)}" alt="${e.titel}" loading="lazy"></div>` : ''}
           <div class="offseason-content">
+            ${e.eigen ? `<span class="offseason-own-tag">aDevantgarde</span>` : ''}
             <div class="offseason-date mono"><span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}</div>
             <h3>${e.titel}</h3>
             ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
