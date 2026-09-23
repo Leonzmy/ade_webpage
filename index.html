@@ -64,16 +64,8 @@
     <div class="wrap">
       <h2>Team</h2>
 
-      <div class="team-grid">
-        <div class="team-card"><a class="photo" href="https://www.markuslehmannhorn.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Markus Lehmann-Horn</h3><div class="role">Künstlerische Leitung &amp; 1. Vorstandsvorsitzender</div></div>
-        <div class="team-card"><a class="photo" href="https://strauchcomposer.de/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1ohqnsH33PaAt3p3WPxqfJS9aHcc60ChG&sz=w400" alt="Alexander Strauch" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">Privat</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Alexander Strauch</h3><div class="role">Künstlerische Leitung</div></div>
-        <div class="team-card"><a class="photo" href="https://leonzmelty.de/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1t2Mblv8dWVN2DcnAaO26tLe5WJIbk2oK&sz=w400" alt="Leon Zmelty" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">© Rene Erbstroh</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Leon Zmelty</h3><div class="role">Künstlerische Leitung</div></div>
-        <div class="team-card"><a class="photo" href="https://www.katrin-klose-komponistin.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Katrin Klose</h3><div class="role">2. Vorstandsvorsitzende</div></div>
-        <div class="team-card"><a class="photo" href="https://christiandieck.com/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Christian Dieck</h3><div class="role">Schatzmeister</div></div>
-        <div class="team-card"><a class="photo" href="https://www.henrik-ajax.net/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Henrik Ajax</h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><a class="photo" href="https://sophiereich.de/" target="_blank" rel="noopener"><span class="photo-content">Foto</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Sophie Reich</h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><a class="photo" href="https://www.abigelvarga.com/" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1sL_ZwMLynVpsBbChXyxY_hhpjQKfwBov&sz=w400" alt="Abigél Varga" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">© Gábor Németh</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Abigél Varga</h3><div class="role">Kuratorium</div></div>
-        <div class="team-card"><a class="photo" href="https://www.muenchner-kammerspiele.de/de/wir/9787-michael-emanuel-bauer" target="_blank" rel="noopener"><span class="photo-content"><img src="https://drive.google.com/thumbnail?id=1xGYr22Ww-V0nMOC84-W5bTjEQ-14Zp3m&sz=w400" alt="Michael Emanuel Bauer" onerror="this.parentElement.textContent='Foto'"></span><span class="photo-credit">Privat</span><span class="photo-overlay">Website ansehen ↗</span></a><h3>Michael Emanuel Bauer</h3><div class="role">Kuratorium</div></div>
+      <div class="team-grid" id="teamGrid">
+        <p class="offseason-empty">Team wird geladen …</p>
       </div>
     </div>
   </section>
@@ -787,6 +779,49 @@
     }
   });
 
+  // Team: wird aus dem Tab "Team" im Sheet "adevantgarde.de über uns" geladen (selbes
+  // Dokument wie die Videos). Spalten: A Name · B Funktion · C Bild (Drive-Link) ·
+  // D Internetseite · E Credits Bild.
+  const ABOUT_SHEET_ID = '1lBDxbKKC5cGMT1FcwX_Nt1vn6yRoThiDZH3PY6hjh_0';
+  const TEAM_SHEET_TAB = 'Team';
+
+  function formatPhotoCredit(credit){
+    if(!credit) return '';
+    if(/^privat$/i.test(credit)) return 'Privat';
+    return credit.startsWith('©') ? credit : `© ${credit}`;
+  }
+
+  async function loadTeam(){
+    const grid = document.getElementById('teamGrid');
+    if(!grid) return;
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${ABOUT_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(TEAM_SHEET_TAB)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
+      const team = rows.map(r => ({
+        name: val(r,0), funktion: val(r,1), bild: val(r,2), website: val(r,3), credit: val(r,4)
+      })).filter(t => t.name);
+      if(!team.length) return; // Platzhaltertext bleibt stehen
+      grid.innerHTML = team.map(t => {
+        const inner = `
+          <span class="photo-content">${t.bild ? `<img src="${driveImageUrl(t.bild)}" alt="${t.name}" onerror="this.parentElement.textContent='Foto'">` : 'Foto'}</span>
+          ${t.credit ? `<span class="photo-credit">${formatPhotoCredit(t.credit)}</span>` : ''}
+          ${t.website ? `<span class="photo-overlay">Website ansehen ↗</span>` : ''}
+        `;
+        const photo = t.website
+          ? `<a class="photo" href="${t.website}" target="_blank" rel="noopener">${inner}</a>`
+          : `<div class="photo">${inner}</div>`;
+        return `<div class="team-card">${photo}<h3>${t.name}</h3><div class="role">${t.funktion}</div></div>`;
+      }).join('');
+    } catch(err){
+      console.error('Team konnte nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
+    }
+  }
+  loadTeam();
+
   // Off-Season-Termine: Mitglieder tragen sie per Google-Formular ein, sie landen im Sheet
   // "Konzerttermine adevantgarde.de (Antworten)". Ein Termin erscheint erst hier, wenn in
   // Spalte J ("bestätigt") ein Häkchen/Wert gesetzt ist. Spalte K ("eigene Veranstaltung")
@@ -878,7 +913,7 @@
   // (selbes Sheet wie "Team"), Spalte A = YouTube-Link, kein Titel. Es zeigt jeweils ein
   // Vorschaubild und wechselt automatisch alle paar Sekunden; ein Klick startet die
   // eingebettete Wiedergabe und stoppt den automatischen Wechsel.
-  const VIDEOS_SHEET_ID = 'DEINE_SHEET_ID_HIER';
+  const VIDEOS_SHEET_ID = '1lBDxbKKC5cGMT1FcwX_Nt1vn6yRoThiDZH3PY6hjh_0';
   const VIDEOS_SHEET_TAB = 'Videos';
 
   let videoList = [];
