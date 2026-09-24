@@ -291,6 +291,24 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 #page-ueber-uns .intro-text{ max-width:680px; font-size:16px; color:var(--gray); line-height:1.6; margin:0 0 18px; }
 #page-ueber-uns .intro-text:last-child{ margin-bottom:0; }
 
+#page-ueber-uns .press-toggle-block{ margin-top:22px; }
+#page-ueber-uns .press-toggle{
+  all:unset; display:inline-flex; align-items:center; gap:8px; cursor:pointer;
+  font-family:'Newsreader',serif; font-size:17px; font-weight:500; color:var(--ink2);
+}
+#page-ueber-uns .press-toggle .arrow{ font-family:'Inter',sans-serif; font-size:12px; transition:transform .2s ease; }
+#page-ueber-uns .press-toggle.open .arrow{ transform:rotate(180deg); }
+#page-ueber-uns .press-toggle-body{ display:none; margin-top:14px; }
+#page-ueber-uns .press-toggle-body.open{ display:block; }
+#page-ueber-uns .press-file-list{ list-style:none; margin:0; padding:0; max-width:520px; }
+#page-ueber-uns .press-file-list li{ padding:10px 0; border-bottom:1px solid var(--line2); }
+#page-ueber-uns .press-file-list li:last-child{ border-bottom:none; }
+#page-ueber-uns .press-file-list a{
+  color:var(--accent); font-weight:600; font-size:14.5px; text-decoration:underline;
+  text-decoration-color:var(--line2); text-underline-offset:3px;
+}
+#page-ueber-uns .press-file-list a:hover{ text-decoration-color:var(--accent); }
+
 #page-ueber-uns .offseason-list{ display:flex; flex-direction:column; }
 #page-ueber-uns .offseason-item{ display:flex; gap:24px; align-items:flex-start; padding:26px 0; border-bottom:1px solid var(--line2); }
 #page-ueber-uns .offseason-item:first-child{ padding-top:0; }
