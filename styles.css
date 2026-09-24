@@ -16,7 +16,7 @@ header{
   font-family:'Inter',Arial,sans-serif;
 }
 header .wrap{
-  width:100%; max-width:1100px; margin:0 auto; padding:22px 28px;
+  width:100%; max-width:1100px; margin:0 auto; padding:30px 28px;
   display:flex; align-items:center; gap:20px;
 }
 header .site-logo{ height:32px; width:auto; display:block; }
@@ -27,7 +27,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
   text-decoration:none; color:#14121A; font-family:'Space Grotesk',sans-serif;
   font-weight:700; font-size:30px; line-height:1;
 }
-.year-arrow-btn{ all:unset; display:inline-flex; align-items:center; font-size:13px; color:#14121A; cursor:pointer; transition:transform .15s ease; }
+.year-arrow-btn{ all:unset; display:inline-flex; align-items:center; font-size:20px; font-weight:700; color:#14121A; cursor:pointer; margin-left:2px; transition:transform .15s ease, opacity .15s ease; }
 .year-arrow-btn:hover{ opacity:0.6; }
 .year-block:has(.year-dropdown.open) .year-arrow-btn{ transform:rotate(180deg); }
 .year-dropdown{
@@ -51,7 +51,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 .header-nav a:hover{ border-bottom:2px solid #14121A; }
 .header-nav a.current{ opacity:1; border-bottom:2px solid #14121A; }
 
-.page-tagline{ background:#FFFFFF; }
+.page-tagline{ background:transparent; }
 .page-tagline .tagline-wrap{ max-width:1100px; margin:0 auto; padding:16px 28px 20px; }
 .page-tagline .tagline-line{
   font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:13px; line-height:1.35;
@@ -103,6 +103,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
    PAGE: ARCHIV 2023 — PDF Flipbook viewer
    ========================================================= */
 #page-archiv-2023{ background:#2b2a30; min-height:100vh; }
+#page-archiv-2023 .page-tagline .tagline-line{ color:#fff; }
 #page-archiv-2023 .flipbook-wrap{ max-width:1000px; margin:0 auto; padding:36px 20px 60px; text-align:center; }
 #page-archiv-2023 .flipbook-stage{
   position:relative; width:380px; height:538px; margin:0 auto;
@@ -321,6 +322,10 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
   #page-ueber-uns .offseason-photo{ width:100%; }
   #page-ueber-uns .offseason-photo img{ max-width:100%; max-height:200px; width:auto; height:auto; }
   #page-ueber-uns .cd-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
+  #page-ueber-uns .team-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
+  #page-ueber-uns .team-card .photo{ margin-bottom:8px; }
+  #page-ueber-uns .team-card h3{ font-size:14.5px; margin-bottom:1px; }
+  #page-ueber-uns .team-card .role{ font-size:12px; line-height:1.3; }
 }
 
 
