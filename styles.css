@@ -440,9 +440,11 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 #page-ueber-uns .social-icon-link{ display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--ink2); margin-bottom:32px; }
 #page-ueber-uns .social-icon-link:hover{ color:var(--accent); }
 #page-ueber-uns .vereinsdaten{ font-size:13px; color:var(--gray); margin:0 0 10px; }
-#page-ueber-uns .legal-row{ display:flex; gap:20px; flex-wrap:wrap; font-size:13px; }
+#page-ueber-uns .legal-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; font-size:13px; }
 #page-ueber-uns .legal-row a{ color:var(--gray); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
 #page-ueber-uns .legal-row a:hover{ color:var(--ink2); text-decoration-color:var(--ink2); }
+#page-ueber-uns .legal-row-sep{ color:var(--line2); }
+#page-ueber-uns .member-area-label{ color:var(--gray); margin-right:-8px; }
 #page-ueber-uns .map-placeholder{ border:1px solid var(--line2); border-radius:8px; height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
 
 /* Presse (shared look, used on both) */
