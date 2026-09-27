@@ -16,10 +16,20 @@ header{
   font-family:'Inter',Arial,sans-serif;
 }
 header .wrap{
-  width:100%; max-width:1100px; margin:0 auto; padding:30px 28px;
+  width:100%; max-width:1100px; margin:0 auto; padding:22px 28px;
   display:flex; align-items:center; gap:20px;
 }
+.logo-block{ display:flex; flex-direction:column; align-items:flex-start; }
 header .site-logo{ height:32px; width:auto; display:block; }
+.logo-block .tagline{
+  overflow:hidden; max-height:40px; opacity:1; margin-top:6px;
+  transition:max-height .3s ease, opacity .25s ease, margin-top .3s ease;
+}
+body.scrolled .logo-block .tagline{ max-height:0; opacity:0; margin-top:0; }
+.tagline-line{
+  font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:13px; line-height:1.35;
+  color:#14121A;
+}
 header .header-bottom-row{ display:flex; align-items:center; justify-content:space-between; flex:1; gap:20px; }
 .year-block{ display:flex; align-items:center; gap:10px; position:relative; }
 .year-toggle{ display:flex; align-items:baseline; gap:4px; }
@@ -51,20 +61,14 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 .header-nav a:hover{ border-bottom:2px solid #14121A; }
 .header-nav a.current{ opacity:1; border-bottom:2px solid #14121A; }
 
-.page-tagline{ background:transparent; }
-.page-tagline .tagline-wrap{ max-width:1100px; margin:0 auto; padding:16px 28px 20px 40px; }
-.page-tagline .tagline-line{
-  font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:13px; line-height:1.35;
-  color:#14121A;
-}
 @media (max-width:640px){
   header .wrap{ flex-direction:column; padding:16px 20px; gap:10px; }
+  .logo-block{ align-items:center; }
   header .site-logo{ height:26px; }
   header .header-bottom-row{ width:100%; justify-content:center; gap:16px; flex-wrap:wrap; }
   .year-big{ font-size:22px; }
   .header-nav{ font-size:13px; gap:14px; }
   .year-dropdown{ left:50%; transform:translateX(-50%); margin-top:8px; }
-  .page-tagline .tagline-wrap{ padding:12px 20px 16px; text-align:center; }
 }
 
 /* =========================================================
@@ -103,7 +107,6 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
    PAGE: ARCHIV 2023 — PDF Flipbook viewer
    ========================================================= */
 #page-archiv-2023{ background:#2b2a30; min-height:100vh; }
-#page-archiv-2023 .page-tagline .tagline-line{ color:#fff; }
 #page-archiv-2023 .flipbook-wrap{ max-width:1000px; margin:0 auto; padding:36px 20px 60px; text-align:center; }
 #page-archiv-2023 .flipbook-stage{
   position:relative; width:380px; height:538px; margin:0 auto;
