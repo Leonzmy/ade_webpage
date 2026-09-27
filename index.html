@@ -16,7 +16,13 @@
 <div class="page" id="page-ueber-uns">
   <header>
           <div class="wrap">
-        <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+        <div class="logo-block">
+          <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+          <div class="tagline">
+            <div class="tagline-line">Music Festival</div>
+            <div class="tagline-line">Made by Composers</div>
+          </div>
+        </div>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
@@ -35,12 +41,6 @@
       </div>
   </header>
 
-  <div class="page-tagline">
-    <div class="tagline-wrap">
-      <div class="tagline-line">Music Festival</div>
-      <div class="tagline-line">Made by Composers</div>
-    </div>
-  </div>
 
   <section id="off-season">
     <div class="wrap">
@@ -164,7 +164,13 @@
 <div class="page" id="page-records">
   <header>
           <div class="wrap">
-        <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+        <div class="logo-block">
+          <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+          <div class="tagline">
+            <div class="tagline-line">Music Festival</div>
+            <div class="tagline-line">Made by Composers</div>
+          </div>
+        </div>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
@@ -183,12 +189,6 @@
       </div>
   </header>
 
-  <div class="page-tagline">
-    <div class="tagline-wrap">
-      <div class="tagline-line">Music Festival</div>
-      <div class="tagline-line">Made by Composers</div>
-    </div>
-  </div>
 
   <section class="hero">
     <div class="wrap">
@@ -367,7 +367,13 @@
 <div class="page" id="page-festival">
   <header>
           <div class="wrap">
-        <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+        <div class="logo-block">
+          <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+          <div class="tagline">
+            <div class="tagline-line">Music Festival</div>
+            <div class="tagline-line">Made by Composers</div>
+          </div>
+        </div>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
@@ -386,12 +392,6 @@
       </div>
   </header>
 
-  <div class="page-tagline">
-    <div class="tagline-wrap">
-      <div class="tagline-line">Music Festival</div>
-      <div class="tagline-line">Made by Composers</div>
-    </div>
-  </div>
   <div class="festival-subnav">
     <a href="#festival-programm">Programm</a>
     <a href="#festival-release">Program Release</a>
@@ -528,7 +528,13 @@
 <div class="page" id="page-archiv-2025">
   <header>
           <div class="wrap">
-        <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+        <div class="logo-block">
+          <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+          <div class="tagline">
+            <div class="tagline-line">Music Festival</div>
+            <div class="tagline-line">Made by Composers</div>
+          </div>
+        </div>
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2025">
             <div class="year-toggle">
@@ -545,12 +551,6 @@
       </div>
   </header>
 
-  <div class="page-tagline">
-    <div class="tagline-wrap">
-      <div class="tagline-line">Music Festival</div>
-      <div class="tagline-line">Made by Composers</div>
-    </div>
-  </div>
 
   <div class="archiv-banner">Archiv — 18. aDevantgarde-Festival 2025</div>
 
@@ -683,7 +683,13 @@
 <div class="page" id="page-archiv-2023">
   <header>
           <div class="wrap">
-        <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+        <div class="logo-block">
+          <img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde">
+          <div class="tagline">
+            <div class="tagline-line">Music Festival</div>
+            <div class="tagline-line">Made by Composers</div>
+          </div>
+        </div>
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2023">
             <div class="year-toggle">
@@ -700,12 +706,6 @@
       </div>
   </header>
 
-  <div class="page-tagline">
-    <div class="tagline-wrap">
-      <div class="tagline-line">Music Festival</div>
-      <div class="tagline-line">Made by Composers</div>
-    </div>
-  </div>
 
   <div class="archiv-banner">Archiv — 17. aDevantgarde-Festival 2023 · BIEDER_MEIER_X</div>
 
@@ -747,9 +747,19 @@
     } else {
       window.scrollTo(0,0);
     }
+    if(typeof updateScrollState === 'function') updateScrollState();
   }
   window.addEventListener('hashchange', router);
   window.addEventListener('DOMContentLoaded', router);
+
+  // Logo besteht aus zwei Teilen ("aDevantgarde" + Tagline darunter). Beim Laden ist das
+  // komplette Logo sichtbar; sobald man zu scrollen beginnt, blendet nur der untere
+  // Tagline-Teil aus, der Schriftzug bleibt im (sticky) Header stehen.
+  function updateScrollState(){
+    document.body.classList.toggle('scrolled', window.scrollY > 10);
+  }
+  window.addEventListener('scroll', updateScrollState, { passive: true });
+  window.addEventListener('DOMContentLoaded', updateScrollState);
 
   // Year switcher — synced globally with whichever page/edition is actually loaded
   const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
