@@ -52,7 +52,7 @@ header .header-bottom-row{ display:flex; align-items:center; justify-content:spa
 .header-nav a.current{ opacity:1; border-bottom:2px solid #14121A; }
 
 .page-tagline{ background:transparent; }
-.page-tagline .tagline-wrap{ max-width:1100px; margin:0 auto; padding:16px 28px 20px; }
+.page-tagline .tagline-wrap{ max-width:1100px; margin:0 auto; padding:16px 28px 20px 40px; }
 .page-tagline .tagline-line{
   font-family:'Inter',Arial,sans-serif; font-weight:700; font-size:13px; line-height:1.35;
   color:#14121A;
