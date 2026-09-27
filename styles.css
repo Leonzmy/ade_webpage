@@ -16,7 +16,7 @@ header{
   font-family:'Inter',Arial,sans-serif;
 }
 header .wrap{
-  width:100%; margin:0; padding:24px 40px;
+  width:100%; margin:0; padding:24px 24px;
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
 .logo-link{ display:block; flex-shrink:0; transition:opacity .15s ease; }
@@ -80,8 +80,14 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 #page-ueber-uns header a, #page-records header a, #page-festival header a,
 #page-archiv-2025 header a, #page-archiv-2023 header a{ color:#F3EFE8; }
 
+/* Gleiches Problem bei der Breite: "#page-ueber-uns .wrap" (ID-Spezifität) trifft auch das
+   .wrap im Header und zwingt es zurück auf die 1040px-Inhaltsspalte. Header soll aber
+   unabhängig von der Spaltenbreite ganz an den Rand gehen. */
+#page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:24px 24px; }
+
 @media (max-width:640px){
   header .wrap{ flex-direction:column; padding:16px 20px; gap:10px; }
+  #page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:16px 20px; }
   header .site-logo{ height:34px; }
   header .header-bottom-row{ width:100%; justify-content:center; gap:16px; flex-wrap:wrap; }
   .header-nav{ font-size:13px; gap:14px; }
