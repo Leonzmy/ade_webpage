@@ -436,10 +436,18 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 #page-ueber-uns .funder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:20px; }
 #page-ueber-uns .funder-box{ border:1px solid var(--line2); border-radius:8px; min-height:80px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--gray); font-size:12px; line-height:1.35; background:var(--card); }
 
-#page-ueber-uns .contact-grid{ display:grid; grid-template-columns:1fr 1fr; gap:40px; }
-#page-ueber-uns .contact-block h3{ font-size:15px; margin-bottom:10px; }
-#page-ueber-uns .contact-block p, #page-ueber-uns .contact-block a{ font-size:15px; color:var(--gray); display:block; margin-bottom:4px; }
-#page-ueber-uns .contact-block a:hover{ color:var(--ink2); }
+#page-ueber-uns .contact-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-bottom:28px; }
+#page-ueber-uns .contact-card h3{ font-size:16px; margin-bottom:6px; }
+#page-ueber-uns .contact-card p{ font-size:13.5px; color:var(--gray); margin:0 0 10px; line-height:1.5; }
+#page-ueber-uns .contact-email{ font-size:14.5px; font-weight:600; color:var(--accent); }
+#page-ueber-uns .contact-email:hover{ text-decoration:underline; }
+#page-ueber-uns .contact-note{ font-size:13.5px; color:var(--gray); line-height:1.5; max-width:520px; margin:0 0 18px; }
+#page-ueber-uns .social-icon-link{ display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--ink2); margin-bottom:32px; }
+#page-ueber-uns .social-icon-link:hover{ color:var(--accent); }
+#page-ueber-uns .vereinsdaten{ font-size:13px; color:var(--gray); margin:0 0 10px; }
+#page-ueber-uns .legal-row{ display:flex; gap:20px; flex-wrap:wrap; font-size:13px; }
+#page-ueber-uns .legal-row a{ color:var(--gray); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
+#page-ueber-uns .legal-row a:hover{ color:var(--ink2); text-decoration-color:var(--ink2); }
 #page-ueber-uns .map-placeholder{ border:1px solid var(--line2); border-radius:8px; height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
 
 /* Presse (shared look, used on both) */
@@ -503,7 +511,7 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 #page-records .stream-links a:hover{ border-color:var(--ink2); }
 
 @media (max-width:640px){
-  #page-ueber-uns .contact-grid{ grid-template-columns:1fr; }
+  #page-ueber-uns .contact-cards{ grid-template-columns:1fr; }
   #page-records .release{ grid-template-columns:1fr; }
   #page-records .cover{ max-width:220px; }
 }
