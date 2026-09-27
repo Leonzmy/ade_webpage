@@ -12,11 +12,11 @@ a{ text-decoration:none; }
    ========================================================= */
 header{
   position:sticky; top:0; z-index:100;
-  background:#FFFFFF; border-bottom:1px solid #E3E0D8;
+  background:#F6F5F1; border-bottom:1px solid #E3E0D8;
   font-family:'Inter',Arial,sans-serif;
 }
 header .wrap{
-  width:100%; max-width:1100px; margin:0 auto; padding:22px 28px;
+  width:100%; margin:0; padding:30px 40px;
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
 .logo-link{ display:block; flex-shrink:0; transition:opacity .15s ease; }
@@ -33,10 +33,11 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 .year-block{ display:flex; align-items:center; gap:10px; position:relative; }
 .year-toggle{ display:flex; align-items:baseline; gap:4px; }
 .year-big{
-  text-decoration:none; color:#14121A; font-family:'Space Grotesk',sans-serif;
-  font-weight:600; font-size:15px; line-height:1;
+  text-decoration:none; color:#14121A; font-family:'Inter',Arial,sans-serif;
+  font-weight:600; font-size:14px; line-height:1; border-bottom:1.5px solid transparent; padding-bottom:2px;
 }
-.year-arrow-btn{ all:unset; display:inline-flex; align-items:center; font-size:13px; font-weight:700; color:#14121A; cursor:pointer; margin-left:1px; transition:transform .15s ease, opacity .15s ease; }
+.year-big:hover{ border-bottom:1.5px solid #14121A; }
+.year-arrow-btn{ all:unset; display:inline-flex; align-items:center; font-size:12px; font-weight:700; color:#14121A; cursor:pointer; margin-left:1px; transition:transform .15s ease, opacity .15s ease; }
 .year-arrow-btn:hover{ opacity:0.6; }
 .year-block:has(.year-dropdown.open) .year-arrow-btn{ transform:rotate(180deg); }
 .year-dropdown{
@@ -60,7 +61,7 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 .header-nav a:hover{ border-bottom:1.5px solid #14121A; }
 .header-nav a.current{ opacity:1; border-bottom:1.5px solid #14121A; }
 .nav-item{ position:relative; }
-.nav-item-toggle{ display:flex; align-items:center; gap:2px; }
+.nav-item-toggle{ display:flex; align-items:baseline; gap:4px; }
 .nav-arrow-btn{
   all:unset; display:inline-flex; align-items:center; font-size:12px; font-weight:700;
   color:#14121A; cursor:pointer; transition:transform .15s ease, opacity .15s ease;
