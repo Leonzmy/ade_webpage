@@ -73,6 +73,13 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 }
 .nav-dropdown a:hover{ background:rgba(255,255,255,0.06); }
 
+/* Einzelne Seiten setzen "a{ color:inherit }" mit ID-Spezifität (z.B. #page-ueber-uns a),
+   das sonst die helle Header-Schrift wieder auf die geerbte (schwarze) Farbe zurückwirft,
+   weil der Header ja innerhalb des jeweiligen Seiten-Divs liegt. Deshalb hier gezielt mit
+   mindestens gleich hoher Spezifität (Seiten-ID + header + a) zurücksetzen. */
+#page-ueber-uns header a, #page-records header a, #page-festival header a,
+#page-archiv-2025 header a, #page-archiv-2023 header a{ color:#F3EFE8; }
+
 @media (max-width:640px){
   header .wrap{ flex-direction:column; padding:16px 20px; gap:10px; }
   header .site-logo{ height:34px; }
