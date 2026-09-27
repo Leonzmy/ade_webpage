@@ -1007,7 +1007,7 @@
           ${e.foto ? `<div class="offseason-photo"><img src="${driveImageUrl(e.foto)}" alt="${e.titel}" loading="lazy"></div>` : ''}
           <div class="offseason-content">
             ${e.eigen ? `<span class="offseason-own-tag">aDevantgarde</span>` : ''}
-            <div class="offseason-date mono">
+            <div class="offseason-date">
               <span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
             </div>
             <h3>${e.titel}</h3>
