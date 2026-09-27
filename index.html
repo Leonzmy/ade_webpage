@@ -18,6 +18,7 @@
           <div class="wrap">
         <div class="logo-block">
           <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde"></a>
+          <span class="tagline-divider"></span>
           <div class="tagline">
             <div class="tagline-line">Music Festival</div>
             <div class="tagline-line">Made by Composers</div>
@@ -26,7 +27,7 @@
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
-              <a href="#festival" class="year-big">2027</a>
+              <a href="#festival" class="year-big">Festival 2027</a>
               <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
             </div>
             <div class="year-dropdown">
@@ -166,6 +167,7 @@
           <div class="wrap">
         <div class="logo-block">
           <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde"></a>
+          <span class="tagline-divider"></span>
           <div class="tagline">
             <div class="tagline-line">Music Festival</div>
             <div class="tagline-line">Made by Composers</div>
@@ -174,7 +176,7 @@
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
-              <a href="#festival" class="year-big">2027</a>
+              <a href="#festival" class="year-big">Festival 2027</a>
               <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
             </div>
             <div class="year-dropdown">
@@ -369,6 +371,7 @@
           <div class="wrap">
         <div class="logo-block">
           <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde"></a>
+          <span class="tagline-divider"></span>
           <div class="tagline">
             <div class="tagline-line">Music Festival</div>
             <div class="tagline-line">Made by Composers</div>
@@ -377,7 +380,7 @@
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
-              <a href="#festival" class="year-big">2027</a>
+              <a href="#festival" class="year-big">Festival 2027</a>
               <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
             </div>
             <div class="year-dropdown">
@@ -530,6 +533,7 @@
           <div class="wrap">
         <div class="logo-block">
           <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde"></a>
+          <span class="tagline-divider"></span>
           <div class="tagline">
             <div class="tagline-line">Music Festival</div>
             <div class="tagline-line">Made by Composers</div>
@@ -538,7 +542,7 @@
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2025">
             <div class="year-toggle">
-              <a href="#archiv-2025" class="year-big">2025</a>
+              <a href="#archiv-2025" class="year-big">Festival 2025</a>
               <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
             </div>
             <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
@@ -685,6 +689,7 @@
           <div class="wrap">
         <div class="logo-block">
           <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.jpg" alt="aDevantgarde"></a>
+          <span class="tagline-divider"></span>
           <div class="tagline">
             <div class="tagline-line">Music Festival</div>
             <div class="tagline-line">Made by Composers</div>
@@ -693,7 +698,7 @@
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2023">
             <div class="year-toggle">
-              <a href="#archiv-2023" class="year-big">2023</a>
+              <a href="#archiv-2023" class="year-big">Festival 2023</a>
               <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
             </div>
             <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
@@ -747,19 +752,9 @@
     } else {
       window.scrollTo(0,0);
     }
-    if(typeof updateScrollState === 'function') updateScrollState();
   }
   window.addEventListener('hashchange', router);
   window.addEventListener('DOMContentLoaded', router);
-
-  // Logo besteht aus zwei Teilen ("aDevantgarde" + Tagline darunter). Beim Laden ist das
-  // komplette Logo sichtbar; sobald man zu scrollen beginnt, blendet nur der untere
-  // Tagline-Teil aus, der Schriftzug bleibt im (sticky) Header stehen.
-  function updateScrollState(){
-    document.body.classList.toggle('scrolled', window.scrollY > 10);
-  }
-  window.addEventListener('scroll', updateScrollState, { passive: true });
-  window.addEventListener('DOMContentLoaded', updateScrollState);
 
   // Year switcher — synced globally with whichever page/edition is actually loaded
   const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
@@ -775,7 +770,7 @@
     const track = yearBlock.querySelector('.year-track');
     const dropdownList = yearBlock.querySelector('.year-dropdown-list');
     if(!bigEl || !dropdownList) return;
-    bigEl.textContent = currentFestivalYear;
+    bigEl.textContent = 'Festival ' + currentFestivalYear;
     bigEl.setAttribute('href', hrefForYear(currentFestivalYear));
     const rest = ALL_FESTIVAL_YEARS.filter(y => y !== currentFestivalYear);
     const linksHtml = rest.map(y =>
