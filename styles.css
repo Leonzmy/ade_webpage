@@ -192,13 +192,13 @@ html.festival-active, html.festival-active body{ overflow:hidden; overscroll-beh
 #page-festival .fest-stamp{
   position:absolute; left:0; top:0; z-index:2; max-width:none;
   transform:rotate(var(--rot,0deg)) scale(var(--zoom,1));
-  mix-blend-mode:multiply; pointer-events:none; user-select:none; will-change:transform, opacity;
+  pointer-events:none; user-select:none; will-change:transform, opacity;
 }
 
 /* Text: liegt zunächst hinter dem Stempel (unsichtbar/unscharf) und kommt beim Scrollen nach vorn */
 #page-festival .fest-copy{
   position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
-  padding:32px 28px; opacity:.5; filter:blur(14px); transform:scale(.94); pointer-events:none;
+  padding:32px 28px; opacity:.85; filter:blur(6px); transform:scale(.94); pointer-events:none;
   will-change:opacity, filter, transform;
 }
 #page-festival .fest-copy-inner{ width:100%; max-width:660px; }
