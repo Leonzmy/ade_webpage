@@ -466,19 +466,21 @@
       </div>
   </header>
 
-  <section class="fest-wrap">
+  <section class="fest-stage" id="festStage" aria-label="19. aDevantgarde-Festival – URGENT">
     <h1 class="sr-only">19. aDevantgarde-Festival – URGENT</h1>
-    <div class="fest-stage">
-      <div class="fest-text fest-text--top">
-        <p>Das 19. aDevantgarde-Festival findet unter dem Motto „<strong>URGENT</strong>“ vom 22.06. bis 03.07. in München statt.</p>
-      </div>
-      <div class="fest-text fest-text--bottom">
+    <div class="fest-copy" id="festCopy">
+      <div class="fest-copy-inner">
+        <p class="fest-lead">Das 19. aDevantgarde-Festival findet unter dem Motto „<strong>URGENT</strong>“ vom 22.06. bis 03.07. in München statt.</p>
         <p>Wir bringen regionale und internationale Akteure der freien Szene auf die Bühne und präsentieren unterschiedliche Formate – von klassischen Konzerten bis zu einem Escape Room.</p>
         <p>Das genaue Programm wird im Februar 2027 veröffentlicht.</p>
         <p>Bleibt auf dem Laufenden auf <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.</p>
       </div>
-      <img class="fest-stamp" src="urgent-stamp.png" alt="URGENT – Stempel">
     </div>
+    <img class="fest-stamp" id="festStamp" src="urgent-stamp.png" alt="URGENT – Stempel" width="1131" height="1521">
+    <button type="button" class="fest-hint" id="festHint" aria-label="Weiterlesen">
+      <span>scrollen</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
   </section>
 </div>
 
@@ -729,6 +731,8 @@
     document.querySelectorAll('.nav-dropdown.open, .year-dropdown.open').forEach(d => d.classList.remove('open'));
     const page = currentPageFromHash();
     pageIds.forEach(p => document.getElementById('page-' + p).classList.toggle('active', p === page));
+    document.documentElement.classList.toggle('festival-active', page === 'festival');
+    if(page === 'festival' && window.festivalEnter) window.festivalEnter();
     if(typeof PAGE_TO_YEAR !== 'undefined' && PAGE_TO_YEAR[page] !== undefined){
       currentFestivalYear = PAGE_TO_YEAR[page];
     }
@@ -1141,6 +1145,89 @@
   }
 </script>
 
+<script>
+  // Festival-Platzhalter: Seite scrollt nicht, Scroll-Eingaben (Rad, Touch, Tasten) steuern nur den Übergang
+  // Stempel (vorne, füllt alles) -> Text (kommt nach vorne, Stempel tritt zurück)
+  (function(){
+    const stage = document.getElementById('festStage');
+    if(!stage) return;
+    const stamp = document.getElementById('festStamp');
+    const copy = document.getElementById('festCopy');
+    const hint = document.getElementById('festHint');
+    const IMG_W = 1131, IMG_H = 1521, BLEED = 1.06;
+    let target = 0, current = 0, raf = null;
+    const page = document.getElementById('page-festival');
+    const active = () => page.classList.contains('active');
+    const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
+    const smooth = (a,b,x) => { const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
+
+    function layout(){
+      const vw = stage.clientWidth, vh = stage.clientHeight;
+      if(!vw || !vh) return;
+      const s0 = Math.max(vw/IMG_W, vh/IMG_H);       // aufrecht
+      const s90 = Math.max(vw/IMG_H, vh/IMG_W);      // um 90° gedreht (Querformat)
+      const rot = s90 < s0 ? 90 : 0;
+      const s = Math.min(s0, s90) * BLEED;
+      stamp.style.width = (IMG_W*s) + 'px';
+      stamp.style.height = (IMG_H*s) + 'px';
+      stamp.style.setProperty('--rot', rot + 'deg');
+    }
+    function apply(p){
+      const stampO = 1 - 0.9*smooth(0, 0.85, p);
+      const copyO = smooth(0.12, 0.75, p);
+      stamp.style.setProperty('--zoom', (1 + 0.14*p).toFixed(4));
+      stamp.style.opacity = stampO.toFixed(3);
+      copy.style.opacity = copyO.toFixed(3);
+      copy.style.filter = 'blur(' + ((1-copyO)*8).toFixed(1) + 'px)';
+      copy.style.transform = 'scale(' + (0.94 + 0.06*copyO).toFixed(4) + ')';
+      copy.style.zIndex = p > 0.5 ? 3 : 1;
+      copy.style.pointerEvents = p > 0.85 ? 'auto' : 'none';
+      hint.style.opacity = (1 - smooth(0, 0.12, p)).toFixed(3);
+      hint.style.pointerEvents = p > 0.12 ? 'none' : 'auto';
+    }
+    function tick(){
+      current += (target - current) * 0.14;
+      if(Math.abs(target - current) < 0.002) current = target;
+      apply(current);
+      raf = current !== target ? requestAnimationFrame(tick) : null;
+    }
+    function setTarget(v){
+      target = clamp(v, 0, 1);
+      if(!raf) raf = requestAnimationFrame(tick);
+    }
+    window.festivalEnter = function(){
+      target = current = 0;
+      apply(0);
+      requestAnimationFrame(layout);
+    };
+    window.addEventListener('resize', layout);
+    const inMenu = (el) => !!(el && el.closest && el.closest('.year-dropdown, .nav-dropdown'));
+    window.addEventListener('wheel', (e) => {
+      if(!active() || inMenu(e.target)) return;
+      e.preventDefault();
+      const dy = e.deltaMode === 1 ? e.deltaY*16 : e.deltaY;
+      setTarget(target + dy/700);
+    }, { passive:false });
+    let lastY = null;
+    window.addEventListener('touchstart', (e) => { lastY = (active() && !inMenu(e.target)) ? e.touches[0].clientY : null; }, { passive:true });
+    window.addEventListener('touchmove', (e) => {
+      if(!active() || lastY === null) return;
+      e.preventDefault();
+      const y = e.touches[0].clientY;
+      setTarget(target + (lastY - y)/320);
+      lastY = y;
+    }, { passive:false });
+    window.addEventListener('touchend', () => { lastY = null; });
+    window.addEventListener('keydown', (e) => {
+      if(!active()) return;
+      if(['ArrowDown','PageDown',' ','End'].includes(e.key)){ e.preventDefault(); setTarget(e.key === 'ArrowDown' ? target + 0.25 : 1); }
+      if(['ArrowUp','PageUp','Home'].includes(e.key)){ e.preventDefault(); setTarget(e.key === 'ArrowUp' ? target - 0.25 : 0); }
+    });
+    hint.addEventListener('click', () => setTarget(1));
+    apply(0);
+    if(active()) layout();
+  })();
+</script>
 <script>
   // Programmheft-Flipbook (Archiv 2023) — eigenständig, ohne externe Bibliothek
   const HEFT_PAGE_COUNT = 52;
