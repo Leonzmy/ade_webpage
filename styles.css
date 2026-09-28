@@ -198,7 +198,7 @@ html.festival-active, html.festival-active body{ overflow:hidden; overscroll-beh
 /* Text: liegt zunächst hinter dem Stempel (unsichtbar/unscharf) und kommt beim Scrollen nach vorn */
 #page-festival .fest-copy{
   position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
-  padding:32px 28px; opacity:0; filter:blur(8px); transform:scale(.94); pointer-events:none;
+  padding:32px 28px; opacity:.5; filter:blur(14px); transform:scale(.94); pointer-events:none;
   will-change:opacity, filter, transform;
 }
 #page-festival .fest-copy-inner{ width:100%; max-width:660px; }
@@ -209,15 +209,14 @@ html.festival-active, html.festival-active body{ overflow:hidden; overscroll-beh
 #page-festival .fest-copy a{ color:var(--ink); font-weight:700; text-decoration:underline; text-decoration-color:var(--red); text-decoration-thickness:2px; text-underline-offset:4px; }
 #page-festival .fest-copy a:hover{ color:var(--red); }
 
-/* Scroll-Hinweis */
+/* Scroll-Hinweis: nur ein sich bewegender Pfeil */
 #page-festival .fest-hint{
-  position:absolute; left:50%; bottom:22px; transform:translateX(-50%); z-index:4;
-  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border:none; cursor:pointer;
-  background:var(--cream); color:var(--ink); border-radius:999px; box-shadow:0 4px 18px rgba(0,0,0,.18);
-  font-family:'Archivo',sans-serif; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
-  animation:festBob 1.8s ease-in-out infinite;
+  position:absolute; left:50%; bottom:14px; z-index:4; transform:translateX(-50%);
+  display:inline-flex; align-items:center; justify-content:center; padding:10px; border:none; background:none; cursor:pointer;
+  color:var(--ink); filter:drop-shadow(0 0 5px var(--cream)) drop-shadow(0 0 2px var(--cream));
+  animation:festBob 1.6s ease-in-out infinite;
 }
-@keyframes festBob{ 0%,100%{ transform:translate(-50%,0); } 50%{ transform:translate(-50%,5px); } }
+@keyframes festBob{ 0%,100%{ transform:translate(-50%,0); } 50%{ transform:translate(-50%,9px); } }
 @media (prefers-reduced-motion: reduce){ #page-festival .fest-hint{ animation:none; } }
 
 /* =========================================================
