@@ -177,10 +177,10 @@ html.festival-active, html.festival-active body{ overflow:hidden; overscroll-beh
 #page-festival .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 #page-festival .fest-stage{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; touch-action:none; }
 
-/* Stempel: wird per JS auf die Seitengröße skaliert und bei Querformat um 90° gedreht */
+/* Stempel: wird per JS so gedreht und skaliert, dass sein Rechteck die ganze Seite ausfüllt */
 #page-festival .fest-stamp{
-  position:absolute; left:50%; top:50%; z-index:2; max-width:none;
-  transform:translate(-50%,-50%) rotate(var(--rot,0deg)) scale(var(--zoom,1));
+  position:absolute; left:0; top:0; z-index:2; max-width:none;
+  transform:rotate(var(--rot,0deg)) scale(var(--zoom,1));
   mix-blend-mode:multiply; pointer-events:none; user-select:none; will-change:transform, opacity;
 }
 
