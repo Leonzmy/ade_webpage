@@ -1178,7 +1178,12 @@
     function layout(){
       const vw = stage.clientWidth, vh = stage.clientHeight;
       if(!vw || !vh) return;
-      const phi = phiFor(vw/vh);
+      let phi = phiFor(vw/vh);          // Winkel, bei dem das Rechteck genau zur Seite passt
+      let signed = phi;                  // positiv = fällt nach rechts ab (Querformat)
+      if(vw < vh){                       // Hochformat (mobil): von links unten nach rechts oben, flacher
+        phi = Math.max(35, phi - 14);    // weniger steil -> Stempel ragt links/rechts über den Rand
+        signed = -phi;
+      }
       const r = phi*Math.PI/180;
       const bw = L*Math.cos(r) + S*Math.sin(r), bh = L*Math.sin(r) + S*Math.cos(r);
       const k = Math.max(vw/bw, vh/bh) * BLEED;
@@ -1187,7 +1192,7 @@
       stamp.style.left = (vw/2 - CX*k) + 'px';
       stamp.style.top = (vh/2 - CY*k) + 'px';
       stamp.style.transformOrigin = (CX*k) + 'px ' + (CY*k) + 'px';
-      stamp.style.setProperty('--rot', (phi - THETA0) + 'deg');
+      stamp.style.setProperty('--rot', (signed - THETA0) + 'deg');
     }
     function apply(p){
       const stampO = 1 - 0.9*smooth(0, 0.85, p);
