@@ -485,8 +485,7 @@
     </div>
     <img class="fest-stamp" id="festStamp" src="urgent-stamp.png" alt="URGENT – Stempel" width="1600" height="1210">
     <button type="button" class="fest-hint" id="festHint" aria-label="Weiterlesen" data-i18n-aria="aria.hint">
-      <span data-i18n="fest.scroll">scrollen</span>
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8l7 7 7-7"/></svg>
     </button>
   </section>
 </div>
@@ -957,7 +956,6 @@
     'fest.p1':'We bring regional and international players of the independent scene to the stage and present a variety of formats – from classical concerts to an escape room.',
     'fest.p2':'The detailed programme will be published in February 2027.',
     'fest.p3':'Stay up to date on <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.',
-    'fest.scroll':'scroll',
     'arch.2025':'Archive — 18th aDevantgarde Festival 2025',
     'arch.2023':'Archive — 17th aDevantgarde Festival 2023 · BIEDER_MEIER_X',
     'flip.title':'Programme booklet <span>BIEDER_MEIER_X</span>',
@@ -1531,12 +1529,13 @@
     }
     function apply(p){
       const stampO = 1 - 0.9*smooth(0, 0.85, p);
-      const copyO = smooth(0.12, 0.75, p);
+      const reveal = smooth(0.1, 0.8, p);       // 0 = stark verschwommen im Hintergrund, 1 = scharf im Vordergrund
+      const copyO = 0.5 + 0.5*reveal;
       stamp.style.setProperty('--zoom', (1 + 0.14*p).toFixed(4));
       stamp.style.opacity = stampO.toFixed(3);
       copy.style.opacity = copyO.toFixed(3);
-      copy.style.filter = 'blur(' + ((1-copyO)*8).toFixed(1) + 'px)';
-      copy.style.transform = 'scale(' + (0.94 + 0.06*copyO).toFixed(4) + ')';
+      copy.style.filter = 'blur(' + ((1-reveal)*14).toFixed(1) + 'px)';
+      copy.style.transform = 'scale(' + (0.94 + 0.06*reveal).toFixed(4) + ')';
       copy.style.zIndex = p > 0.5 ? 3 : 1;
       copy.style.pointerEvents = p > 0.85 ? 'auto' : 'none';
       hint.style.opacity = (1 - smooth(0, 0.12, p)).toFixed(3);
