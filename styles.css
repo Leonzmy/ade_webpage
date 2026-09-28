@@ -162,31 +162,52 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 
 
 /* =========================================================
-   PAGE: FESTIVAL 2027 — Platzhalter: großer Stempel "URGENT" mit Text dahinter
+   PAGE: FESTIVAL 2027 — Platzhalter: Stempel "URGENT" füllt die ganze Seite (nicht scrollbar),
+   der Text liegt dahinter und kommt per Scrollen nach vorn.
    (Stil wechselt pro Festivalausgabe, bewusst frei vom Vereinsdesign)
    ========================================================= */
+html.festival-active, html.festival-active body{ overflow:hidden; overscroll-behavior:none; }
 #page-festival{
   --ink:#17130F; --cream:#F7F1E3; --red:#FE0606;
   background:var(--cream); color:var(--ink);
   font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased;
 }
+#page-festival.active{ display:flex; flex-direction:column; height:100vh; height:100dvh; overflow:hidden; }
+#page-festival header{ flex:0 0 auto; }
 #page-festival .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
-#page-festival .fest-wrap{ container-type:inline-size; width:100%; overflow:hidden; }
-#page-festival .fest-stage{ position:relative; padding-bottom:6cqw; }
-@container (max-width: 700px){ #page-festival .fest-stage{ padding-bottom:42cqw; } }
-/* Stempel liegt über dem Text; multiply lässt den Text darunter dunkel durchscheinen */
+#page-festival .fest-stage{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; touch-action:none; }
+
+/* Stempel: wird per JS auf die Seitengröße skaliert und bei Querformat um 90° gedreht */
 #page-festival .fest-stamp{
-  display:block; width:100%; height:auto; position:relative; z-index:2;
-  mix-blend-mode:multiply; pointer-events:none; user-select:none;
+  position:absolute; left:50%; top:50%; z-index:2; max-width:none;
+  transform:translate(-50%,-50%) rotate(var(--rot,0deg)) scale(var(--zoom,1));
+  mix-blend-mode:multiply; pointer-events:none; user-select:none; will-change:transform, opacity;
 }
-#page-festival .fest-text{ position:absolute; z-index:1; }
-#page-festival .fest-text p{ margin:0 0 0.9em; }
-#page-festival .fest-text p:last-child{ margin-bottom:0; }
-#page-festival .fest-text--top{ top:4cqw; left:3cqw; width:52cqw; max-width:640px; font-size:14px; font-size:clamp(14px, 2.6cqw, 30px); line-height:1.3; font-weight:600; }
-#page-festival .fest-text--bottom{ bottom:3cqw; right:3cqw; width:50cqw; max-width:560px; font-size:12px; font-size:clamp(12px, 1.9cqw, 21px); line-height:1.45; font-weight:500; }
-#page-festival .fest-text strong{ color:var(--red); font-weight:800; }
-#page-festival .fest-text a{ color:var(--ink); font-weight:700; text-decoration:underline; text-decoration-color:var(--red); text-decoration-thickness:2px; text-underline-offset:3px; }
-#page-festival .fest-text a:hover{ color:var(--red); }
+
+/* Text: liegt zunächst hinter dem Stempel (unsichtbar/unscharf) und kommt beim Scrollen nach vorn */
+#page-festival .fest-copy{
+  position:absolute; inset:0; z-index:1; display:flex; align-items:center; justify-content:center;
+  padding:32px 28px; opacity:0; filter:blur(8px); transform:scale(.94); pointer-events:none;
+  will-change:opacity, filter, transform;
+}
+#page-festival .fest-copy-inner{ width:100%; max-width:660px; }
+#page-festival .fest-copy p{ margin:0 0 1.1em; font-size:clamp(16px, 2.1vw, 21px); line-height:1.5; font-weight:500; }
+#page-festival .fest-copy p:last-child{ margin-bottom:0; }
+#page-festival .fest-copy .fest-lead{ font-size:clamp(22px, 3.6vw, 38px); line-height:1.2; font-weight:700; margin-bottom:0.9em; }
+#page-festival .fest-copy strong{ color:var(--red); font-weight:800; }
+#page-festival .fest-copy a{ color:var(--ink); font-weight:700; text-decoration:underline; text-decoration-color:var(--red); text-decoration-thickness:2px; text-underline-offset:4px; }
+#page-festival .fest-copy a:hover{ color:var(--red); }
+
+/* Scroll-Hinweis */
+#page-festival .fest-hint{
+  position:absolute; left:50%; bottom:22px; transform:translateX(-50%); z-index:4;
+  display:inline-flex; align-items:center; gap:8px; padding:9px 16px; border:none; cursor:pointer;
+  background:var(--cream); color:var(--ink); border-radius:999px; box-shadow:0 4px 18px rgba(0,0,0,.18);
+  font-family:'Archivo',sans-serif; font-size:13px; font-weight:700; letter-spacing:.04em; text-transform:uppercase;
+  animation:festBob 1.8s ease-in-out infinite;
+}
+@keyframes festBob{ 0%,100%{ transform:translate(-50%,0); } 50%{ transform:translate(-50%,5px); } }
+@media (prefers-reduced-motion: reduce){ #page-festival .fest-hint{ animation:none; } }
 
 /* =========================================================
    SHARED MINIMAL STYLE (Über uns / records)
