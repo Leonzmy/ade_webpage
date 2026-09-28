@@ -857,6 +857,23 @@
   window.addEventListener('hashchange', router);
   window.addEventListener('DOMContentLoaded', router);
 
+  // Großes Logo auf "Über uns": bleibt unter dem Header stehen und blendet beim Scrollen aus
+  function updateHeaderHeight(){
+    const hd = document.querySelector('.page.active header') || document.querySelector('header');
+    if(hd) document.documentElement.style.setProperty('--header-h', hd.offsetHeight + 'px');
+  }
+  function updateLogoFade(){
+    const img = document.querySelector('.logo-hero img');
+    if(!img) return;
+    const o = Math.max(0, 1 - window.scrollY / 240);
+    img.style.opacity = o;
+  }
+  window.addEventListener('scroll', updateLogoFade, { passive: true });
+  window.addEventListener('resize', updateHeaderHeight);
+  window.addEventListener('hashchange', () => { updateHeaderHeight(); updateLogoFade(); });
+  window.addEventListener('DOMContentLoaded', () => { updateHeaderHeight(); updateLogoFade(); });
+  window.addEventListener('load', updateHeaderHeight);
+
   // Year switcher — synced globally with whichever page/edition is actually loaded
   const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
   const YEAR_TO_PAGE = {2027:'festival', 2025:'archiv-2025', 2023:'archiv-2023'};
