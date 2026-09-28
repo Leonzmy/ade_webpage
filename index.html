@@ -7,6 +7,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Archivo:wght@400;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#211E1C">
 </head>
 <body>
 
@@ -1530,11 +1534,11 @@
     function apply(p){
       const stampO = 1 - 0.9*smooth(0, 0.85, p);
       const reveal = smooth(0.1, 0.8, p);       // 0 = stark verschwommen im Hintergrund, 1 = scharf im Vordergrund
-      const copyO = 0.5 + 0.5*reveal;
+      const copyO = 0.85 + 0.15*reveal;
       stamp.style.setProperty('--zoom', (1 + 0.14*p).toFixed(4));
       stamp.style.opacity = stampO.toFixed(3);
       copy.style.opacity = copyO.toFixed(3);
-      copy.style.filter = 'blur(' + ((1-reveal)*14).toFixed(1) + 'px)';
+      copy.style.filter = 'blur(' + ((1-reveal)*6).toFixed(1) + 'px)';
       copy.style.transform = 'scale(' + (0.94 + 0.06*reveal).toFixed(4) + ')';
       copy.style.zIndex = p > 0.5 ? 3 : 1;
       copy.style.pointerEvents = p > 0.85 ? 'auto' : 'none';
