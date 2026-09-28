@@ -1042,7 +1042,7 @@
               <span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
             </div>
             <h3>${e.titel}</h3>
-            ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
+            ${e.beschreibung ? `<button type="button" class="offseason-toggle" onclick="toggleOffseasonItem(this)">Beschreibung <span class="arrow">▾</span></button><p>${e.beschreibung}</p>` : ''}
             ${e.link ? `<a class="offseason-link" href="${e.link}" target="_blank" rel="noopener">mehr Infos ↗</a>` : ''}
           </div>
         </div>
@@ -1056,6 +1056,10 @@
   // Bildhöhe soll sich nach der Höhe der Textspalte rechts richten (nicht umgekehrt) —
   // dafür Flexbox-"stretch" vermeiden (das würde zirkulär auch von der Bildbreite abhängen)
   // und die Höhe nach dem Rendern direkt vom Text übernehmen.
+  function toggleOffseasonItem(btn){
+    btn.closest('.offseason-item').classList.toggle('open');
+  }
+
   function syncOffSeasonPhotoHeights(){
     document.querySelectorAll('#offseasonList .offseason-item').forEach(item => {
       const photo = item.querySelector('.offseason-photo');
@@ -1212,6 +1216,18 @@
     btn.classList.toggle('open', willOpen);
   }
 
+
+  // Team (mobil/Touch): 1. Tipp auf das Foto blendet "Website ansehen" ein, 2. Tipp öffnet die Website
+  document.addEventListener('click', (ev) => {
+    const link = ev.target.closest('.team-card a.photo');
+    document.querySelectorAll('.team-card .photo.reveal').forEach(p => { if(p !== link) p.classList.remove('reveal'); });
+    if(!link || !window.matchMedia('(max-width:640px), (hover:none)').matches) return;
+    if(!link.classList.contains('reveal')){
+      ev.preventDefault();
+      link.classList.add('reveal');
+    }
+  });
+
   function switchTab(releaseId, tab, btn){
     ['info','tracks','trailer'].forEach(t => {
       const panel = document.getElementById(releaseId + '-' + t);
@@ -1219,6 +1235,16 @@
     });
     btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
+    // mobil: Klick auf einen Tab klappt die Details automatisch auf
+    if(window.matchMedia('(max-width:640px)').matches){
+      const tabs = btn.closest('.release-tabs');
+      const details = tabs && tabs.nextElementSibling;
+      if(details){
+        details.classList.add('open');
+        const tg = tabs.querySelector('.details-toggle');
+        if(tg) tg.classList.add('open');
+      }
+    }
   }
 </script>
 
