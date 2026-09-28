@@ -476,7 +476,7 @@
         <p>Bleibt auf dem Laufenden auf <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.</p>
       </div>
     </div>
-    <img class="fest-stamp" id="festStamp" src="urgent-stamp.png" alt="URGENT – Stempel" width="1131" height="1521">
+    <img class="fest-stamp" id="festStamp" src="urgent-stamp.png" alt="URGENT – Stempel" width="1600" height="1210">
     <button type="button" class="fest-hint" id="festHint" aria-label="Weiterlesen">
       <span>scrollen</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
@@ -1154,23 +1154,40 @@
     const stamp = document.getElementById('festStamp');
     const copy = document.getElementById('festCopy');
     const hint = document.getElementById('festHint');
-    const IMG_W = 1131, IMG_H = 1521, BLEED = 1.06;
+    // Geometrie des Stempel-Rechtecks im PNG (Mittelpunkt, Winkel der Längsachse, Länge, Breite)
+    const IMG_W = 1600, IMG_H = 1210, CX = 809.3, CY = 638.4, THETA0 = 37.0, L = 1617.5, S = 546.8, BLEED = 1.04;
     let target = 0, current = 0, raf = null;
     const page = document.getElementById('page-festival');
     const active = () => page.classList.contains('active');
     const clamp = (v,a,b) => Math.min(b, Math.max(a, v));
     const smooth = (a,b,x) => { const t = clamp((x-a)/(b-a),0,1); return t*t*(3-2*t); };
 
+    // Seitenverhältnis des Stempel-Rechtecks in Abhängigkeit vom Drehwinkel (0° = Längsachse waagrecht)
+    function aspectAt(phi){
+      const r = phi*Math.PI/180, c = Math.cos(r), s = Math.sin(r);
+      return (L*c + S*s) / (L*s + S*c);
+    }
+    // Drehwinkel finden, bei dem das Stempel-Rechteck genau das Seitenverhältnis der Seite hat
+    function phiFor(a){
+      if(a >= aspectAt(0)) return 0;
+      if(a <= aspectAt(90)) return 90;
+      let lo = 0, hi = 90;
+      for(let i = 0; i < 40; i++){ const mid = (lo+hi)/2; if(aspectAt(mid) > a) lo = mid; else hi = mid; }
+      return (lo+hi)/2;
+    }
     function layout(){
       const vw = stage.clientWidth, vh = stage.clientHeight;
       if(!vw || !vh) return;
-      const s0 = Math.max(vw/IMG_W, vh/IMG_H);       // aufrecht
-      const s90 = Math.max(vw/IMG_H, vh/IMG_W);      // um 90° gedreht (Querformat)
-      const rot = s90 < s0 ? 90 : 0;
-      const s = Math.min(s0, s90) * BLEED;
-      stamp.style.width = (IMG_W*s) + 'px';
-      stamp.style.height = (IMG_H*s) + 'px';
-      stamp.style.setProperty('--rot', rot + 'deg');
+      const phi = phiFor(vw/vh);
+      const r = phi*Math.PI/180;
+      const bw = L*Math.cos(r) + S*Math.sin(r), bh = L*Math.sin(r) + S*Math.cos(r);
+      const k = Math.max(vw/bw, vh/bh) * BLEED;
+      stamp.style.width = (IMG_W*k) + 'px';
+      stamp.style.height = (IMG_H*k) + 'px';
+      stamp.style.left = (vw/2 - CX*k) + 'px';
+      stamp.style.top = (vh/2 - CY*k) + 'px';
+      stamp.style.transformOrigin = (CX*k) + 'px ' + (CY*k) + 'px';
+      stamp.style.setProperty('--rot', (phi - THETA0) + 'deg');
     }
     function apply(p){
       const stampO = 1 - 0.9*smooth(0, 0.85, p);
