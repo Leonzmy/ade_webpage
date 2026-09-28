@@ -319,7 +319,13 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
   margin-bottom:36px; max-width:720px;
 }
 /* Großes Logo mit Tagline oberhalb von "Kommende Veranstaltungen" */
-#page-ueber-uns section.logo-hero{ padding:64px 0 8px; border-bottom:none; }
+/* Logo bleibt unter dem Header stehen (sticky), der restliche Inhalt schiebt sich wie ein Vorhang darüber,
+   zusätzlich blendet es per JS beim Scrollen aus. */
+#page-ueber-uns section.logo-hero{
+  position:sticky; top:var(--header-h, 58px); z-index:0;
+  padding:64px 0 8px; border-bottom:none;
+}
+#page-ueber-uns section:not(.logo-hero){ position:relative; z-index:1; background:var(--bg); }
 #page-ueber-uns .logo-hero img{ display:block; width:clamp(260px, 46vw, 540px); height:auto; }
 @media (max-width:640px){ #page-ueber-uns section.logo-hero{ padding:36px 0 0; } }
 
