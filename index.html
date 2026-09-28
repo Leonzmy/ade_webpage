@@ -1042,7 +1042,7 @@
             <div class="offseason-date">
               <span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
             </div>
-            ${(e.beschreibung || e.link) ? `<div class="offseason-title-row" role="button" tabindex="0" aria-expanded="false" onclick="toggleOffseasonItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleOffseasonItem(this)}"><h3>${e.titel}</h3><svg class="offseason-chevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></div>` : `<div class="offseason-title-row"><h3>${e.titel}</h3></div>`}
+            ${(e.beschreibung || e.link) ? `<div class="offseason-title-row" role="button" tabindex="0" aria-expanded="false" onclick="toggleOffseasonItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleOffseasonItem(this)}"><h3>${e.titel}</h3><span class="offseason-chevron-wrap" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>` : `<div class="offseason-title-row"><h3>${e.titel}</h3></div>`}
             ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
             ${e.link ? `<a class="offseason-link" href="${e.link}" target="_blank" rel="noopener">mehr Infos ↗</a>` : ''}
           </div>
