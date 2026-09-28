@@ -16,12 +16,12 @@ header{
   font-family:'Inter',Arial,sans-serif;
 }
 header .wrap{
-  width:100%; margin:0; padding:18px 24px;
+  width:100%; margin:0; padding:14px 24px;
   display:flex; align-items:center; justify-content:space-between; gap:24px;
 }
 .logo-link{ display:block; flex-shrink:0; transition:opacity .15s ease; }
 .logo-link:hover{ opacity:0.8; }
-header .site-logo{ height:36px; width:auto; display:block; }
+header .site-logo{ height:30px; width:auto; display:block; }
 header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 .year-block{ display:flex; align-items:center; gap:10px; position:relative; }
 .year-toggle{ display:flex; align-items:baseline; gap:4px; }
@@ -83,12 +83,12 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 /* Gleiches Problem bei der Breite: "#page-ueber-uns .wrap" (ID-Spezifität) trifft auch das
    .wrap im Header und zwingt es zurück auf die 1040px-Inhaltsspalte. Header soll aber
    unabhängig von der Spaltenbreite ganz an den Rand gehen. */
-#page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:18px 24px; }
+#page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:14px 24px; }
 
 @media (max-width:640px){
-  header .wrap{ flex-direction:column; padding:16px 20px; gap:10px; }
-  #page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:16px 20px; }
-  header .site-logo{ height:28px; }
+  header .wrap{ flex-direction:column; padding:12px 20px; gap:8px; }
+  #page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:12px 20px; }
+  header .site-logo{ height:26px; }
   header .header-bottom-row{ width:100%; justify-content:center; gap:16px; flex-wrap:wrap; }
   .header-nav{ font-size:13px; gap:14px; }
   .year-dropdown{ left:50%; transform:translateX(-50%); margin-top:8px; }
@@ -314,7 +314,23 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 #page-ueber-uns section, #page-records section{ padding:72px 0; border-bottom:1px solid var(--line2); }
 #page-ueber-uns section:last-of-type, #page-records section:last-of-type{ border-bottom:none; }
 #page-ueber-uns .section-label, #page-records .section-label{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:14px; display:block; }
-#page-ueber-uns section h2, #page-records section h2{ font-size:30px; margin-bottom:36px; max-width:600px; }
+#page-ueber-uns section h2, #page-records section h2{
+  font-size:clamp(32px, 4.4vw, 46px); line-height:1.08; letter-spacing:-0.01em;
+  margin-bottom:36px; max-width:720px;
+}
+/* Kleiner roter Akzentstrich über jeder Abschnittsüberschrift */
+#page-ueber-uns section h2::before, #page-records section h2::before{
+  content:''; display:block; width:40px; height:3px; background:var(--accent); margin-bottom:18px;
+}
+
+/* Dunkle Abschnitte: Variablen umdrehen, damit alle bestehenden Komponenten automatisch passen */
+#page-ueber-uns section.section-dark{
+  --ink2:#F3EFE8; --gray:#B8B3AA; --line2:rgba(255,255,255,0.16); --card:#2B2825;
+  background:#211E1C; color:var(--ink2); border-bottom:none;
+}
+/* Team-Namen reagieren dezent mit dem Logo-Rot */
+#page-ueber-uns .team-card h3{ transition:color .15s ease; }
+#page-ueber-uns .team-card:hover h3{ color:var(--accent); }
 #page-ueber-uns .intro-text{ max-width:680px; font-size:16px; color:var(--gray); line-height:1.6; margin:0 0 18px; }
 #page-ueber-uns .intro-text:last-child{ margin-bottom:0; }
 
