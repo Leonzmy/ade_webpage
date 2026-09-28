@@ -73,6 +73,15 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 }
 .nav-dropdown a:hover{ background:rgba(255,255,255,0.06); }
 
+/* Sprachumschalter DE / EN */
+.lang-switch{ display:flex; align-items:center; gap:2px; font-size:13px; font-weight:600; color:rgba(243,239,232,0.4); margin-left:-10px; }
+.lang-switch button{
+  background:none; border:none; margin:0; padding:2px 4px; cursor:pointer; font:inherit; letter-spacing:0.04em;
+  color:rgba(243,239,232,0.55); border-bottom:1.5px solid transparent; transition:color .15s ease;
+}
+.lang-switch button:hover{ color:#F3EFE8; }
+.lang-switch button.active{ color:#F3EFE8; border-bottom-color:#F3EFE8; }
+
 /* Einzelne Seiten setzen "a{ color:inherit }" mit ID-Spezifität (z.B. #page-ueber-uns a),
    das sonst die helle Header-Schrift wieder auf die geerbte (schwarze) Farbe zurückwirft,
    weil der Header ja innerhalb des jeweiligen Seiten-Divs liegt. Deshalb hier gezielt mit
@@ -87,6 +96,8 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
 
 @media (max-width:640px){
   header .wrap{ flex-direction:column; padding:12px 20px; gap:8px; }
+  header .wrap{ position:relative; }
+  .lang-switch{ position:absolute; top:12px; right:16px; margin:0; }
   #page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:12px 20px; }
   header .site-logo{ height:26px; }
   header .header-bottom-row{ width:100%; justify-content:center; gap:16px; flex-wrap:wrap; }
