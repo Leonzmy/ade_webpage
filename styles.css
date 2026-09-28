@@ -323,10 +323,16 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
   content:''; display:block; width:40px; height:3px; background:var(--accent); margin-bottom:18px;
 }
 
-/* Dunkle Abschnitte: Variablen umdrehen, damit alle bestehenden Komponenten automatisch passen */
-#page-ueber-uns section.section-dark{
+/* Dunkle Kacheln: Variablen umdrehen, damit alle enthaltenen Komponenten automatisch passen */
+#page-ueber-uns .dark-tile{
   --ink2:#F3EFE8; --gray:#B8B3AA; --line2:rgba(255,255,255,0.16); --card:#2B2825;
-  background:#211E1C; color:var(--ink2); border-bottom:none;
+  background:#211E1C; color:var(--ink2); border-radius:20px; padding:48px 44px;
+}
+#page-ueber-uns .dark-tile > :last-child{ margin-bottom:0; }
+#page-ueber-uns .contact-cards.dark-tile{ padding:32px 36px; }
+@media (max-width:640px){
+  #page-ueber-uns .dark-tile{ padding:30px 22px; border-radius:16px; }
+  #page-ueber-uns .contact-cards.dark-tile{ padding:26px 22px; }
 }
 /* Team-Namen reagieren dezent mit dem Logo-Rot */
 #page-ueber-uns .team-card h3{ transition:color .15s ease; }
