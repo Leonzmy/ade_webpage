@@ -318,6 +318,11 @@ header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
   font-size:clamp(32px, 4.4vw, 46px); line-height:1.08; letter-spacing:-0.01em;
   margin-bottom:36px; max-width:720px;
 }
+/* Großes Logo mit Tagline oberhalb von "Kommende Veranstaltungen" */
+#page-ueber-uns section.logo-hero{ padding:64px 0 8px; border-bottom:none; }
+#page-ueber-uns .logo-hero img{ display:block; width:clamp(260px, 46vw, 540px); height:auto; }
+@media (max-width:640px){ #page-ueber-uns section.logo-hero{ padding:36px 0 0; } }
+
 /* Kleiner roter Akzentstrich über jeder Abschnittsüberschrift */
 #page-ueber-uns section h2::before, #page-records section h2::before{
   content:''; display:block; width:40px; height:3px; background:var(--accent); margin-bottom:18px;
