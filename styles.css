@@ -1,588 +1,1195 @@
-/* =========================================================
-   GLOBAL RESET
-   ========================================================= */
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-a{ text-decoration:none; }
-.page{ display:none; }
-.page.active{ display:block; }
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>aDevantgarde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Archivo:wght@400;600&family=Newsreader:ital,wght@0,400;0,500;1,400&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-/* =========================================================
-   UNIFIED SITE HEADER (identical across all pages)
-   ========================================================= */
-header{
-  position:sticky; top:0; z-index:100;
-  background:#211E1C; box-shadow:0 2px 10px rgba(0,0,0,0.15);
-  font-family:'Inter',Arial,sans-serif;
-}
-header .wrap{
-  width:100%; margin:0; padding:14px 24px;
-  display:flex; align-items:center; justify-content:space-between; gap:24px;
-}
-.logo-link{ display:block; flex-shrink:0; transition:opacity .15s ease; }
-.logo-link:hover{ opacity:0.8; }
-header .site-logo{ height:30px; width:auto; display:block; }
-header .header-bottom-row{ display:flex; align-items:center; gap:36px; }
-.year-block{ display:flex; align-items:center; gap:10px; position:relative; }
-.year-toggle{ display:flex; align-items:baseline; gap:4px; }
-.year-big{
-  text-decoration:none; color:#F3EFE8; font-family:'Inter',Arial,sans-serif;
-  font-weight:600; font-size:14px; line-height:1; border-bottom:1.5px solid transparent; padding-bottom:2px;
-}
-.year-big:hover{ border-bottom:1.5px solid #F3EFE8; }
-.year-arrow-btn{ all:unset; display:inline-flex; align-items:center; font-size:12px; font-weight:700; color:#F3EFE8; cursor:pointer; margin-left:1px; transition:transform .15s ease, opacity .15s ease; }
-.year-arrow-btn:hover{ opacity:0.6; }
-.year-block:has(.year-dropdown.open) .year-arrow-btn{ transform:rotate(180deg); }
-.year-dropdown{
-  display:none; position:absolute; top:100%; left:0; margin-top:10px;
-  background:#2B2825; border:1px solid rgba(255,255,255,0.12); border-radius:10px;
-  box-shadow:0 12px 28px rgba(0,0,0,0.35); z-index:150; min-width:130px;
-}
-.year-dropdown.open{ display:block; }
-.year-dropdown-list{ display:flex; flex-direction:column; max-height:50vh; overflow-y:auto; padding:6px 0; }
-.year-dropdown-list a{
-  padding:8px 18px; font-family:'IBM Plex Mono',monospace; font-size:14px;
-  color:#F3EFE8; text-decoration:none; white-space:nowrap;
-}
-.year-dropdown-list a:hover{ background:rgba(255,255,255,0.06); }
-.year-dropdown-list .year-disabled{
-  display:block; padding:8px 18px; font-family:'IBM Plex Mono',monospace; font-size:14px;
-  color:rgba(255,255,255,0.32); white-space:nowrap; cursor:default; user-select:none;
-}
-.header-nav{ display:flex; gap:22px; align-items:center; font-size:14px; font-weight:600; white-space:nowrap; }
-.header-nav a{ text-decoration:none; color:#F3EFE8; border-bottom:1.5px solid transparent; padding-bottom:2px; }
-.header-nav a:hover{ border-bottom:1.5px solid #F3EFE8; }
-.header-nav a.current{ opacity:1; border-bottom:1.5px solid #F3EFE8; }
-.nav-item{ position:relative; }
-.nav-item-toggle{ display:flex; align-items:baseline; gap:4px; }
-.nav-arrow-btn{
-  all:unset; display:inline-flex; align-items:center; font-size:12px; font-weight:700;
-  color:#F3EFE8; cursor:pointer; transition:transform .15s ease, opacity .15s ease;
-}
-.nav-arrow-btn:hover{ opacity:0.6; }
-.nav-item:has(.nav-dropdown.open) .nav-arrow-btn{ transform:rotate(180deg); }
-.nav-dropdown{
-  display:none; position:absolute; top:100%; right:0; margin-top:10px;
-  background:#2B2825; border:1px solid rgba(255,255,255,0.12); border-radius:10px;
-  box-shadow:0 12px 28px rgba(0,0,0,0.35); z-index:150; min-width:210px; overflow:hidden;
-}
-.nav-dropdown.open{ display:block; }
-.nav-dropdown a{
-  display:block; padding:9px 16px; font-family:'Inter',Arial,sans-serif; font-size:13.5px;
-  font-weight:600; color:#F3EFE8; border-bottom:none !important;
-}
-.nav-dropdown a:hover{ background:rgba(255,255,255,0.06); }
-
-/* Einzelne Seiten setzen "a{ color:inherit }" mit ID-Spezifität (z.B. #page-ueber-uns a),
-   das sonst die helle Header-Schrift wieder auf die geerbte (schwarze) Farbe zurückwirft,
-   weil der Header ja innerhalb des jeweiligen Seiten-Divs liegt. Deshalb hier gezielt mit
-   mindestens gleich hoher Spezifität (Seiten-ID + header + a) zurücksetzen. */
-#page-ueber-uns header a, #page-records header a, #page-festival header a,
-#page-archiv-2025 header a, #page-archiv-2023 header a{ color:#F3EFE8; }
-
-/* Gleiches Problem bei der Breite: "#page-ueber-uns .wrap" (ID-Spezifität) trifft auch das
-   .wrap im Header und zwingt es zurück auf die 1040px-Inhaltsspalte. Header soll aber
-   unabhängig von der Spaltenbreite ganz an den Rand gehen. */
-#page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:14px 24px; }
-
-@media (max-width:640px){
-  header .wrap{ flex-direction:column; padding:12px 20px; gap:8px; }
-  #page-ueber-uns header .wrap, #page-records header .wrap{ max-width:none; margin:0; padding:12px 20px; }
-  header .site-logo{ height:26px; }
-  header .header-bottom-row{ width:100%; justify-content:center; gap:16px; flex-wrap:wrap; }
-  .header-nav{ font-size:13px; gap:14px; }
-  .year-dropdown{ left:50%; transform:translateX(-50%); margin-top:8px; }
-  .nav-dropdown{ left:50%; right:auto; transform:translateX(-50%); }
-}
-
-/* =========================================================
-   PAGE: ARCHIV 2025 — plain 1:1 rebuild of the real WordPress site
-   (deliberately NOT in the comic style; plain/default look)
-   ========================================================= */
-#page-archiv-2025{
-  background:#FFFFFF; color:#1a1a1a; font-family:Arial, Helvetica, sans-serif; font-size:16px; line-height:1.7;
-}
-#page-archiv-2025 a{ color:#1a1a1a; }
-#page-archiv-2025 .archiv-banner{
-  background:#f2f2f2; border-bottom:1px solid #ddd; text-align:center;
-  font-size:13px; padding:8px 12px; color:#555; font-family:Arial, Helvetica, sans-serif;
-}
-#page-archiv-2025 .wp-wrap{ max-width:760px; margin:0 auto; padding:30px 20px 60px; }
-#page-archiv-2025 .wp-hero img{ width:100%; height:auto; display:block; margin-bottom:20px; }
-#page-archiv-2025 h1{ font-size:32px; font-weight:700; margin:0 0 10px; }
-#page-archiv-2025 h2{ font-size:24px; font-weight:700; margin:40px 0 16px; }
-#page-archiv-2025 .wp-dates{ font-size:17px; margin-bottom:16px; }
-#page-archiv-2025 p{ margin:0 0 18px; }
-#page-archiv-2025 .wp-jumplinks{ list-style:none; padding:0; margin:24px 0; display:flex; gap:24px; }
-#page-archiv-2025 .wp-jumplinks a{ text-decoration:underline; font-weight:700; }
-#page-archiv-2025 .wp-concert-list{ display:flex; flex-direction:column; }
-#page-archiv-2025 .wp-concert{ padding:22px 0; border-bottom:1px solid #e2e2e2; }
-#page-archiv-2025 .wp-concert:first-child{ padding-top:0; }
-#page-archiv-2025 .wp-concert img{ width:100%; max-width:400px; height:auto; display:block; margin-bottom:10px; }
-#page-archiv-2025 .wp-concert a{ font-size:18px; text-decoration:underline; }
-#page-archiv-2025 .wp-concert div{ font-size:15px; color:#333; margin-top:2px; }
-#page-archiv-2025 .wp-concert-note{ font-style:italic; color:#666; }
-#page-archiv-2025 .wp-credits{ font-size:14.5px; line-height:1.9; }
-#page-archiv-2025 .wp-social{ display:flex; gap:16px; margin:32px 0 12px; font-size:14px; }
-#page-archiv-2025 .wp-social a{ text-decoration:underline; }
-#page-archiv-2025 .wp-footer-copy{ font-size:13px; color:#777; border-top:1px solid #e2e2e2; padding-top:16px; }
-
-/* =========================================================
-   PAGE: ARCHIV 2023 — PDF Flipbook viewer
-   ========================================================= */
-#page-archiv-2023{ background:#2b2a30; min-height:100vh; }
-#page-archiv-2023 .flipbook-wrap{ max-width:1000px; margin:0 auto; padding:36px 20px 60px; text-align:center; }
-#page-archiv-2023 .flipbook-stage{
-  position:relative; width:380px; height:538px; margin:0 auto;
-  perspective:1800px;
-}
-#page-archiv-2023 .flip-page-under, #page-archiv-2023 .flip-page-active{
-  position:absolute; inset:0; width:100%; height:100%;
-}
-#page-archiv-2023 .flip-page-under{ z-index:1; }
-#page-archiv-2023 .flip-page-active{
-  z-index:2; transform-style:preserve-3d; transform-origin:right center;
-  transition:transform .45s ease; cursor:pointer;
-}
-#page-archiv-2023 .flip-page-under img, #page-archiv-2023 .flip-page-active img{
-  width:100%; height:100%; object-fit:contain; background:#fff;
-  display:block; box-shadow:0 6px 30px rgba(0,0,0,0.5); user-select:none;
-}
-#page-archiv-2023 .flipbook-title{ color:#fff; font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:700; margin:0 0 24px; }
-#page-archiv-2023 .flipbook-title span{ color:#F5A8D0; }
-#page-archiv-2023 .flipbook-controls{ display:flex; align-items:center; justify-content:center; gap:20px; margin-top:22px; }
-#page-archiv-2023 .flipbook-controls button{
-  all:unset; cursor:pointer; color:#fff; font-size:26px; font-weight:700;
-  width:44px; height:44px; display:flex; align-items:center; justify-content:center;
-  border:2px solid #fff; border-radius:50%;
-}
-#page-archiv-2023 .flipbook-controls button:hover{ background:#fff; color:#2b2a30; }
-#page-archiv-2023 .flipbook-page-indicator{ color:#fff; font-family:'IBM Plex Mono',monospace; font-size:14px; min-width:70px; }
-#page-archiv-2023 .flipbook-hint{ color:#aaa; font-size:13px; margin-top:18px; }
+<!-- ============================================================
+     PAGE 1: ÜBER UNS (Startseite)
+     ============================================================ -->
+<div class="page" id="page-ueber-uns">
+  <header>
+          <div class="wrap">
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <div class="header-bottom-row">
+          <div class="year-block">
+            <div class="year-toggle">
+              <a href="#festival" class="year-big">Festival 2027</a>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+            </div>
+            <div class="year-dropdown">
+              <div class="year-dropdown-list"></div>
+            </div>
+          </div>
+          <nav class="header-nav">
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#ueber-uns" class="current">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#off-season">Kommende Veranstaltungen</a>
+              <a href="#intro">Über uns</a>
+              <a href="#team">Team</a>
+              <a href="#presse">Presse</a>
+              <a href="#kontakt">Kontakt</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#records">aDevantgarde records</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#records-release-3">Schoeck vs. Bauer</a>
+              <a href="#records-release-2">An Earth Symphony</a>
+              <a href="#records-release-1">Zentaur – Quartet</a>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </div>
+  </header>
 
 
-/* =========================================================
-   PAGE: FESTIVAL 2027 (stamp / ink-mark aesthetic)
-   ========================================================= */
-#page-festival{
-  --ink:#17130F; --cream:#F7F1E3; --red:#C22A1E; --line:3px;
-  background:
-    repeating-linear-gradient(115deg, rgba(23,19,15,0) 0px, rgba(23,19,15,0) 38px, rgba(23,19,15,0.035) 38px, rgba(23,19,15,0.035) 39px),
-    var(--cream);
-  color:var(--ink);
-  font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased;
-}
-#page-festival h1, #page-festival h2, #page-festival h3, #page-festival .display{
-  font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em; margin:0;
-}
-#page-festival .mono{ font-family:'IBM Plex Mono',monospace; }
-#page-festival a{ color:inherit; }
-#page-festival .festival-subnav{
-  background:var(--cream); border-bottom:var(--line) solid var(--ink);
-  display:flex; gap:24px; padding:10px 28px; font-size:14px; font-weight:600;
-  align-items:center; flex-wrap:wrap;
-}
-#page-festival .festival-subnav a{ text-decoration:none; border-bottom:2px solid transparent; padding-bottom:2px; }
-#page-festival .festival-subnav a:hover{ border-bottom:2px solid var(--ink); }
-#page-festival .subnav-disabled{
-  display:inline-flex; align-items:center; gap:6px; color:var(--ink); opacity:0.4; cursor:default; user-select:none;
-}
-#page-festival .soon-tag{
-  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:10.5px;
-  border:1.5px solid var(--red); color:var(--red); border-radius:3px 6px 3px 6px;
-  padding:1px 8px; text-transform:uppercase; letter-spacing:0.04em;
-  display:inline-block; transform:rotate(-3deg);
-}
+  <section class="logo-hero" aria-label="aDevantgarde – Music Festival – Made by Composers">
+    <div class="wrap">
+      <img src="aDevantgarde-logo-tagline.png" alt="aDevantgarde – Music Festival – Made by Composers">
+    </div>
+  </section>
 
-#page-festival .hero{ position:relative; background:var(--cream); border-bottom:var(--line) solid var(--ink); overflow:hidden; padding:70px 28px 90px; }
-#page-festival .tiled-bg{ position:absolute; inset:0; display:flex; flex-direction:column; justify-content:space-between; opacity:0.05; pointer-events:none; user-select:none; transform:rotate(-6deg) scale(1.2); }
-#page-festival .tiled-bg .row{ white-space:nowrap; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:64px; color:var(--ink); letter-spacing:0.02em; }
-#page-festival .hero-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; display:flex; align-items:center; gap:48px; flex-wrap:wrap; }
-#page-festival .hero-text{ flex:1 1 380px; }
-#page-festival .eyebrow{
-  font-family:'IBM Plex Mono',monospace; font-size:13px; font-weight:600; background:none;
-  color:var(--ink); display:inline-block; padding:3px 10px; border:2px solid var(--ink);
-  border-radius:3px 8px 3px 8px; margin-bottom:20px; text-transform:uppercase; letter-spacing:0.06em;
-  transform:rotate(-2deg);
-}
-#page-festival .hero-text h1{
-  display:inline-block; font-size:clamp(38px,6.4vw,72px); line-height:0.95; margin-bottom:24px;
-  border:var(--line) solid var(--ink); border-radius:10px 4px 14px 3px; padding:6px 22px 10px;
-  transform:rotate(-1.5deg); background:var(--cream);
-}
-#page-festival .hero-text p{ font-size:18px; line-height:1.5; max-width:440px; margin-bottom:26px; }
-#page-festival .hero-dates{ font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:15px; margin-bottom:26px; }
-#page-festival .cta{
-  display:inline-block; background:none; color:var(--ink); border:var(--line) solid var(--ink);
-  padding:11px 24px; border-radius:4px; font-weight:700; text-decoration:none;
-  text-transform:uppercase; letter-spacing:0.04em; font-size:14px;
-  transition:transform .12s ease, background .12s ease, color .12s ease;
-}
-#page-festival .cta:hover{ transform:translate(-2px,-2px); box-shadow:4px 4px 0 var(--ink); background:var(--ink); color:var(--cream); }
-#page-festival .hero-illustration{ flex:1 1 320px; display:flex; justify-content:center; }
-#page-festival .hero-illustration svg{ width:100%; max-width:380px; height:auto; }
+  <section id="off-season">
+    <div class="wrap">
+      <h2>Kommende Veranstaltungen</h2>
+      <p class="offseason-legend" id="offseasonLegend" hidden>Konzerte von <span class="offseason-own-tag">aDevantgarde</span> und von unseren Mitgliedern</p>
+      <div class="offseason-list" id="offseasonList">
+        <p class="offseason-empty">Aktuell keine bestätigten Termine — schau bald wieder vorbei.</p>
+      </div>
+    </div>
+  </section>
 
-#page-festival section.block{ padding:64px 28px; max-width:1100px; margin:0 auto; }
-#page-festival .section-head{ display:flex; align-items:baseline; gap:16px; margin-bottom:32px; flex-wrap:wrap; }
-#page-festival .section-head h2{ font-size:34px; }
-#page-festival .section-head .tag{
-  font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:13px; border:2px solid var(--ink);
-  border-radius:4px 9px 4px 9px; padding:3px 10px; display:inline-block; transform:rotate(-2deg);
-}
+  <section id="intro">
+    <div class="wrap">
+      <div class="dark-tile">
+      <h2>Über uns</h2>
+      <p class="intro-text">Wir sind ein Verein Münchner Komponistinnen und Komponisten mit einer gemeinsamen Leidenschaft für Neue Musik. Uns treibt an, die Szene vor Ort zu stärken und international zu vernetzen.</p>
+      <p class="intro-text">Gegründet wurde aDevantgarde 1991 auf Initiative Wilhelm Killmayers von dessen Studierenden – als A/DEvantgarde – Projekte Neuer Musik e.V. Ursprünglich verstanden wir uns als Gegenbewegung zum klassischen Neue-Musik-Festival. Dieses Format gibt es in der Form heute kaum noch – wir sind trotzdem geblieben und machen weiterhin, was uns begeistert: frische Ideen auf hohem künstlerischen Niveau, etabliert und experimentell.</p>
+      <p class="intro-text">Alle zwei Jahre zeigen wir das auf unserem aDevantgarde-Festival. Dazwischen mit Konzertprojekten im Off-Season-Programm – etwa der Konzertreihe „Neuer Hoargartn".</p>
+      </div>
+    </div>
+  </section>
 
-#page-festival .festival-intro-text{ font-size:16px; line-height:1.6; max-width:720px; margin:0 0 28px; }
+  <section id="team">
+    <div class="wrap">
+      <h2>Team</h2>
 
-#page-festival .coming-soon-note{
-  display:inline-block; border:2px solid var(--red); color:var(--red);
-  border-radius:11px 4px 13px 3px; background:none;
-  padding:13px 20px; font-size:14.5px; line-height:1.5; max-width:720px; margin:0 0 8px;
-  transform:rotate(-1deg);
-}
-#page-festival .coming-soon-note strong{ color:var(--red); }
+      <div class="team-grid" id="teamGrid">
+        <p class="offseason-empty">Team wird geladen …</p>
+      </div>
+    </div>
+  </section>
 
-/* Program Release highlight */
-#page-festival .release-highlight{
-  display:flex; align-items:center; gap:28px; flex-wrap:wrap;
-  border:var(--line) solid var(--red); border-radius:14px 5px 16px 4px;
-  padding:26px 30px; max-width:780px; background:none;
-}
-#page-festival .release-highlight-date{
-  font-size:26px; font-weight:700; color:var(--red); white-space:nowrap;
-  border:2px solid var(--red); border-radius:8px 3px 10px 3px; padding:8px 18px;
-  transform:rotate(-2deg); flex-shrink:0;
-}
-#page-festival .release-highlight p{ font-size:15.5px; line-height:1.6; margin:0; max-width:440px; }
+  <section id="ehrenmitglieder">
+    <div class="wrap">
+      <h2>Ehrenmitglieder</h2>
+      <p style="font-size:16px; color:var(--gray); line-height:1.8; max-width:680px;">
+        <a href="https://de.schott-music.com/shop/autoren/wilhelm-killmayer" target="_blank" rel="noopener">Wilhelm Killmayer †</a>,
+        <a href="http://www.moritzeggert.de/" target="_blank" rel="noopener">Moritz Eggert</a> (Ehrenvorsitzender),
+        <a href="https://de.wikipedia.org/wiki/Sandeep_Bhagwati" target="_blank" rel="noopener">Sandeep Bhagwati</a>,
+        <a href="http://musikverlag-nickel.eu/Schmitt/" target="_blank" rel="noopener">Markus Schmitt</a> und
+        <a href="http://www.bernhardweidner.de/" target="_blank" rel="noopener">Bernhard Weidner</a>
+      </p>
+    </div>
+  </section>
 
-/* Static two-month calendar */
-#page-festival .mini-cal-grid{ display:flex; gap:40px; flex-wrap:wrap; }
-#page-festival .mini-cal{ flex:1 1 260px; max-width:320px; }
-#page-festival .mini-cal-title{ font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:17px; margin-bottom:12px; }
-#page-festival .mini-cal-dow{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:6px; }
-#page-festival .mini-cal-dow span{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-align:center; opacity:0.55; }
-#page-festival .mini-cal-days{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
-#page-festival .mini-cal-days span{
-  font-family:'IBM Plex Mono',monospace; font-size:12.5px; text-align:center;
-  padding:6px 0; border-radius:3px; opacity:0.65;
-}
-#page-festival .mini-cal-days span.empty{ visibility:hidden; }
-#page-festival .mini-cal-days span.festival-day{
-  opacity:1; font-weight:700; color:var(--red); background:rgba(194,42,30,0.12);
-  border:1.5px solid var(--red); border-radius:3px 7px 3px 7px;
-}
-#page-festival .mini-cal-legend{ display:flex; align-items:center; gap:8px; margin-top:18px; font-size:13px; opacity:0.75; }
-#page-festival .mini-cal-legend .swatch{
-  display:inline-block; width:16px; height:16px; background:rgba(194,42,30,0.12);
-  border:1.5px solid var(--red); border-radius:2px 5px 2px 5px;
-}
-@media (max-width:640px){
-  #page-festival section.block{ padding:40px 12px; }
-}
+  <section id="medien">
+    <div class="wrap">
+      <div class="dark-tile">
+      <h2>Medien</h2>
 
-#page-festival footer{ border-top:var(--line) solid var(--ink); background:var(--ink); color:var(--cream); padding:48px 28px 28px; position:relative; overflow:hidden; }
-#page-festival footer .tiled-bg .row{ color:var(--cream); }
-#page-festival .footer-inner{ position:relative; z-index:2; max-width:1100px; margin:0 auto; display:flex; justify-content:space-between; flex-wrap:wrap; gap:24px; }
-#page-festival .footer-col h4{ font-family:'IBM Plex Mono',monospace; font-size:13px; opacity:0.6; margin-bottom:10px; text-transform:uppercase; letter-spacing:0.05em; }
-#page-festival .footer-col a{ display:block; text-decoration:none; font-size:14px; margin-bottom:6px; }
-#page-festival .footer-col a:hover{ text-decoration:underline; }
-#page-festival .footer-disabled{ display:block; font-size:14px; margin-bottom:6px; opacity:0.45; cursor:default; }
-#page-festival .footer-bottom{ margin-top:36px; font-family:'IBM Plex Mono',monospace; font-size:12px; opacity:0.55; position:relative; z-index:2; }
-@media (max-width:640px){
-  #page-festival .hero-inner{ flex-direction:column; }
-}
+      <span class="section-label media-label">YouTube</span>
+      <div class="video-carousel-wrap">
+        <div class="video-carousel" id="videoCarousel">
+          <p class="videos-status">Videos werden geladen …</p>
+        </div>
+        <div class="video-carousel-thumbs" id="videoThumbs"></div>
+      </div>
+      <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" class="offseason-link">Zum YouTube-Kanal ↗</a>
 
-/* =========================================================
-   SHARED MINIMAL STYLE (Über uns / records)
-   ========================================================= */
-#page-ueber-uns, #page-records{
-  --bg:#F6F5F1; --ink2:#17171B; --gray:#68666B; --line2:#DDDAD2; --accent:#E83D35; --card:#FFFFFF;
-  background:var(--bg); color:var(--ink2);
-  font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; line-height:1.5;
-}
-#page-ueber-uns h1, #page-ueber-uns h2, #page-ueber-uns h3, #page-ueber-uns .serif,
-#page-records h1, #page-records h2, #page-records h3, #page-records .serif{
-  font-family:'Newsreader',serif; font-weight:500; margin:0;
-}
-#page-ueber-uns .mono, #page-records .mono{ font-family:'IBM Plex Mono',monospace; }
-#page-ueber-uns a, #page-records a{ color:inherit; text-decoration:none; }
-#page-ueber-uns .wrap, #page-records .wrap{ max-width:1040px; margin:0 auto; padding:0 28px; }
+      <span class="section-label media-label media-label-cds">aDevantgarde records</span>
+      <div class="cd-grid">
+        <a href="#records" class="cd-cover"><img src="cover3.jpg" alt="Schoeck vs. Bauer oder What Futures Are You Longing For?"></a>
+        <a href="#records" class="cd-cover"><img src="cover2.jpg" alt="An Earth Symphony"></a>
+        <a href="#records" class="cd-cover"><img src="cover1.jpg" alt="Zentaur – Quartet"></a>
+      </div>
+      </div>
+    </div>
+  </section>
 
-#page-ueber-uns .hero, #page-records .hero{ padding:36px 0 28px; border-bottom:1px solid var(--line2); }
-#page-ueber-uns .hero .eyebrow, #page-records .hero .eyebrow{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:8px; display:block; }
-#page-ueber-uns .hero h1, #page-records .hero h1{ font-size:clamp(28px,4vw,38px); max-width:700px; line-height:1.15; margin-bottom:8px; }
-#page-ueber-uns .hero p, #page-records .hero p{ max-width:560px; color:var(--gray); font-size:15px; }
+  <section id="presse">
+    <div class="wrap">
+      <h2>Presse</h2>
+      <p class="intro-text">Presseinformationen zum kommenden Festival folgen in Kürze. Für Presseanfragen: <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a></p>
 
-#page-ueber-uns section, #page-records section{ padding:72px 0; border-bottom:1px solid var(--line2); }
-#page-ueber-uns section:last-of-type, #page-records section:last-of-type{ border-bottom:none; }
-#page-ueber-uns .section-label, #page-records .section-label{ font-size:13px; letter-spacing:0.08em; text-transform:uppercase; color:var(--gray); margin-bottom:14px; display:block; }
-#page-ueber-uns section h2, #page-records section h2{
-  font-size:clamp(32px, 4.4vw, 46px); line-height:1.08; letter-spacing:-0.01em;
-  margin-bottom:36px; max-width:720px;
-}
-/* Großes Logo mit Tagline oberhalb von "Kommende Veranstaltungen" */
-/* Logo bleibt unter dem Header stehen (sticky), der restliche Inhalt schiebt sich wie ein Vorhang darüber,
-   zusätzlich blendet es per JS beim Scrollen aus. */
-#page-ueber-uns section.logo-hero{
-  position:sticky; top:var(--header-h, 58px); z-index:0;
-  padding:64px 0 8px; border-bottom:none;
-}
-#page-ueber-uns section:not(.logo-hero){ position:relative; z-index:1; background:var(--bg); }
-#page-ueber-uns .logo-hero img{ display:block; width:clamp(260px, 46vw, 540px); height:auto; }
-@media (max-width:640px){ #page-ueber-uns section.logo-hero{ padding:36px 0 0; } }
+      <div class="press-toggle-block">
+        <button type="button" class="press-toggle" onclick="togglePress(this)">
+          Pressemeldungen <span class="arrow">▾</span>
+        </button>
+        <div class="press-toggle-body">
+          <ul class="press-file-list">
+            <li><a href="PM/PM-aDe-Records-CD-Release.pdf" target="_blank" rel="noopener">PM-aDe-Records-CD-Release.pdf</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* Kleiner roter Akzentstrich über jeder Abschnittsüberschrift */
-#page-ueber-uns section h2::before, #page-records section h2::before{
-  content:''; display:block; width:40px; height:3px; background:var(--accent); margin-bottom:18px;
-}
+  <section id="kontakt">
+    <div class="wrap">
+      <h2>Kontakt</h2>
 
-/* Dunkle Kacheln: Variablen umdrehen, damit alle enthaltenen Komponenten automatisch passen */
-#page-ueber-uns .dark-tile{
-  --ink2:#F3EFE8; --gray:#B8B3AA; --line2:rgba(255,255,255,0.16); --card:#2B2825;
-  background:#211E1C; color:var(--ink2); border-radius:20px; padding:48px 44px;
-}
-#page-ueber-uns .dark-tile > :last-child{ margin-bottom:0; }
-#page-ueber-uns .contact-card.dark-tile{ padding:28px 30px; }
-@media (max-width:640px){
-  #page-ueber-uns .dark-tile{ padding:30px 22px; border-radius:16px; }
-  #page-ueber-uns .contact-card.dark-tile{ padding:24px 22px; }
-}
-/* Team-Namen reagieren dezent mit dem Logo-Rot */
-#page-ueber-uns .team-card h3{ transition:color .15s ease; }
-#page-ueber-uns .team-card:hover h3{ color:var(--accent); }
-#page-ueber-uns .intro-text{ max-width:680px; font-size:16px; color:var(--gray); line-height:1.6; margin:0 0 18px; }
-#page-ueber-uns .intro-text:last-child{ margin-bottom:0; }
+      <div class="contact-cards">
+        <div class="contact-card dark-tile">
+          <h3>Allgemein</h3>
+          <p>Fragen rund um Verein und Festival.</p>
+          <a href="mailto:leitung@adevantgarde.de" class="contact-email">leitung@adevantgarde.de</a>
+        </div>
+        <div class="contact-card dark-tile">
+          <h3>Mitglied werden</h3>
+          <p>Formlose Mail mit kurzer Vorstellung.</p>
+          <a href="mailto:kbb@adevantgarde.de" class="contact-email">kbb@adevantgarde.de</a>
+        </div>
+        <div class="contact-card dark-tile">
+          <h3>Presse</h3>
+          <p>Presseanfragen und Medienmaterial.</p>
+          <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a>
+        </div>
+      </div>
 
-#page-ueber-uns .press-toggle-block{ margin-top:22px; }
-#page-ueber-uns .press-toggle{
-  all:unset; display:inline-flex; align-items:center; gap:8px; cursor:pointer;
-  font-family:'Newsreader',serif; font-size:17px; font-weight:500; color:var(--ink2);
-}
-#page-ueber-uns .press-toggle .arrow{ font-family:'Inter',sans-serif; font-size:12px; transition:transform .2s ease; }
-#page-ueber-uns .press-toggle.open .arrow{ transform:rotate(180deg); }
-#page-ueber-uns .press-toggle-body{ display:none; margin-top:14px; }
-#page-ueber-uns .press-toggle-body.open{ display:block; }
-#page-ueber-uns .press-file-list{ list-style:none; margin:0; padding:0; max-width:520px; }
-#page-ueber-uns .press-file-list li{ padding:10px 0; border-bottom:1px solid var(--line2); }
-#page-ueber-uns .press-file-list li:last-child{ border-bottom:none; }
-#page-ueber-uns .press-file-list a{
-  color:var(--accent); font-weight:600; font-size:14.5px; text-decoration:underline;
-  text-decoration-color:var(--line2); text-underline-offset:3px;
-}
-#page-ueber-uns .press-file-list a:hover{ text-decoration-color:var(--accent); }
+      <p class="contact-note">Blindbewerbungen von Interpret:innen, Kunstschaffenden und Agenturen sind leider nicht möglich.</p>
 
-#page-ueber-uns #off-season h2{ margin-bottom:14px; }
-#page-ueber-uns .offseason-legend{ display:flex; align-items:center; flex-wrap:wrap; gap:8px; font-size:14px; color:var(--gray); margin:0 0 32px; }
-#page-ueber-uns .offseason-legend[hidden]{ display:none; }
-#page-ueber-uns .offseason-legend .offseason-own-tag{ margin-bottom:0; }
-#page-ueber-uns .offseason-list{ display:flex; flex-direction:column; }
-#page-ueber-uns .offseason-item{ display:flex; gap:24px; align-items:flex-start; padding:26px 0; border-bottom:1px solid var(--line2); }
-#page-ueber-uns .offseason-item:first-child{ padding-top:0; }
-#page-ueber-uns .offseason-item:last-child{ border-bottom:none; padding-bottom:0; }
-#page-ueber-uns .offseason-photo{ flex-shrink:0; width:220px; overflow:hidden; border-radius:6px; display:flex; align-items:center; justify-content:center; }
-#page-ueber-uns .offseason-photo img{ display:block; height:auto; max-height:100%; width:auto; max-width:220px; object-fit:cover; }
-#page-ueber-uns .offseason-content{ flex:1 1 auto; min-width:0; }
-#page-ueber-uns .offseason-date{
-  display:flex; align-items:baseline; gap:8px; flex-wrap:wrap;
-  font-size:12.5px; font-weight:600; letter-spacing:0.03em; color:var(--accent); margin-bottom:8px;
-}
-#page-ueber-uns .offseason-date-sep{ opacity:0.5; font-weight:400; }
-#page-ueber-uns .offseason-content h3{ font-size:19px; margin:0; }
-#page-ueber-uns .offseason-title-row{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:6px; }
-#page-ueber-uns .offseason-chevron-wrap{ display:none; }
-#page-ueber-uns .offseason-content p{ font-size:14.5px; line-height:1.6; color:var(--gray); margin:0 0 8px; max-width:620px; }
-#page-ueber-uns .offseason-link{ font-size:13.5px; font-weight:600; color:var(--accent); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
-#page-ueber-uns .offseason-link:hover{ text-decoration-color:var(--accent); }
-#page-ueber-uns .offseason-empty{ font-size:14.5px; color:var(--gray); font-style:italic; margin:0; }
-#page-ueber-uns .offseason-item.is-own{
-  background:rgba(43,46,74,0.07); border-radius:12px; padding:24px 22px; border-bottom:none; margin:6px -22px;
-}
-#page-ueber-uns .offseason-item.is-own:first-child{ padding-top:24px; }
-#page-ueber-uns .offseason-item.is-own:last-child{ padding-bottom:24px; }
-#page-ueber-uns .offseason-own-tag{
-  display:inline-block; background:var(--accent); color:#fff; font-size:10.5px; font-weight:600;
-  letter-spacing:0.05em; text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:10px;
-}
-@media (max-width:640px){
-  #page-ueber-uns .offseason-item{ flex-direction:column; gap:14px; }
-  #page-ueber-uns .offseason-title-row[role="button"]{ cursor:pointer; }
-  #page-ueber-uns .offseason-title-row{ flex-direction:column; align-items:flex-start; gap:10px; }
-  #page-ueber-uns .offseason-chevron-wrap{
-    display:inline-flex; align-items:center; justify-content:center; width:34px; height:34px; border-radius:50%;
-    background:rgba(232,61,53,0.12); color:var(--accent); transition:transform .2s ease, background .2s ease;
+      <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener" class="social-icon-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+
+      <p class="vereinsdaten">A/DEvantgarde e.V. – Projekte Neuer Musik München, VR 13428</p>
+      <div class="legal-row">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutzerklärung</a>
+        <a href="satzung.pdf" target="_blank" rel="noopener">Satzung (PDF)</a>
+        <span class="legal-row-sep">·</span>
+        <span class="member-area-label">Mitgliederbereich:</span>
+        <a href="https://www.campai.com/" target="_blank" rel="noopener">Campai</a>
+        <a href="https://leonzmy.github.io/ade_intranet/" target="_blank" rel="noopener">Intranet</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© aDevantgarde e.V.</span>
+      <span>Mockup-Entwurf, Stand Juli 2026</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PAGE 2: ADEVANTGARDE RECORDS
+     ============================================================ -->
+<div class="page" id="page-records">
+  <header>
+          <div class="wrap">
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <div class="header-bottom-row">
+          <div class="year-block">
+            <div class="year-toggle">
+              <a href="#festival" class="year-big">Festival 2027</a>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+            </div>
+            <div class="year-dropdown">
+              <div class="year-dropdown-list"></div>
+            </div>
+          </div>
+          <nav class="header-nav">
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#ueber-uns">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#off-season">Kommende Veranstaltungen</a>
+              <a href="#intro">Über uns</a>
+              <a href="#team">Team</a>
+              <a href="#presse">Presse</a>
+              <a href="#kontakt">Kontakt</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#records" class="current">aDevantgarde records</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#records-release-3">Schoeck vs. Bauer</a>
+              <a href="#records-release-2">An Earth Symphony</a>
+              <a href="#records-release-1">Zentaur – Quartet</a>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </div>
+  </header>
+
+
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Label</span>
+      <h1>aDevantgarde records</h1>
+      <p>Unser Label dokumentiert Produktionen aus dem Festivalumfeld dauerhaft — als physische und digitale Veröffentlichungen, unabhängig vom zweijährigen Festivalrhythmus.</p>
+    </div>
+  </section>
+
+  <section id="veroeffentlichungen">
+    <div class="wrap">
+      <span class="section-label">Veröffentlichungen</span>
+      <h2>Alle Releases</h2>
+      <div class="release-quicknav">
+        <a href="#records-release-1">1</a>
+        <a href="#records-release-2">2</a>
+        <a href="#records-release-3">3</a>
+      </div>
+
+      <div class="release-block" id="records-release-3">
+        <div class="release-num">Release #3</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="cover3.jpg" alt="Cover: Schoeck vs. Bauer"></div>
+          </div>
+          <div class="release-card">
+            <h3>SCHOECK vs. BAUER oder WHAT FUTURES ARE YOU LONGING FOR?</h3>
+            <div class="artist">Komponisten: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Interpreten: Robert Koller (Bariton), Stefan Kägi (Klavier), Gunnar Geisse (Laptop Guitar)</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0003" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
+            </div>
+            <div class="release-details">
+            <div class="tab-panel active" id="r3-info">
+              <p class="desc">Im Sommer 2018 gräbt der Schweizer Pianist Stefan Kägi den Liedzyklus Nachhall, op. 70 für Stimme und Orchester des Schweizer Komponisten Othmar Schoeck (1886-1957) aus. Der wegen seiner technischen und interpretatorischen Herausforderung nur selten gespielte Liedzyklus Nachhall, op. 70 liegt hier als Ersteinspielung für Stimme und Klavier vor. Stefan Kägi und Michael Emanuel Bauer, die beide ein großes Faible für k-punk aka Mark Fisher haben, insbesondere für dessen Buch Ghosts of my Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014), finden, dass es doch gar keine schlechte Idee wäre, Schoecks Liedzyklus daher aus dem Geist der Derrida'schen Hauntology neu zu betrachten. Die hier vorliegende Ersteinspielung stellt die beiden Zyklen gegenüber. Unmittelbar nach dem jeweiligen Lied von Othmar Schoeck folgt die entsprechende Fortschreibung von Michael Emanuel Bauer. Bauers Fortschreibung macht auch nicht Halt vor den Texten von Matthias Claudius und Nikolaus Lenau. In der Tradition von Raymond Queneau und der Gruppe Oulipo werden die Texte formal-lettristisch dekonstruiert und neu zusammengesetzt.</p>
+            </div>
+            <div class="tab-panel" id="r3-tracks">
+              <ul class="tracklist">
+                <li><div class="track-info"><span class="track-title">1. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 1, Nachhall</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">3:51</span></li>
+                <li><div class="track-info"><span class="track-title">2. Afterimages: No. 1, Nachhall</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:44</span></li>
+                <li><div class="track-info"><span class="track-title">3. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 2, Einsamkeit</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">4:56</span></li>
+                <li><div class="track-info"><span class="track-title">4. Afterimages: No. 2, Einsamkeit</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">3:28</span></li>
+                <li><div class="track-info"><span class="track-title">5. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 3, Mein Herz</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:34</span></li>
+                <li><div class="track-info"><span class="track-title">6. Afterimages: No. 3, Mein Herz</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:59</span></li>
+                <li><div class="track-info"><span class="track-title">7. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 4, Veränderte Welt</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:20</span></li>
+                <li><div class="track-info"><span class="track-title">8. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 5, Abendheimkehr</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:18</span></li>
+                <li><div class="track-info"><span class="track-title">9. Afterimages: No. 5, Abendheimkehr</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:27</span></li>
+                <li><div class="track-info"><span class="track-title">10. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 6, Auf eine holländische Landschaft</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:05</span></li>
+                <li><div class="track-info"><span class="track-title">11. Afterimages: No. 6, Auf eine holländische Landschaft</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:40</span></li>
+                <li><div class="track-info"><span class="track-title">12. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 7, Stimme des Windes</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:38</span></li>
+                <li><div class="track-info"><span class="track-title">13. Afterimages: No. 7, Stimme des Windes</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:31</span></li>
+                <li><div class="track-info"><span class="track-title">14. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 8, Der falsche Freund</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">1:15</span></li>
+                <li><div class="track-info"><span class="track-title">15. Afterimages: No. 8, Der falsche Freund</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:24</span></li>
+                <li><div class="track-info"><span class="track-title">16. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 9, Niagara</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">3:27</span></li>
+                <li><div class="track-info"><span class="track-title">17. Afterimages: No. 9, Niagara</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">3:08</span></li>
+                <li><div class="track-info"><span class="track-title">18. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 10, Heimatklang</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:57</span></li>
+                <li><div class="track-info"><span class="track-title">19. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 11, Der Kranich</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:23</span></li>
+                <li><div class="track-info"><span class="track-title">20. Afterimages: No. 12, Der Kranich</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">1:22</span></li>
+                <li><div class="track-info"><span class="track-title">21. Nachhall, Op. 70 (Version for Voice &amp; Piano): No. 12, O du Land</span><span class="track-composer">Othmar Schoeck</span></div><span class="track-duration">2:13</span></li>
+                <li><div class="track-info"><span class="track-title">22. Afterimages: No. 13, O du Land</span><span class="track-composer">Michael Emanuel Bauer</span></div><span class="track-duration">2:26</span></li>
+                <li><div class="track-info"><span class="track-title">23. Nachhall Afterimages: Remix_01a Nachhall</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">2:32</span></li>
+                <li><div class="track-info"><span class="track-title">24. Nachhall Afterimages: Remix_01b Nachhall</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:38</span></li>
+                <li><div class="track-info"><span class="track-title">25. Nachhall Afterimages: Remix_02 Einsamkeit</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">3:43</span></li>
+                <li><div class="track-info"><span class="track-title">26. Nachhall Afterimages: Remix_09 Niagara</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">3:27</span></li>
+                <li><div class="track-info"><span class="track-title">27. Nachhall Afterimages: Remix_10 Heimatklang</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:59</span></li>
+                <li><div class="track-info"><span class="track-title">28. Nachhall Afterimages: Remix_11 Der Kranich</span><span class="track-composer">Gunnar Geisse</span></div><span class="track-duration">1:10</span></li>
+              </ul>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="release-block" id="records-release-2">
+        <div class="release-num">Release #2</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="cover2.jpg" alt="Cover: An Earth Symphony"></div>
+          </div>
+          <div class="release-card">
+            <h3>AN EARTH SYMPHONY</h3>
+            <div class="artist">Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (Dirigent) · Jung-Eun Shin (Violine)</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r2','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r2','tracks',this)">Tracklist</button>
+              <button class="tab-btn" onclick="switchTab('r2','trailer',this)">Trailer</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
+            </div>
+            <div class="release-details">
+            <div class="tab-panel active" id="r2-info">
+              <p class="desc">Mit der zweiten Veröffentlichung in der Live-Reihe unseres Labels präsentieren wir die Einspielung der Augsburger Philharmoniker unter Domonkos Héja und mit Jung-Eun Shin an der Solo-Violine der 4. Sinfonie („An Earth Symphony") von Tobias PM Schneid. Tobias PM Schneids „Earth Symphony" ist kein verklärender Hymnus auf den Planeten Erde, sondern ein großorchestraler Aufschrei, ein Fanal, um auch im Konzertsaal auf die prekäre Klimasituation und die Dringlichkeit eines bewussten und achtsamen Umgangs mit den Ressourcen dieses Planeten zu verweisen. Die fünf Sätze der Sinfonie – Magma, Water, Tree, Desert und Air – kommentieren auf je eigene Weise das „Aus den Fugen geraten"-Sein unseres Ökosystems, und thematisieren die Zersetzungsprozesse, denen dieses System durch menschliches Handeln ausgesetzt ist. Kein musikalischer Ökothriller, sondern ein Mahnmal mit der Aufforderung verantwortungsbewusst zu handeln.</p>
+            </div>
+            <div class="tab-panel" id="r2-tracks">
+              <ul class="tracklist">
+                <li><span>1. Symphony No. 4 "An Earth": I. Magma - Live</span><span>8:05</span></li>
+                <li><span>2. Symphony No. 4 "An Earth": II. Water - Live</span><span>4:37</span></li>
+                <li><span>3. Symphony No. 4 "An Earth": III. Tree - Live</span><span>6:05</span></li>
+                <li><span>4. Symphony No. 4 "An Earth": IV. Desert - Live</span><span>6:43</span></li>
+                <li><span>5. Symphony No. 4 "An Earth": V. Air - Live</span><span>8:09</span></li>
+              </ul>
+            </div>
+            <div class="tab-panel" id="r2-trailer">
+              <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/URCCvxXxok0" title="Trailer: An Earth Symphony" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="release-block" id="records-release-1">
+        <div class="release-num">Release #1</div>
+        <div class="release">
+          <div>
+            <div class="cover"><img src="cover1.jpg" alt="Cover: Zentaur – Quartet"></div>
+          </div>
+          <div class="release-card">
+            <h3>ZENTAUR – QUARTET</h3>
+            <div class="artist">string quartets by aDevantgarde composers · Zentaur-Quartett</div>
+            <div class="release-tabs">
+              <button class="tab-btn active" onclick="switchTab('r1','info',this)">Infotext</button>
+              <button class="tab-btn" onclick="switchTab('r1','tracks',this)">Tracklist</button>
+              <button class="tab-btn" onclick="switchTab('r1','trailer',this)">Trailer</button>
+              <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
+              <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
+            </div>
+            <div class="release-details">
+            <div class="tab-panel active" id="r1-info">
+              <p class="desc">Das im Jahr 2023 neu gegründete Label aDevantgarde records aus München widmet sich zeitgenössischer Musik mit vielfältigen Erscheinungsformen und Stilistiken. Das Debütalbum versammelt dreizehn Streichquartette, die zwischen 1997 und 2019 entstanden sind. Die CD ist das erste Produkt dieser neuen Reihe.</p>
+              <p class="desc">Das Zentaur-Quartett spielte Werke von Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch und Bernhard Weidner ein, die einen Querschnitt durch mehr als dreißig Jahre aDevantgarde darstellen.</p>
+              <p class="desc">Annette Fritz (1. Violine), Marc Kaufmann (2. Violine), Katharina Schmauder (Viola) und Caio de Azevedo (Violoncello) stellen mit dieser CD-Produktion einmal mehr ihr herausragendes Können und Engagement für zeitgenössische Kompositionen unter Beweis.</p>
+            </div>
+            <div class="tab-panel" id="r1-tracks">
+              <ul class="tracklist">
+                <li><div class="track-info"><span class="track-title">1. Il y a l'Océan (rev. 2007)</span><span class="track-composer">Carl Christian Bettendorf, Zentaur-Quartett</span></div><span class="track-duration">10:30</span></li>
+                <li><div class="track-info"><span class="track-title">2. Scratch – string quartet (rev. 2020): I. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">4:04</span></li>
+                <li><div class="track-info"><span class="track-title">3. Scratch – string quartet (rev. 2020): II. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">2:44</span></li>
+                <li><div class="track-info"><span class="track-title">4. Scratch – string quartet (rev. 2020): III. Satz</span><span class="track-composer">Nina Deuse, Zentaur-Quartett</span></div><span class="track-duration">3:48</span></li>
+                <li><div class="track-info"><span class="track-title">5. Skin</span><span class="track-composer">Katharina Schmauder, Zentaur-Quartett</span></div><span class="track-duration">5:59</span></li>
+                <li><div class="track-info"><span class="track-title">6. Clouds &amp; Fragments</span><span class="track-composer">Markus Lehmann-Horn, Zentaur-Quartett</span></div><span class="track-duration">11:17</span></li>
+                <li><div class="track-info"><span class="track-title">7. 1. Streichquartett</span><span class="track-composer">Caio de Azevedo, Zentaur-Quartett</span></div><span class="track-duration">5:27</span></li>
+                <li><div class="track-info"><span class="track-title">8. Bruckner Schemen</span><span class="track-composer">Bernhard Weidner, Zentaur-Quartett</span></div><span class="track-duration">12:09</span></li>
+                <li><div class="track-info"><span class="track-title">9. Streichquartett Nr. 3 "Vor Anker" (rev. 2018)</span><span class="track-composer">Johannes X. Schachtner, Zentaur-Quartett</span></div><span class="track-duration">9:45</span></li>
+                <li><div class="track-info"><span class="track-title">10. Streichquartett Nr. 1 – H-I-A-S</span><span class="track-composer">Alexander Strauch, Zentaur-Quartett</span></div><span class="track-duration">10:48</span></li>
+                <li><div class="track-info"><span class="track-title">11. Pixels</span><span class="track-composer">Jacopo Salvatori, Zentaur-Quartett</span></div><span class="track-duration">7:29</span></li>
+                <li><div class="track-info"><span class="track-title">12. Streichquartett (2019) – I.</span><span class="track-composer">Christian Dieck, Zentaur-Quartett</span></div><span class="track-duration">2:29</span></li>
+                <li><div class="track-info"><span class="track-title">13. Streichquartett (2019) – II.</span><span class="track-composer">Christian Dieck, Zentaur-Quartett</span></div><span class="track-duration">2:46</span></li>
+                <li><div class="track-info"><span class="track-title">14. Stele III for James Tenney</span><span class="track-composer">Sandeep Bhagwati, Zentaur-Quartett</span></div><span class="track-duration">8:35</span></li>
+                <li><div class="track-info"><span class="track-title">15. Scary Meditation (rev. 2019)</span><span class="track-composer">Helga Pogatschar, Zentaur-Quartett</span></div><span class="track-duration">10:37</span></li>
+                <li><div class="track-info"><span class="track-title">16. Et in Arcadia Ego – String quartet No. 2</span><span class="track-composer">Moritz Eggert, Zentaur-Quartett</span></div><span class="track-duration">16:05</span></li>
+              </ul>
+            </div>
+            <div class="tab-panel" id="r1-trailer">
+              <div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/NKH4M78VCag" title="Trailer: Zentaur – Quartet" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>© aDevantgarde records</span>
+      <span>Mockup-Entwurf, Stand Juli 2026</span>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PAGE 3: FESTIVAL 2027 (comic style)
+     ============================================================ -->
+<div class="page" id="page-festival">
+  <header>
+          <div class="wrap">
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <div class="header-bottom-row">
+          <div class="year-block">
+            <div class="year-toggle">
+              <a href="#festival" class="year-big">Festival 2027</a>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+            </div>
+            <div class="year-dropdown">
+              <div class="year-dropdown-list"></div>
+            </div>
+          </div>
+          <nav class="header-nav">
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#ueber-uns">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#off-season">Kommende Veranstaltungen</a>
+              <a href="#intro">Über uns</a>
+              <a href="#team">Team</a>
+              <a href="#presse">Presse</a>
+              <a href="#kontakt">Kontakt</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#records">aDevantgarde records</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#records-release-3">Schoeck vs. Bauer</a>
+              <a href="#records-release-2">An Earth Symphony</a>
+              <a href="#records-release-1">Zentaur – Quartet</a>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </div>
+  </header>
+
+  <section class="fest-wrap">
+    <h1 class="sr-only">19. aDevantgarde-Festival – URGENT</h1>
+    <div class="fest-stage">
+      <div class="fest-text fest-text--top">
+        <p>Das 19. aDevantgarde-Festival findet unter dem Motto „<strong>URGENT</strong>“ vom 22.06. bis 03.07. in München statt.</p>
+      </div>
+      <div class="fest-text fest-text--bottom">
+        <p>Wir bringen regionale und internationale Akteure der freien Szene auf die Bühne und präsentieren unterschiedliche Formate – von klassischen Konzerten bis zu einem Escape Room.</p>
+        <p>Das genaue Programm wird im Februar 2027 veröffentlicht.</p>
+        <p>Bleibt auf dem Laufenden auf <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.</p>
+      </div>
+      <img class="fest-stamp" src="urgent-stamp.png" alt="URGENT – Stempel">
+    </div>
+  </section>
+</div>
+
+<!-- ============================================================
+     PAGE: ARCHIV 2025 (1:1-Nachbau der echten adevantgarde.de-Startseite,
+     18. Festival "SCHÖNHEIT")
+     ============================================================ -->
+<div class="page" id="page-archiv-2025">
+  <header>
+          <div class="wrap">
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <div class="header-bottom-row">
+          <div class="year-block" data-default-year="2025">
+            <div class="year-toggle">
+              <a href="#archiv-2025" class="year-big">Festival 2025</a>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+            </div>
+            <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
+          </div>
+          <nav class="header-nav">
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#ueber-uns">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#off-season">Kommende Veranstaltungen</a>
+              <a href="#intro">Über uns</a>
+              <a href="#team">Team</a>
+              <a href="#presse">Presse</a>
+              <a href="#kontakt">Kontakt</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#records">aDevantgarde records</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#records-release-3">Schoeck vs. Bauer</a>
+              <a href="#records-release-2">An Earth Symphony</a>
+              <a href="#records-release-1">Zentaur – Quartet</a>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </div>
+  </header>
+
+
+  <div class="archiv-banner">Archiv — 18. aDevantgarde-Festival 2025</div>
+
+  <div class="wp-wrap">
+    <div class="wp-hero">
+      <a href="https://adevantgarde.de/wp-content/uploads/2025/04/aDevantgarde18-Schoenheit-Motiv-scaled.jpg" target="_blank" rel="noopener">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/aDevantgarde18-Schoenheit-Motiv-1024x722.jpg" alt="SCHÖNHEIT — 18. aDevantgarde-Festival">
+      </a>
+    </div>
+    <h1>SCHÖNHEIT</h1>
+    <p class="wp-dates"><strong>24. Juni – 6. Juli 2025<br>18. aDevantgarde-Festival</strong></p>
+    <p>Der Begriff der <strong>Schönheit</strong> wird in der Neuen Musik seit jeher kontrovers diskutiert. Ging es einmal darum, ihn zu erweitern oder zu dekonstruieren, fordern andere Stimmen wiederum explizit „schöne harmonische Musik" ein. Es drängt sich also die Frage auf, welche Konzeptionen musikalischer Schönheit es in der heutigen Zeit gibt, die über reine Geschmacksfragen hinausgehen.</p>
+    <ul class="wp-jumplinks">
+      <li><a href="#archiv-2025-konzerte">KONZERTE</a></li>
+      <li><a href="#archiv-2025-festival">FESTIVAL &amp; MOTTO</a></li>
+    </ul>
+
+    <h2 id="archiv-2025-konzerte">KONZERTE</h2>
+    <div class="wp-concert-list">
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Vokalzirkel-2023-c-Jakob-Schad.jpg" alt="EUPHONIA">
+        <a href="https://adevantgarde.de/veranstaltung/euphonia" target="_blank" rel="noopener"><strong>EUPHONIA</strong></a>
+        <div>Di. 24.06.25</div>
+        <div>19.00 Uhr</div>
+        <div>Bayerische Akademie der Schönen Künste</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Lauriane-Follonier.jpg" alt="FREUND:INNEN">
+        <a href="https://adevantgarde.de/veranstaltung/freundinnen" target="_blank" rel="noopener"><strong>FREUND:INNEN</strong></a>
+        <div>Mi. 25.06.25</div>
+        <div>20.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/dergelbeklang-c-Astrid-Ackermann.jpg" alt="CARTE BELLE">
+        <a href="https://adevantgarde.de/veranstaltung/carte-belle" target="_blank" rel="noopener"><strong>CARTE BELLE</strong></a>
+        <div>Fr. 27.06.25</div>
+        <div>20.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Jumble-c-W-Pakzad.jpg" alt="SCHULTERBLICKE">
+        <a href="https://adevantgarde.de/veranstaltung/schulterblicke-jumble" target="_blank" rel="noopener"><strong>SCHULTERBLICKE</strong></a>
+        <div>Sa. 28.06.25</div>
+        <div>18.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Salome-Kammer-c-C-Hellhake.jpg" alt="DEDICATED TO…">
+        <a href="https://adevantgarde.de/veranstaltung/dediacated-to-ensemble-jumblex" target="_blank" rel="noopener"><strong>DEDICATED TO…</strong></a>
+        <div>So 29.06.25</div>
+        <div>11.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/MKO-c-Florian-Ganslmeier.jpg" alt="MKO SONGBOOK">
+        <a href="https://adevantgarde.de/veranstaltung/mko-songbook" target="_blank" rel="noopener"><strong>MKO SONGBOOK</strong></a>
+        <div>So. 29.06.25</div>
+        <div>20.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Quasar-c-Marie-Lassiat-1.jpg" alt="BEAUTÉ DOUCE-AMÈRE">
+        <a href="https://adevantgarde.de/veranstaltung/quasar-saxophone-quartet" target="_blank" rel="noopener"><strong>BEAUTÉ DOUCE-AMÈRE</strong></a>
+        <div>Fr. 04.07.25</div>
+        <div>20.00 Uhr</div>
+        <div>schwere reiter</div>
+        <div class="wp-concert-note">19:30: Diskussion mit den Komponierenden</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Brigitte-Helbig-c-Natalia-Luzenko.jpg" alt="DIALOGHI D'AMORE">
+        <a href="https://adevantgarde.de/veranstaltung/duo-helbig-wangler" target="_blank" rel="noopener"><strong>DIALOGHI D'AMORE</strong></a>
+        <div>Sa. 05.07.25</div>
+        <div>20.00 Uhr</div>
+        <div>schwere reiter</div>
+      </div>
+      <div class="wp-concert">
+        <img src="https://adevantgarde.de/wp-content/uploads/2025/04/Schoettl-Wurmer-Kuhn-c-Elisabeth-Pfahler-Scharf.jpg" alt="ISARMÄRCHEN">
+        <a href="https://adevantgarde.de/veranstaltung/isarmaerchen" target="_blank" rel="noopener"><strong>ISARMÄRCHEN</strong></a>
+        <div>So. 06.07.25</div>
+        <div>20.00 Uhr</div>
+        <div>Einstein Kultur</div>
+      </div>
+    </div>
+
+    <h2 id="archiv-2025-festival">FESTIVAL</h2>
+    <p>Der Philosoph Byung-Chul Han schreibt nach einer harten Kritik der aalglatten Social Media Schönheitsästhetik am Ende eines seiner neuesten Bücher: „Die <strong>Schönheit</strong> ist ein Beziehungsereignis. Sie entzieht sich dem unmittelbaren Genuss, denn die <strong>Schönheit</strong> einer Sache erscheint erst viel später im Licht einer anderen als Reminiszenz. Sie besteht aus geschichtlichen Ablagerungen, die phosphoreszieren. Die <strong>Schönheit</strong> ist ein Zögerling, ein Nachzügler. <strong>Schönheit</strong> ist kein augenblicklicher Glanz, sondern ein stilles Nachleuchten."</p>
+    <p>Das verweist auf den Schönheitsbegriff in der Neuen Musik, der Schönheit im Sinne Adornos Platon-Rezeption als eine fast unerreichbare Utopie auch heute noch oft begreift. Allerdings gibt es auch die Schockmomente von <strong>Schönheit</strong> in der Neuen Musik, die eher ein helles Aufleuchten statt ein stilles Nachleuchten waren: Being Beauteous nach Arthur Rimbaud von Hans Werner Henze, die Orchestermusik von Wolfgang Rihm, das Geistliche in der Musik von Sofia Gubaidulina, das Reduzierte bei Morton Feldman, die stille Musik von Valentin Silvestrov und der von ihm geprägten Umfelds in Osteuropa.</p>
+    <p>Unser Festival greift all dies mit tiefem Ernst und zugleich mit viel Selbstironie auf. So greift das Vokalkonzert <strong>Euphonia</strong> mit dem Ensemble unter anderem Musik von Luciano Berio, Beat Furrer und Caroline Shaw auf und stellt dem in Uraufführungen von Johannes X. Schachtner, Eva Kuhn und Markus Lehmann-Horn jetztzeitige Aspekte von Schönheit gegenüber. Das Konzert <strong>MKO Songbook</strong> des Münchener Kammerorchesters kontrastiert die Klangsprachen von z.B. Margareta Ferek-Petric, Iris ter Schiphorst, Tomasz Skweres, Georg Haider, Christian Dieck, Hans Abrahamsen und Tobias PM Schneid. Das auf Neue Musik hochspezialisierte Québecer <strong>Quasar Saxophone Quartet</strong> aus Montreal vereint Florence Tremblay, Maxime Mckinley und Francis Battah aus Québec/Kanada und Philipp C. Mayer, Alexander Strauch und Abigél Varga von aDevantgarde.</p>
+    <p>Das Ensemble der/gelbe/klang begibt in sich <strong>Carte Belle</strong> mit seiner Stammbesetzung und u.a. den Komponierenden Nina Deuse, Leon Zmelty und Manue Zwerger auf die Suche des Schönen in einer raumöffnenden Anordnung. Das Klavier-Akkordeon-Duo <strong>Brigitte Helbig/Kai Wangler</strong> stellt zuerst Werke für die Soloinstrumente und Live-Elektronik von Lisa Streich und Gregor Mayrhofer vor und vereint sich dann in Werken von Keiko Harada und Nikolaus Brass und Uraufführungen von Henrik Ajax und Jakob Stillmark. Das Geburtstagskonzert <strong>Freundinnen</strong> für fünf aDevantgarde-Mitglieder zum 60ten ist eine nostalgische Selbstbetrachtung und verbindet die Musik von Moritz Eggert, Markus Muench, Helga Pogatschar, Markus Schmitt und Bernhard Weidner mit neuen Ansätzen der fünf jüngeren Komponierenden, welche die Älteren einluden, Marisa Algari, Nina Deuse, Ines Lütge, Sophie Reich und Katharina Schmauder. Das <strong>Isarmärchen</strong> ist ein selbstironischer Blick auf den in sich schon gebrochenen Schönheitsbegriff der Münchner Volkssängerin Bally Prell und heute in München wirkender Komponierender mit Johannes Brömmel, Alexander F. Hooper, Kathrin Klose, Minami Nagai und Tom Smith.</p>
+    <p>Mit JU[MB]LE Landesjugendensemble für Neue Musik Bayern besteht seit dessen Gründung 2015 eine freundschaftliche Verbindung. Im Festivalprogramm findet das zehnjährige Jubiläum des Jugendensembles im Konzert <strong>Schulterblicke</strong> mit Werken von Pierre Boulez, Ulrich Kreppein, Grace-Evangeline Mason, Wolfgang Rihm und einer Uraufführung von Markus Schmitt statt. In <strong>Dedicated to… JU[MB]LEX</strong> spielen die Ehemaligen des Jugendensembles als <strong>Ensemble JU[MB]LEX</strong> Werke u.a. von Birte Bertelsmeier, Jan Müller-Wieland und Stefan Schulzki.</p>
+
+    <p class="wp-credits">
+      <strong>Veranstalter</strong> aDevantgarde e.V.<br>
+      <strong>Festivalleitung</strong> Markus Lehmann-Horn, Alexander Strauch<br>
+      <strong>Weitere Projektverantwortliche</strong> Henrik Ajax, Caio de Azevedo, Fabian Blum, Sophie Reich, Johannes X. Schachtner, Jakob Stillmark, Abigél Varga, Leon Zmelty<br>
+      <strong>Bühnenmanagement</strong> Abigél Varga<br>
+      <strong>Assistenz Organisation und Bühne</strong> Sarah Luisa Wurmer<br>
+      <strong>PR</strong> Pfau PR<br>
+      <strong>Key Visual</strong> Fabian Filß<br>
+      <strong>Gestaltung &amp; Umsetzung</strong> Sylvie Bohnet
+    </p>
+
+    <p class="wp-credits">
+      <strong>Festivalförderer</strong><br>
+      Landeshauptstadt München, Musikfonds e.V. mit Mitteln der Beauftragten der Bundesregierung für Kultur und Medien, GEMA Stiftung
+    </p>
+    <p class="wp-credits">
+      <strong>Konzertförderer</strong><br>
+      Bayerische Staatskanzlei, Bayerisches Staatsministerium für Wissenschaft und Kultur, Vertretung der Regierung von Québec – Québec Antenne Berlin, Conseil des arts et des lettres du Québec, Bayerische Akademie der Schönen Künste, BR-Klassik
+    </p>
+    <p class="wp-credits">
+      <strong>Kooperationspartner</strong><br>
+      der/gelbe/klang, Münchener Kammerorchester, Tonkünstler München e.V., scope – Spielraum für aktuelle Musik, schwere reiter münchen, Einstein Kultur, JU[MB]LE Landesjugendensemble für Neue Musik Bayern, Ensemble JU[MB]LEX
+    </p>
+
+    <div class="wp-social">
+      <a href="https://www.youtube.com/channel/UCiOtSqLfERr76yZ2WJT08tA" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.facebook.com/aDevantgarde/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.instagram.com/adevantgarde_festival/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://twitter.com/adevantgarde" target="_blank" rel="noopener">Twitter</a>
+    </div>
+    <div class="wp-footer-copy">© 2025 aDevantgarde.de</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PAGE: ARCHIV 2023 — Programmheft als Flipbook (BIEDER_MEIER_X)
+     ============================================================ -->
+<div class="page" id="page-archiv-2023">
+  <header>
+          <div class="wrap">
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <div class="header-bottom-row">
+          <div class="year-block" data-default-year="2023">
+            <div class="year-toggle">
+              <a href="#archiv-2023" class="year-big">Festival 2023</a>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+            </div>
+            <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
+          </div>
+          <nav class="header-nav">
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#ueber-uns">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#off-season">Kommende Veranstaltungen</a>
+              <a href="#intro">Über uns</a>
+              <a href="#team">Team</a>
+              <a href="#presse">Presse</a>
+              <a href="#kontakt">Kontakt</a>
+            </div>
+          </div>
+          <div class="nav-item">
+            <div class="nav-item-toggle">
+              <a href="#records">aDevantgarde records</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+            </div>
+            <div class="nav-dropdown">
+              <a href="#records-release-3">Schoeck vs. Bauer</a>
+              <a href="#records-release-2">An Earth Symphony</a>
+              <a href="#records-release-1">Zentaur – Quartet</a>
+            </div>
+          </div>
+          </nav>
+        </div>
+      </div>
+  </header>
+
+
+  <div class="archiv-banner">Archiv — 17. aDevantgarde-Festival 2023 · BIEDER_MEIER_X</div>
+
+  <div class="flipbook-wrap">
+    <h1 class="flipbook-title">Programmheft <span>BIEDER_MEIER_X</span></h1>
+    <div class="flipbook-stage">
+      <div class="flip-page-under"><img id="fpImgUnder" alt=""></div>
+      <div class="flip-page-active" id="fpActive" onclick="flipbookNext()"><img id="fpImgActive" alt=""></div>
+    </div>
+    <div class="flipbook-controls">
+      <button type="button" onclick="flipbookPrev()" aria-label="Vorherige Seite">‹</button>
+      <span id="flipbookPageIndicator" class="flipbook-page-indicator">1 / 52</span>
+      <button type="button" onclick="flipbookNext()" aria-label="Nächste Seite">›</button>
+    </div>
+    <p class="flipbook-hint">Klick auf das Bild oder nutze die Pfeile zum Umblättern.</p>
+  </div>
+</div>
+
+<script>
+  // ---- Simple hash-based router across the three "pages" ----
+  const pageIds = ['ueber-uns', 'records', 'festival', 'archiv-2025', 'archiv-2023'];
+  function currentPageFromHash(){
+    const h = (location.hash || '').replace('#','');
+    const matchedPage = pageIds.find(p => h === p || h.startsWith(p + '-'));
+    return matchedPage || 'ueber-uns'; // Über uns is the default/home page
   }
-  #page-ueber-uns .offseason-item.open .offseason-chevron-wrap{ transform:rotate(180deg); background:rgba(232,61,53,0.2); }
-  #page-ueber-uns .offseason-content .offseason-link{ display:none; }
-  #page-ueber-uns .offseason-item.open .offseason-content .offseason-link{ display:inline-block; }
-  #page-ueber-uns .offseason-content p{ display:none; }
-  #page-ueber-uns .offseason-item.open .offseason-content p{ display:block; }
-  #page-ueber-uns .offseason-photo{ width:100%; }
-  #page-ueber-uns .offseason-photo img{ max-width:100%; max-height:200px; width:auto; height:auto; }
-  #page-ueber-uns .cd-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
-}
+  function router(){
+    document.querySelectorAll('.nav-dropdown.open, .year-dropdown.open').forEach(d => d.classList.remove('open'));
+    const page = currentPageFromHash();
+    pageIds.forEach(p => document.getElementById('page-' + p).classList.toggle('active', p === page));
+    if(typeof PAGE_TO_YEAR !== 'undefined' && PAGE_TO_YEAR[page] !== undefined){
+      currentFestivalYear = PAGE_TO_YEAR[page];
+    }
+    if(typeof renderAllYearBlocks === 'function') renderAllYearBlocks();
+    // If the hash points at an in-page anchor (e.g. #festival-kalender), scroll to it
+    const h = (location.hash || '').replace('#','');
+    if(h && h !== page){
+      const target = document.getElementById(h);
+      if(target){ setTimeout(() => target.scrollIntoView({behavior:'instant', block:'start'}), 0); }
+    } else {
+      window.scrollTo(0,0);
+    }
+  }
+  window.addEventListener('hashchange', router);
+  window.addEventListener('DOMContentLoaded', router);
+
+  // Großes Logo auf "Über uns": bleibt unter dem Header stehen und blendet beim Scrollen aus
+  function updateHeaderHeight(){
+    const hd = document.querySelector('.page.active header') || document.querySelector('header');
+    if(hd) document.documentElement.style.setProperty('--header-h', hd.offsetHeight + 'px');
+  }
+  function updateLogoFade(){
+    const img = document.querySelector('.logo-hero img');
+    if(!img) return;
+    const o = Math.max(0, 1 - window.scrollY / 240);
+    img.style.opacity = o;
+  }
+  window.addEventListener('scroll', updateLogoFade, { passive: true });
+  window.addEventListener('resize', updateHeaderHeight);
+  window.addEventListener('hashchange', () => { updateHeaderHeight(); updateLogoFade(); });
+  window.addEventListener('DOMContentLoaded', () => { updateHeaderHeight(); updateLogoFade(); });
+  window.addEventListener('load', updateHeaderHeight);
+
+  // Year switcher — synced globally with whichever page/edition is actually loaded
+  const ALL_FESTIVAL_YEARS = [2027,2025,2023,2021,2019,2017,2015,2013,2011,2009,2007,2005,2003,2001,1999,1997,1995,1994,1993,1992];
+  const YEAR_TO_PAGE = {2027:'festival', 2025:'archiv-2025', 2023:'archiv-2023'};
+  const PAGE_TO_YEAR = {festival:2027, 'archiv-2025':2025, 'archiv-2023':2023};
+  const ACTIVE_YEARS = [2027, 2025, 2023];
+  let currentFestivalYear = 2027;
+
+  function hrefForYear(y){ return '#' + (YEAR_TO_PAGE[y] || 'festival'); }
+
+  function renderYearBlock(yearBlock){
+    const bigEl = yearBlock.querySelector('.year-big');
+    const track = yearBlock.querySelector('.year-track');
+    const dropdownList = yearBlock.querySelector('.year-dropdown-list');
+    if(!bigEl || !dropdownList) return;
+    bigEl.textContent = 'Festival ' + currentFestivalYear;
+    bigEl.setAttribute('href', hrefForYear(currentFestivalYear));
+    const rest = ALL_FESTIVAL_YEARS.filter(y => y !== currentFestivalYear);
+    const linksHtml = rest.map(y =>
+      ACTIVE_YEARS.includes(y)
+        ? `<a href="${hrefForYear(y)}" data-year="${y}">${y}</a>`
+        : `<span class="year-disabled">${y}</span>`
+    ).join('');
+    if(track) track.innerHTML = linksHtml;
+    dropdownList.innerHTML = linksHtml;
+    yearBlock.querySelectorAll('.year-track a, .year-dropdown-list a').forEach(a => {
+      a.addEventListener('click', () => {
+        currentFestivalYear = parseInt(a.dataset.year, 10);
+        renderAllYearBlocks();
+        const dd = yearBlock.querySelector('.year-dropdown');
+        if(dd) dd.classList.remove('open');
+      });
+    });
+  }
+
+  function renderAllYearBlocks(){
+    document.querySelectorAll('.year-block').forEach(renderYearBlock);
+  }
+
+  renderAllYearBlocks();
+
+  function toggleYearDropdown(btn){
+    const dropdown = btn.closest('.year-block').querySelector('.year-dropdown');
+    if(!dropdown) return;
+    const willOpen = !dropdown.classList.contains('open');
+    document.querySelectorAll('.year-dropdown.open').forEach(d => d.classList.remove('open'));
+    if(willOpen) dropdown.classList.add('open');
+  }
+  function toggleNavDropdown(btn){
+    const dropdown = btn.closest('.nav-item').querySelector('.nav-dropdown');
+    if(!dropdown) return;
+    const willOpen = !dropdown.classList.contains('open');
+    document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+    if(willOpen) dropdown.classList.add('open');
+  }
+  document.addEventListener('click', (ev) => {
+    if(!ev.target.closest('.year-block')){
+      document.querySelectorAll('.year-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+    if(!ev.target.closest('.nav-item')){
+      document.querySelectorAll('.nav-dropdown.open').forEach(d => d.classList.remove('open'));
+    }
+  });
+
+  // Team: wird aus dem Tab "Team" im Sheet "adevantgarde.de über uns" geladen (selbes
+  // Dokument wie die Videos). Spalten: A Name · B Funktion · C Bild (Drive-Link) ·
+  // D Internetseite · E Credits Bild.
+  const ABOUT_SHEET_ID = '1lBDxbKKC5cGMT1FcwX_Nt1vn6yRoThiDZH3PY6hjh_0';
+  const TEAM_SHEET_TAB = 'Team';
+
+  function formatPhotoCredit(credit){
+    if(!credit) return '';
+    if(/^privat$/i.test(credit)) return 'Privat';
+    return credit.startsWith('©') ? credit : `© ${credit}`;
+  }
+
+  async function loadTeam(){
+    const grid = document.getElementById('teamGrid');
+    if(!grid) return;
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${ABOUT_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(TEAM_SHEET_TAB)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
+      const team = rows.map(r => ({
+        name: val(r,0), funktion: val(r,1), bild: val(r,2), website: val(r,3), credit: val(r,4)
+      })).filter(t => t.name);
+      if(!team.length) return; // Platzhaltertext bleibt stehen
+      grid.innerHTML = team.map(t => {
+        const inner = `
+          <span class="photo-content">${t.bild ? `<img src="${driveImageUrl(t.bild)}" alt="${t.name}" onerror="this.parentElement.textContent='Foto'">` : 'Foto'}</span>
+          ${t.credit ? `<span class="photo-credit">${formatPhotoCredit(t.credit)}</span>` : ''}
+          ${t.website ? `<span class="photo-overlay">Website ansehen ↗</span>` : ''}
+        `;
+        const photo = t.website
+          ? `<a class="photo" href="${t.website}" target="_blank" rel="noopener">${inner}</a>`
+          : `<div class="photo">${inner}</div>`;
+        return `<div class="team-card">${photo}<h3>${t.name}</h3><div class="role">${t.funktion}</div></div>`;
+      }).join('');
+    } catch(err){
+      console.error('Team konnte nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
+    }
+  }
+  loadTeam();
+
+  // Off-Season-Termine: Mitglieder tragen sie per Google-Formular ein, sie landen im Sheet
+  // "Konzerttermine adevantgarde.de (Antworten)". Ein Termin erscheint erst hier, wenn in
+  // Spalte J ("bestätigt") ein Häkchen/Wert gesetzt ist. Spalte K ("eigene Veranstaltung")
+  // wird manuell im Sheet gepflegt und markiert Termine, die aDevantgarde selbst veranstaltet
+  // (z.B. Neuer Hoargartn) — die werden auf der Website farblich hervorgehoben. Tabellenspalten:
+  // A Zeitstempel · B E-Mail-Adresse (wird NIE angezeigt) · C Konzerttitel · D Datum ·
+  // E Zeit · F Kurzbeschreibung · G Link zum Veranstalter · H Foto zur Veranstaltung ·
+  // I Ort · J bestätigt · K eigene Veranstaltung (manuell)
+  const OFFSEASON_SHEET_ID = '13Yr0KSwwBefM3jZM0QxqGlbxc8BWn8B458hm6TCe_iM';
+  const OFFSEASON_SHEET_GID = '134675467';
+
+  function driveImageUrl(link){
+    if(!link) return '';
+    const m = link.match(/[-\w]{25,}/);
+    return m ? `https://drive.google.com/thumbnail?id=${m[0]}&sz=w600` : link;
+  }
+
+  function formatOffSeasonTime(zeit){
+    if(!zeit) return '';
+    const trimmed = zeit.replace(/^(\d{1,2}:\d{2}):\d{2}$/, '$1');
+    return /uhr/i.test(trimmed) ? trimmed : `${trimmed} Uhr`;
+  }
+
+  async function loadOffSeasonEvents(){
+    const listEl = document.getElementById('offseasonList');
+    if(!listEl) return;
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${OFFSEASON_SHEET_ID}/gviz/tq?tqx=out:json&gid=${OFFSEASON_SHEET_GID}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      // Datum-/Zeit-Zellen liefern in "v" einen rohen Date(...)-Wert (Google-Sheets-Eigenheit
+      // der gviz-API) statt des im Sheet sichtbaren Textes — deshalb bevorzugt die bereits
+      // formatierte Darstellung "f" verwenden, "v" nur als Rückfalloption für reinen Text.
+      const val = (r,i) => {
+        const c = r.c[i];
+        if(!c) return '';
+        if(c.f != null) return String(c.f).trim();
+        if(c.v != null) return String(c.v).trim();
+        return '';
+      };
+      const isChecked = (r,i) => {
+        const cell = r.c[i];
+        if(!cell || cell.v == null) return false;
+        if(typeof cell.v === 'boolean') return cell.v;
+        return /^(bestätigt|wahr|true|ja|x)$/i.test(String(cell.v).trim());
+      };
+      const events = rows.map(r => ({
+        titel: val(r,2), datum: val(r,3), zeit: val(r,4), beschreibung: val(r,5),
+        link: val(r,6), foto: val(r,7), ort: val(r,8), bestaetigt: isChecked(r,9), eigen: isChecked(r,10)
+      })).filter(e => e.titel && e.bestaetigt);
+      if(!events.length) return; // Platzhaltertext bleibt stehen
+      listEl.innerHTML = events.map(e => `
+        <div class="offseason-item${e.eigen ? ' is-own' : ''}">
+          ${e.foto ? `<div class="offseason-photo"><img src="${driveImageUrl(e.foto)}" alt="${e.titel}" loading="lazy"></div>` : ''}
+          <div class="offseason-content">
+            ${e.eigen ? `<span class="offseason-own-tag">aDevantgarde</span>` : ''}
+            <div class="offseason-date">
+              <span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
+            </div>
+            ${(e.beschreibung || e.link) ? `<div class="offseason-title-row" role="button" tabindex="0" aria-expanded="false" onclick="toggleOffseasonItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleOffseasonItem(this)}"><h3>${e.titel}</h3><span class="offseason-chevron-wrap" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>` : `<div class="offseason-title-row"><h3>${e.titel}</h3></div>`}
+            ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
+            ${e.link ? `<a class="offseason-link" href="${e.link}" target="_blank" rel="noopener">mehr Infos ↗</a>` : ''}
+          </div>
+        </div>
+      `).join('');
+      syncOffSeasonPhotoHeights();
+      const legend = document.getElementById('offseasonLegend');
+      if(legend) legend.hidden = !events.some(e => e.eigen);
+    } catch(err){
+      console.error('Off-Season-Termine konnten nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
+    }
+  }
+
+  // Bildhöhe soll sich nach der Höhe der Textspalte rechts richten (nicht umgekehrt) —
+  // dafür Flexbox-"stretch" vermeiden (das würde zirkulär auch von der Bildbreite abhängen)
+  // und die Höhe nach dem Rendern direkt vom Text übernehmen.
+  function toggleOffseasonItem(el){
+    const item = el.closest('.offseason-item');
+    const open = item.classList.toggle('open');
+    const row = item.querySelector('.offseason-title-row');
+    if(row) row.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
+  function syncOffSeasonPhotoHeights(){
+    document.querySelectorAll('#offseasonList .offseason-item').forEach(item => {
+      const photo = item.querySelector('.offseason-photo');
+      const content = item.querySelector('.offseason-content');
+      if(!photo || !content) return;
+      photo.style.height = window.innerWidth > 640 ? content.offsetHeight + 'px' : '';
+    });
+  }
+  window.addEventListener('resize', syncOffSeasonPhotoHeights);
+  loadOffSeasonEvents();
+
+  // YouTube-Videokarussell: Videolinks werden manuell im Tabellenblatt "Videos" gepflegt
+  // (selbes Sheet wie "Team"), Spalte A = YouTube-Link, kein Titel. Es zeigt jeweils ein
+  // Vorschaubild und wechselt automatisch alle paar Sekunden; ein Klick startet die
+  // eingebettete Wiedergabe und stoppt den automatischen Wechsel.
+  const VIDEOS_SHEET_ID = '1lBDxbKKC5cGMT1FcwX_Nt1vn6yRoThiDZH3PY6hjh_0';
+  const VIDEOS_SHEET_TAB = 'Videos';
+
+  let videoList = [];
+  let videoIndex = 0;
+  let videoTimer = null;
+  let videoPlaying = false;
+
+  function extractYoutubeId(url){
+    if(!url) return '';
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : '';
+  }
+
+  function renderVideoThumbs(){
+    const thumbsEl = document.getElementById('videoThumbs');
+    if(!thumbsEl) return;
+    thumbsEl.innerHTML = videoList.map((v,i) => `
+      <button type="button" class="video-carousel-thumb${i === videoIndex ? ' active' : ''}" onclick="goToVideo(${i})" aria-label="Video ${i + 1}">
+        <img src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" alt="${v.titel}" loading="lazy">
+      </button>
+    `).join('');
+  }
+
+  function buildVideoStageHTML(v){
+    return `
+      <div class="video-carousel-stage" onclick="playCurrentVideo()" onmouseenter="pauseVideoTimer()" onmouseleave="restartVideoTimer()">
+        <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.titel}" loading="lazy">
+        <div class="video-carousel-play">
+          <svg viewBox="0 0 68 48"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.64 3.26-5.42 6.19C0 13.05 0 24 0 24s0 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C68 34.95 68 24 68 24s0-10.95-1.48-16.26z" fill="#FF0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+        </div>
+        ${v.titel ? `<div class="video-carousel-title">${v.titel}</div>` : ''}
+      </div>
+    `;
+  }
+
+  function renderVideoStage(animate){
+    const stage = document.getElementById('videoCarousel');
+    if(!stage || !videoList.length) return;
+    const v = videoList[videoIndex];
+    const existing = stage.querySelector('.video-carousel-stage');
+    const swap = () => {
+      stage.innerHTML = buildVideoStageHTML(v);
+      const el = stage.querySelector('.video-carousel-stage');
+      if(el){
+        el.style.opacity = '0';
+        requestAnimationFrame(() => requestAnimationFrame(() => { el.style.opacity = '1'; }));
+      }
+      renderVideoThumbs();
+    };
+    if(existing && animate !== false){
+      existing.style.opacity = '0';
+      setTimeout(swap, 300);
+    } else {
+      swap();
+    }
+  }
+
+  function goToVideo(i){
+    videoIndex = i;
+    renderVideoStage();
+    restartVideoTimer();
+  }
+
+  function playCurrentVideo(){
+    const stage = document.getElementById('videoCarousel');
+    const v = videoList[videoIndex];
+    if(!stage || !v) return;
+    videoPlaying = true;
+    if(videoTimer) clearInterval(videoTimer);
+    stage.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1" title="${v.titel}" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+  }
+
+  function pauseVideoTimer(){
+    if(videoTimer) clearInterval(videoTimer);
+  }
+
+  function restartVideoTimer(){
+    if(videoTimer) clearInterval(videoTimer);
+    if(videoPlaying || videoList.length < 2) return;
+    videoTimer = setInterval(() => {
+      videoIndex = (videoIndex + 1) % videoList.length;
+      renderVideoStage();
+    }, 10000);
+  }
+
+  async function fetchYoutubeTitle(id){
+    try{
+      const url = `https://www.youtube.com/oembed?url=${encodeURIComponent('https://www.youtube.com/watch?v=' + id)}&format=json`;
+      const res = await fetch(url);
+      if(!res.ok) return '';
+      const data = await res.json();
+      return data.title || '';
+    } catch(err){
+      return ''; // Titel bleibt einfach leer, kein Problem für die Anzeige
+    }
+  }
+
+  async function loadVideos(){
+    const container = document.getElementById('videoCarousel');
+    if(!container) return;
+    try{
+      const url = `https://docs.google.com/spreadsheets/d/${VIDEOS_SHEET_ID}/gviz/tq?tqx=out:json&sheet=${encodeURIComponent(VIDEOS_SHEET_TAB)}`;
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
+      const rows = json.table.rows || [];
+      const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
+      videoList = rows.map(r => ({ titel: '', id: extractYoutubeId(val(r,0)) })).filter(v => v.id);
+      if(!videoList.length){
+        container.innerHTML = '<p class="videos-status">Aktuell keine Videos hinterlegt.</p>';
+        return;
+      }
+      renderVideoStage();
+      restartVideoTimer();
+      // Titel kommen direkt von YouTube (oEmbed) und werden nachgeladen, sobald verfügbar.
+      await Promise.all(videoList.map(async v => { v.titel = await fetchYoutubeTitle(v.id); }));
+      if(!videoPlaying) renderVideoStage(false);
+    } catch(err){
+      console.error('Videos konnten nicht geladen werden.', err);
+    }
+  }
+  loadVideos();
+
+  function togglePress(btn){
+    const body = btn.nextElementSibling;
+    if(!body) return;
+    const willOpen = !body.classList.contains('open');
+    body.classList.toggle('open', willOpen);
+    btn.classList.toggle('open', willOpen);
+  }
+
+  // Tracklist toggles
+  function toggleReleaseDetails(btn){
+    const details = btn.closest('.release-tabs').nextElementSibling;
+    if(!details) return;
+    const willOpen = !details.classList.contains('open');
+    details.classList.toggle('open', willOpen);
+    btn.classList.toggle('open', willOpen);
+  }
 
 
-#page-ueber-uns footer, #page-records footer{ padding:36px 0; border-top:none; }
-#page-ueber-uns footer .wrap, #page-records footer .wrap{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--gray); }
+  // Team (mobil/Touch): 1. Tipp auf das Foto blendet "Website ansehen" ein, 2. Tipp öffnet die Website
+  document.addEventListener('click', (ev) => {
+    const link = ev.target.closest('.team-card a.photo');
+    document.querySelectorAll('.team-card .photo.reveal').forEach(p => { if(p !== link) p.classList.remove('reveal'); });
+    if(!link || !window.matchMedia('(max-width:640px), (hover:none)').matches) return;
+    if(!link.classList.contains('reveal')){
+      ev.preventDefault();
+      link.classList.add('reveal');
+    }
+  });
 
-/* Über uns specifics */
-#page-ueber-uns .team-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:32px; }
-#page-ueber-uns .team-card .photo{ aspect-ratio:1; background:var(--line2); border-radius:6px; margin-bottom:14px; position:relative; display:block; overflow:hidden; }
-#page-ueber-uns .team-card .photo-content{ display:flex; align-items:center; justify-content:center; width:100%; height:100%; color:var(--gray); font-size:13px; transition:filter 2s ease; }
-#page-ueber-uns .team-card .photo-content img{ width:100%; height:100%; object-fit:cover; display:block; }
-#page-ueber-uns .team-card .photo-overlay{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; text-align:center; padding:10px; background:rgba(23,23,27,0.55); color:#fff; font-size:12.5px; font-weight:600; opacity:0; transition:opacity 2s ease; }
-#page-ueber-uns .team-card .photo-credit{
-  position:absolute; left:6px; bottom:6px; font-family:'IBM Plex Mono',monospace;
-  font-size:9.5px; color:rgba(255,255,255,0.75); background:rgba(23,23,27,0.32); padding:1.5px 6px; border-radius:4px;
-  pointer-events:none; z-index:2; letter-spacing:0.01em;
-}
-@media (hover:hover){
-  #page-ueber-uns .team-card .photo:hover .photo-content{ filter:blur(5px); }
-  #page-ueber-uns .team-card .photo:hover .photo-overlay{ opacity:1; }
-}
-#page-ueber-uns .team-card .photo.reveal .photo-content{ filter:blur(5px); transition:filter .25s ease; }
-#page-ueber-uns .team-card .photo.reveal .photo-overlay{ opacity:1; transition:opacity .25s ease; }
-#page-ueber-uns .team-card h3{ font-size:17px; margin-bottom:2px; font-weight:500; }
-#page-ueber-uns .team-card .role{ font-size:13.5px; color:var(--gray); }
-@media (max-width:640px){
-  #page-ueber-uns .team-grid{ grid-template-columns:repeat(2,1fr); gap:16px; }
-  #page-ueber-uns .team-card .photo{ margin-bottom:8px; }
-  #page-ueber-uns .team-card h3{ font-size:14.5px; margin-bottom:1px; }
-  #page-ueber-uns .team-card .role{ font-size:12px; line-height:1.3; }
-}
+  function switchTab(releaseId, tab, btn){
+    ['info','tracks','trailer'].forEach(t => {
+      const panel = document.getElementById(releaseId + '-' + t);
+      if(panel) panel.classList.toggle('active', t === tab);
+    });
+    btn.parentElement.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    // mobil: Klick auf einen Tab klappt die Details automatisch auf
+    if(window.matchMedia('(max-width:640px)').matches){
+      const tabs = btn.closest('.release-tabs');
+      const details = tabs && tabs.nextElementSibling;
+      if(details){
+        details.classList.add('open');
+        const tg = tabs.querySelector('.details-toggle');
+        if(tg) tg.classList.add('open');
+      }
+    }
+  }
+</script>
 
-#page-ueber-uns .video-carousel-wrap{ max-width:640px; margin-bottom:18px; }
-#page-ueber-uns .video-carousel{
-  position:relative; width:100%; aspect-ratio:16/9; border-radius:8px; overflow:hidden;
-  background:#000;
-}
-#page-ueber-uns .video-carousel .videos-status{
-  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
-  color:var(--gray); font-size:14px; font-style:italic; background:var(--card);
-}
-#page-ueber-uns .video-carousel-stage{ position:absolute; inset:0; cursor:pointer; overflow:hidden; transition:opacity .35s ease; }
-#page-ueber-uns .video-carousel-stage img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease, filter .35s ease; }
-#page-ueber-uns .video-carousel-stage iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-#page-ueber-uns .video-carousel-stage::after{
-  content:''; position:absolute; inset:0; background:rgba(0,0,0,0); transition:background .25s ease; pointer-events:none;
-}
-#page-ueber-uns .video-carousel-stage:hover img{ transform:scale(1.04); filter:brightness(0.85); }
-#page-ueber-uns .video-carousel-stage:hover::after{ background:rgba(0,0,0,0.05); }
-#page-ueber-uns .video-carousel-play{ position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; }
-#page-ueber-uns .video-carousel-play svg{ width:72px; height:auto; filter:drop-shadow(0 2px 8px rgba(0,0,0,0.45)); transition:transform .2s ease; }
-#page-ueber-uns .video-carousel-stage:hover .video-carousel-play svg{ transform:scale(1.1); }
-#page-ueber-uns .video-carousel-title{
-  position:absolute; left:0; right:0; bottom:0; padding:28px 16px 12px;
-  background:linear-gradient(transparent, rgba(0,0,0,0.72)); color:#fff; font-size:14px; font-weight:600;
-}
-#page-ueber-uns .video-carousel-thumbs{ display:flex; gap:10px; margin:14px 0 20px; overflow-x:auto; padding-bottom:2px; }
-#page-ueber-uns .video-carousel-thumb{
-  all:unset; display:block; flex-shrink:0; width:104px; aspect-ratio:16/9; border-radius:6px; overflow:hidden;
-  cursor:pointer; border:2px solid transparent; opacity:0.6; transition:opacity .2s ease, border-color .2s ease, transform .15s ease;
-}
-#page-ueber-uns .video-carousel-thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
-#page-ueber-uns .video-carousel-thumb:hover{ opacity:0.9; transform:translateY(-2px); }
-#page-ueber-uns .video-carousel-thumb.active{ opacity:1; border-color:var(--accent); }
-#page-ueber-uns .media-label.media-label-cds{ margin-top:34px; }
-#page-ueber-uns .cd-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:28px; }
-#page-ueber-uns .cd-cover{ display:block; aspect-ratio:1; border-radius:6px; overflow:hidden; background:var(--line2); transition:transform .15s ease, box-shadow .15s ease; }
-#page-ueber-uns .cd-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
-#page-ueber-uns .cd-cover:hover{ transform:translateY(-3px); box-shadow:0 8px 18px rgba(0,0,0,0.14); }
-#page-ueber-uns #ehrenmitglieder a{ color:var(--ink2); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
-#page-ueber-uns #ehrenmitglieder a:hover{ color:var(--accent); text-decoration-color:var(--accent); }
-#page-ueber-uns .timeline{ position:relative; padding-left:24px; max-width:680px; }
-#page-ueber-uns .timeline::before{ content:''; position:absolute; left:0; top:6px; bottom:6px; width:1px; background:var(--line2); }
-#page-ueber-uns .tl-item{ position:relative; padding-bottom:36px; padding-left:24px; }
-#page-ueber-uns .tl-item:last-child{ padding-bottom:0; }
-#page-ueber-uns .tl-item::before{ content:''; position:absolute; left:-24px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--accent); transform:translateX(19.5px); }
-#page-ueber-uns .tl-item .year{ font-size:13px; margin-bottom:6px; display:block; color:var(--accent); }
-#page-ueber-uns .tl-item h3{ font-size:18px; margin-bottom:6px; }
-#page-ueber-uns .tl-item p{ color:var(--gray); font-size:14.5px; max-width:520px; }
+<script>
+  // Programmheft-Flipbook (Archiv 2023) — eigenständig, ohne externe Bibliothek
+  const HEFT_PAGE_COUNT = 52;
+  let heftCurrentPage = 1;
+  let heftFlipbookReady = false;
 
-#page-ueber-uns .funder-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:20px; }
-#page-ueber-uns .funder-box{ border:1px solid var(--line2); border-radius:8px; min-height:80px; padding:12px; display:flex; align-items:center; justify-content:center; text-align:center; color:var(--gray); font-size:12px; line-height:1.35; background:var(--card); }
+  function heftPad(n){ return String(n).padStart(2, '0'); }
+  function heftPagePath(n){ return `heft2023/page-${heftPad(n)}.jpg`; }
 
-#page-ueber-uns .contact-cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:20px; margin-bottom:28px; }
-#page-ueber-uns .contact-card h3{ font-size:16px; margin-bottom:6px; }
-#page-ueber-uns .contact-card p{ font-size:13.5px; color:var(--gray); margin:0 0 10px; line-height:1.5; }
-#page-ueber-uns .contact-email{ font-size:14.5px; font-weight:600; color:var(--accent); }
-#page-ueber-uns .contact-email:hover{ text-decoration:underline; }
-#page-ueber-uns .contact-note{ font-size:13.5px; color:var(--gray); line-height:1.5; max-width:520px; margin:0 0 18px; padding:14px 18px; border:1px solid var(--line2); border-radius:8px; }
-#page-ueber-uns .social-icon-link{ display:inline-flex; align-items:center; gap:6px; font-size:14px; color:var(--ink2); margin-bottom:32px; }
-#page-ueber-uns .social-icon-link:hover{ color:var(--accent); }
-#page-ueber-uns .vereinsdaten{ font-size:13px; color:var(--gray); margin:0 0 10px; }
-#page-ueber-uns .legal-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; font-size:13px; }
-#page-ueber-uns .legal-row a{ color:var(--gray); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
-#page-ueber-uns .legal-row a:hover{ color:var(--ink2); text-decoration-color:var(--ink2); }
-#page-ueber-uns .legal-row-sep{ color:var(--line2); }
-#page-ueber-uns .member-area-label{ color:var(--gray); margin-right:-8px; }
-#page-ueber-uns .map-placeholder{ border:1px solid var(--line2); border-radius:8px; height:220px; background:var(--card); display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
+  function initHeftFlipbook(){
+    if(heftFlipbookReady) return;
+    const activeImg = document.getElementById('fpImgActive');
+    const underImg = document.getElementById('fpImgUnder');
+    if(!activeImg || !underImg) return;
+    heftFlipbookReady = true;
+    renderHeftPage(1);
+  }
 
-/* Presse (shared look, used on both) */
-#page-ueber-uns .press-grid, #page-records .press-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:28px; }
-#page-ueber-uns .quote-card, #page-records .quote-card{ background:var(--card); border:1px solid var(--line2); border-radius:10px; padding:26px; }
-#page-ueber-uns .quote-card p, #page-records .quote-card p{ font-family:'Newsreader',serif; font-style:italic; font-size:18px; line-height:1.5; margin-bottom:14px; }
-#page-ueber-uns .quote-card .source, #page-records .quote-card .source{ font-size:13px; color:var(--gray); }
+  function renderHeftPage(n){
+    const activeImg = document.getElementById('fpImgActive');
+    const underImg = document.getElementById('fpImgUnder');
+    const indicator = document.getElementById('flipbookPageIndicator');
+    if(!activeImg || !underImg) return;
+    heftCurrentPage = n;
+    activeImg.src = heftPagePath(n);
+    underImg.src = n < HEFT_PAGE_COUNT ? heftPagePath(n + 1) : heftPagePath(n);
+    if(indicator) indicator.textContent = n + ' / ' + HEFT_PAGE_COUNT;
+  }
 
-/* records specifics */
-#page-records #veroeffentlichungen{ padding-top:28px; }
-#page-records #veroeffentlichungen h2{ margin-bottom:16px; }
-#page-records .release-quicknav{ display:flex; gap:10px; margin-bottom:20px; }
-#page-records .release-quicknav a{ width:32px; height:32px; border:1px solid var(--line2); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:600; color:var(--gray); }
-#page-records .release-quicknav a:hover{ border-color:var(--accent); color:var(--accent); }
-#page-records .release-block{ padding:44px 0; border-bottom:1px solid var(--line2); scroll-margin-top:90px; }
-#page-records .release-block:first-of-type{ padding-top:0; }
-#page-records .release-block:last-of-type{ border-bottom:none; padding-bottom:0; }
-#page-records .release-num{ font-size:13px; font-family:'IBM Plex Mono',monospace; color:var(--accent); margin-bottom:14px; letter-spacing:0.04em; text-transform:uppercase; }
-#page-records .release{ display:grid; grid-template-columns:280px 1fr; gap:28px; align-items:start; }
-#page-records .cover{ overflow:hidden; }
-#page-records .cover img{ width:100%; height:100%; object-fit:cover; display:block; }
-#page-records .release-card{
-  /* dunkle Kachel: Variablen umdrehen, damit Titel, Tabs, Tracklist etc. automatisch passen */
-  --ink2:#F3EFE8; --gray:#B8B3AA; --line2:rgba(255,255,255,0.16); --card:#2B2825;
-  background:#211E1C; color:var(--ink2); border:none; border-radius:20px; padding:32px 34px;
-}
-@media (max-width:640px){ #page-records .release-card{ padding:24px 22px; border-radius:16px; } }
-#page-records .cover{ aspect-ratio:1; background:var(--line2); border-radius:6px; display:flex; align-items:center; justify-content:center; color:var(--gray); font-size:13px; }
-#page-records .release-meta{ font-size:13px; color:var(--gray); margin-bottom:8px; }
-#page-records .release h3{ font-size:24px; margin-bottom:4px; }
-#page-records .release .artist{ font-size:15px; color:var(--gray); margin-bottom:14px; line-height:1.6; }
-#page-records .release p.desc{ font-size:15px; max-width:560px; margin-bottom:16px; }
-#page-records .stream-list{ display:flex; flex-direction:column; gap:0; }
-#page-records .stream-list a{ display:flex; align-items:center; gap:10px; padding:11px 0; border-bottom:1px solid var(--line2); color:var(--ink2); font-size:14.5px; }
-#page-records .stream-list a:last-child{ border-bottom:none; }
-#page-records .stream-list a svg{ flex-shrink:0; color:var(--accent); }
-#page-records .stream-list a:hover{ color:var(--accent); }
-#page-records .release-tabs{ display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-bottom:16px; }
-#page-records .stream-btn{ display:inline-flex; align-items:center; gap:6px; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; background:var(--accent); color:#fff; margin-left:auto; }
-#page-records .details-toggle{ all:unset; display:none; align-items:center; gap:6px; cursor:pointer; font-size:13px; font-weight:600; color:var(--accent); }
-#page-records .details-toggle .arrow{ font-size:11px; transition:transform .2s ease; }
-#page-records .details-toggle.open .arrow{ transform:rotate(180deg); }
-@media (max-width:640px){
-  #page-records .release-tabs{ position:relative; }
-  #page-records .stream-btn{ order:-1; flex:0 0 100%; justify-content:center; margin:0 0 6px; }
-  #page-records .tab-btn{ order:0; }
-  #page-records .details-toggle{ display:flex; order:2; margin-left:auto; }
-  #page-records .release-details{ display:none; flex-basis:100%; }
-  #page-records .release-details.open{ display:block; }
-}
-#page-records .stream-btn:hover{ opacity:0.85; }
-#page-records .tab-btn{ font-family:'Inter',sans-serif; font-size:13.5px; font-weight:600; padding:7px 16px; border-radius:999px; border:1px solid var(--line2); background:var(--card); color:var(--gray); cursor:pointer; }
-#page-records .tab-btn.active{ background:var(--accent); color:#fff; border-color:var(--accent); }
-#page-records .tab-panel{ display:none; }
-#page-records .tab-panel.active{ display:block; }
-#page-records .video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:8px; overflow:hidden; }
-#page-records .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
-#page-records .tracklist{ margin:0; padding-left:0; list-style:none; max-width:100%; }
-#page-records .tracklist li{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; font-size:14px; padding:9px 0; border-bottom:1px solid var(--line2); color:var(--gray); }
-#page-records .track-info{ display:flex; flex-direction:column; gap:2px; }
-#page-records .track-title{ color:var(--ink2); }
-#page-records .track-composer{ font-size:12px; color:var(--gray); }
-#page-records .track-duration{ flex-shrink:0; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--gray); padding-top:1px; }
-#page-records .stream-links{ display:flex; gap:14px; flex-wrap:wrap; }
-#page-records .stream-links a{ font-size:13px; border:1px solid var(--line2); border-radius:999px; padding:6px 14px; background:var(--card); }
-#page-records .stream-links a:hover{ border-color:var(--ink2); }
+  function heftFlipTo(n){
+    if(n < 1 || n > HEFT_PAGE_COUNT) return;
+    const el = document.getElementById('fpActive');
+    if(!el) return;
+    el.style.transform = 'rotateY(-100deg)';
+    setTimeout(() => {
+      renderHeftPage(n);
+      el.style.transition = 'none';
+      el.style.transform = 'rotateY(0deg)';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { el.style.transition = 'transform .45s ease'; });
+      });
+    }, 260);
+  }
 
-@media (max-width:640px){
-  #page-ueber-uns .contact-cards{ grid-template-columns:1fr; }
-  #page-records .release{ grid-template-columns:1fr; }
-  #page-records .cover{ max-width:220px; }
-}
+  function flipbookPrev(){ heftFlipTo(heftCurrentPage - 1); }
+  function flipbookNext(){ heftFlipTo(heftCurrentPage + 1); }
+
+  window.addEventListener('DOMContentLoaded', initHeftFlipbook);
+  window.addEventListener('hashchange', () => { setTimeout(initHeftFlipbook, 50); });
+</script>
+</body>
+</html>
