@@ -465,6 +465,7 @@ html[lang="en"] .legal-note{ display:block; }
 #page-ueber-uns .social-icon-link:hover{ color:var(--accent); }
 #page-ueber-uns .vereinsdaten{ font-size:13px; color:var(--gray); margin:0 0 10px; }
 #page-ueber-uns .legal-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; font-size:13px; }
+#page-ueber-uns .legal-break{ display:none; }
 #page-ueber-uns .legal-row a{ color:var(--gray); text-decoration:underline; text-decoration-color:var(--line2); text-underline-offset:3px; }
 #page-ueber-uns .legal-row a:hover{ color:var(--ink2); text-decoration-color:var(--ink2); }
 #page-ueber-uns .legal-row-sep{ color:var(--line2); }
@@ -538,6 +539,9 @@ html[lang="en"] .legal-note{ display:block; }
 
 @media (max-width:640px){
   #page-ueber-uns .contact-cards{ grid-template-columns:1fr; }
+  #page-ueber-uns .legal-row{ row-gap:6px; }
+  #page-ueber-uns .legal-break{ display:block; flex-basis:100%; height:0; }
+  #page-ueber-uns .legal-row-sep{ display:none; }
   #page-records .release{ grid-template-columns:1fr; }
   #page-records .cover{ max-width:220px; }
 }
