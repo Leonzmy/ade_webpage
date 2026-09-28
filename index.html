@@ -16,12 +16,12 @@
 <div class="page" id="page-ueber-uns">
   <header>
           <div class="wrap">
-        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite" data-i18n-aria="aria.home"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
               <a href="#festival" class="year-big">Festival 2027</a>
-              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre" data-i18n-aria="aria.years">▾</button>
             </div>
             <div class="year-dropdown">
               <div class="year-dropdown-list"></div>
@@ -30,21 +30,21 @@
           <nav class="header-nav">
           <div class="nav-item">
             <div class="nav-item-toggle">
-              <a href="#ueber-uns" class="current">Über uns</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+              <a href="#ueber-uns" class="current" data-i18n="nav.about">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns" data-i18n-aria="aria.about">▾</button>
             </div>
             <div class="nav-dropdown">
-              <a href="#off-season">Kommende Veranstaltungen</a>
-              <a href="#intro">Über uns</a>
+              <a href="#off-season" data-i18n="nav.events">Kommende Veranstaltungen</a>
+              <a href="#intro" data-i18n="nav.about">Über uns</a>
               <a href="#team">Team</a>
-              <a href="#presse">Presse</a>
-              <a href="#kontakt">Kontakt</a>
+              <a href="#presse" data-i18n="nav.press">Presse</a>
+              <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
             </div>
           </div>
           <div class="nav-item">
             <div class="nav-item-toggle">
               <a href="#records">aDevantgarde records</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records" data-i18n-aria="aria.records">▾</button>
             </div>
             <div class="nav-dropdown">
               <a href="#records-release-3">Schoeck vs. Bauer</a>
@@ -53,6 +53,9 @@
             </div>
           </div>
           </nav>
+          <div class="lang-switch" role="group" aria-label="Sprache / Language">
+            <button type="button" data-lang="de" onclick="setLang('de')">DE</button><span aria-hidden="true">/</span><button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </div>
   </header>
@@ -66,10 +69,10 @@
 
   <section id="off-season">
     <div class="wrap">
-      <h2>Kommende Veranstaltungen</h2>
-      <p class="offseason-legend" id="offseasonLegend" hidden>Konzerte von <span class="offseason-own-tag">aDevantgarde</span> und von unseren Mitgliedern</p>
+      <h2 data-i18n="nav.events">Kommende Veranstaltungen</h2>
+      <p class="offseason-legend" id="offseasonLegend" hidden data-i18n="off.legend">Konzerte von <span class="offseason-own-tag">aDevantgarde</span> und von unseren Mitgliedern</p>
       <div class="offseason-list" id="offseasonList">
-        <p class="offseason-empty">Aktuell keine bestätigten Termine — schau bald wieder vorbei.</p>
+        <p class="offseason-empty" data-i18n="off.empty">Aktuell keine bestätigten Termine — schau bald wieder vorbei.</p>
       </div>
     </div>
   </section>
@@ -77,10 +80,10 @@
   <section id="intro">
     <div class="wrap">
       <div class="dark-tile">
-      <h2>Über uns</h2>
-      <p class="intro-text">Wir sind ein Verein Münchner Komponistinnen und Komponisten mit einer gemeinsamen Leidenschaft für Neue Musik. Uns treibt an, die Szene vor Ort zu stärken und international zu vernetzen.</p>
-      <p class="intro-text">Gegründet wurde aDevantgarde 1991 auf Initiative Wilhelm Killmayers von dessen Studierenden – als A/DEvantgarde – Projekte Neuer Musik e.V. Ursprünglich verstanden wir uns als Gegenbewegung zum klassischen Neue-Musik-Festival. Dieses Format gibt es in der Form heute kaum noch – wir sind trotzdem geblieben und machen weiterhin, was uns begeistert: frische Ideen auf hohem künstlerischen Niveau, etabliert und experimentell.</p>
-      <p class="intro-text">Alle zwei Jahre zeigen wir das auf unserem aDevantgarde-Festival. Dazwischen mit Konzertprojekten im Off-Season-Programm – etwa der Konzertreihe „Neuer Hoargartn".</p>
+      <h2 data-i18n="nav.about">Über uns</h2>
+      <p class="intro-text" data-i18n="intro.1">Wir sind ein Verein Münchner Komponistinnen und Komponisten mit einer gemeinsamen Leidenschaft für Neue Musik. Uns treibt an, die Szene vor Ort zu stärken und international zu vernetzen.</p>
+      <p class="intro-text" data-i18n="intro.2">Gegründet wurde aDevantgarde 1991 auf Initiative Wilhelm Killmayers von dessen Studierenden – als A/DEvantgarde – Projekte Neuer Musik e.V. Ursprünglich verstanden wir uns als Gegenbewegung zum klassischen Neue-Musik-Festival. Dieses Format gibt es in der Form heute kaum noch – wir sind trotzdem geblieben und machen weiterhin, was uns begeistert: frische Ideen auf hohem künstlerischen Niveau, etabliert und experimentell.</p>
+      <p class="intro-text" data-i18n="intro.3">Alle zwei Jahre zeigen wir das auf unserem aDevantgarde-Festival. Dazwischen mit Konzertprojekten im Off-Season-Programm – etwa der Konzertreihe „Neuer Hoargartn".</p>
       </div>
     </div>
   </section>
@@ -90,19 +93,19 @@
       <h2>Team</h2>
 
       <div class="team-grid" id="teamGrid">
-        <p class="offseason-empty">Team wird geladen …</p>
+        <p class="offseason-empty" data-i18n="team.loading">Team wird geladen …</p>
       </div>
     </div>
   </section>
 
   <section id="ehrenmitglieder">
     <div class="wrap">
-      <h2>Ehrenmitglieder</h2>
+      <h2 data-i18n="hon.title">Ehrenmitglieder</h2>
       <p style="font-size:16px; color:var(--gray); line-height:1.8; max-width:680px;">
         <a href="https://de.schott-music.com/shop/autoren/wilhelm-killmayer" target="_blank" rel="noopener">Wilhelm Killmayer †</a>,
-        <a href="http://www.moritzeggert.de/" target="_blank" rel="noopener">Moritz Eggert</a> (Ehrenvorsitzender),
+        <a href="http://www.moritzeggert.de/" target="_blank" rel="noopener">Moritz Eggert</a> <span data-i18n="hon.chair">(Ehrenvorsitzender)</span>,
         <a href="https://de.wikipedia.org/wiki/Sandeep_Bhagwati" target="_blank" rel="noopener">Sandeep Bhagwati</a>,
-        <a href="http://musikverlag-nickel.eu/Schmitt/" target="_blank" rel="noopener">Markus Schmitt</a> und
+        <a href="http://musikverlag-nickel.eu/Schmitt/" target="_blank" rel="noopener">Markus Schmitt</a> <span data-i18n="hon.and">und</span>
         <a href="http://www.bernhardweidner.de/" target="_blank" rel="noopener">Bernhard Weidner</a>
       </p>
     </div>
@@ -111,16 +114,16 @@
   <section id="medien">
     <div class="wrap">
       <div class="dark-tile">
-      <h2>Medien</h2>
+      <h2 data-i18n="media.title">Medien</h2>
 
       <span class="section-label media-label">YouTube</span>
       <div class="video-carousel-wrap">
         <div class="video-carousel" id="videoCarousel">
-          <p class="videos-status">Videos werden geladen …</p>
+          <p class="videos-status" data-i18n="videos.loading">Videos werden geladen …</p>
         </div>
         <div class="video-carousel-thumbs" id="videoThumbs"></div>
       </div>
-      <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" class="offseason-link">Zum YouTube-Kanal ↗</a>
+      <a href="https://www.youtube.com/@adevantgarde1845" target="_blank" rel="noopener" class="offseason-link" data-i18n="media.yt">Zum YouTube-Kanal ↗</a>
 
       <span class="section-label media-label media-label-cds">aDevantgarde records</span>
       <div class="cd-grid">
@@ -134,12 +137,12 @@
 
   <section id="presse">
     <div class="wrap">
-      <h2>Presse</h2>
-      <p class="intro-text">Presseinformationen zum kommenden Festival folgen in Kürze. Für Presseanfragen: <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a></p>
+      <h2 data-i18n="nav.press">Presse</h2>
+      <p class="intro-text" data-i18n="press.intro">Presseinformationen zum kommenden Festival folgen in Kürze. Für Presseanfragen: <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a></p>
 
       <div class="press-toggle-block">
         <button type="button" class="press-toggle" onclick="togglePress(this)">
-          Pressemeldungen <span class="arrow">▾</span>
+          <span data-i18n="press.files">Pressemeldungen</span> <span class="arrow">▾</span>
         </button>
         <div class="press-toggle-body">
           <ul class="press-file-list">
@@ -152,27 +155,27 @@
 
   <section id="kontakt">
     <div class="wrap">
-      <h2>Kontakt</h2>
+      <h2 data-i18n="nav.contact">Kontakt</h2>
 
       <div class="contact-cards">
         <div class="contact-card dark-tile">
-          <h3>Allgemein</h3>
-          <p>Fragen rund um Verein und Festival.</p>
+          <h3 data-i18n="contact.general">Allgemein</h3>
+          <p data-i18n="contact.general.t">Fragen rund um Verein und Festival.</p>
           <a href="mailto:leitung@adevantgarde.de" class="contact-email">leitung@adevantgarde.de</a>
         </div>
         <div class="contact-card dark-tile">
-          <h3>Mitglied werden</h3>
-          <p>Formlose Mail mit kurzer Vorstellung.</p>
+          <h3 data-i18n="contact.member">Mitglied werden</h3>
+          <p data-i18n="contact.member.t">Formlose Mail mit kurzer Vorstellung.</p>
           <a href="mailto:kbb@adevantgarde.de" class="contact-email">kbb@adevantgarde.de</a>
         </div>
         <div class="contact-card dark-tile">
-          <h3>Presse</h3>
-          <p>Presseanfragen und Medienmaterial.</p>
+          <h3 data-i18n="nav.press">Presse</h3>
+          <p data-i18n="contact.press.t">Presseanfragen und Medienmaterial.</p>
           <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a>
         </div>
       </div>
 
-      <p class="contact-note">Blindbewerbungen von Interpret:innen, Kunstschaffenden und Agenturen sind leider nicht möglich.</p>
+      <p class="contact-note" data-i18n="contact.note">Blindbewerbungen von Interpret:innen, Kunstschaffenden und Agenturen sind leider nicht möglich.</p>
 
       <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener" class="social-icon-link">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
@@ -181,11 +184,11 @@
 
       <p class="vereinsdaten">A/DEvantgarde e.V. – Projekte Neuer Musik München, VR 13428</p>
       <div class="legal-row">
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutzerklärung</a>
-        <a href="satzung.pdf" target="_blank" rel="noopener">Satzung (PDF)</a>
+        <a href="impressum.html" data-i18n="legal.imprint">Impressum</a>
+        <a href="datenschutz.html" data-i18n="legal.privacy">Datenschutzerklärung</a>
+        <a href="satzung.pdf" target="_blank" rel="noopener" data-i18n="legal.statutes">Satzung (PDF)</a>
         <span class="legal-row-sep">·</span>
-        <span class="member-area-label">Mitgliederbereich:</span>
+        <span class="member-area-label" data-i18n="legal.members">Mitgliederbereich:</span>
         <a href="https://www.campai.com/" target="_blank" rel="noopener">Campai</a>
         <a href="https://leonzmy.github.io/ade_intranet/" target="_blank" rel="noopener">Intranet</a>
       </div>
@@ -195,7 +198,6 @@
   <footer>
     <div class="wrap">
       <span>© aDevantgarde e.V.</span>
-      <span>Mockup-Entwurf, Stand Juli 2026</span>
     </div>
   </footer>
 </div>
@@ -206,12 +208,12 @@
 <div class="page" id="page-records">
   <header>
           <div class="wrap">
-        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite" data-i18n-aria="aria.home"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
               <a href="#festival" class="year-big">Festival 2027</a>
-              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre" data-i18n-aria="aria.years">▾</button>
             </div>
             <div class="year-dropdown">
               <div class="year-dropdown-list"></div>
@@ -220,21 +222,21 @@
           <nav class="header-nav">
           <div class="nav-item">
             <div class="nav-item-toggle">
-              <a href="#ueber-uns">Über uns</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+              <a href="#ueber-uns" data-i18n="nav.about">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns" data-i18n-aria="aria.about">▾</button>
             </div>
             <div class="nav-dropdown">
-              <a href="#off-season">Kommende Veranstaltungen</a>
-              <a href="#intro">Über uns</a>
+              <a href="#off-season" data-i18n="nav.events">Kommende Veranstaltungen</a>
+              <a href="#intro" data-i18n="nav.about">Über uns</a>
               <a href="#team">Team</a>
-              <a href="#presse">Presse</a>
-              <a href="#kontakt">Kontakt</a>
+              <a href="#presse" data-i18n="nav.press">Presse</a>
+              <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
             </div>
           </div>
           <div class="nav-item">
             <div class="nav-item-toggle">
               <a href="#records" class="current">aDevantgarde records</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records" data-i18n-aria="aria.records">▾</button>
             </div>
             <div class="nav-dropdown">
               <a href="#records-release-3">Schoeck vs. Bauer</a>
@@ -243,6 +245,9 @@
             </div>
           </div>
           </nav>
+          <div class="lang-switch" role="group" aria-label="Sprache / Language">
+            <button type="button" data-lang="de" onclick="setLang('de')">DE</button><span aria-hidden="true">/</span><button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </div>
   </header>
@@ -252,14 +257,14 @@
     <div class="wrap">
       <span class="eyebrow">Label</span>
       <h1>aDevantgarde records</h1>
-      <p>Unser Label dokumentiert Produktionen aus dem Festivalumfeld dauerhaft — als physische und digitale Veröffentlichungen, unabhängig vom zweijährigen Festivalrhythmus.</p>
+      <p data-i18n="rec.hero">Unser Label dokumentiert Produktionen aus dem Festivalumfeld dauerhaft — als physische und digitale Veröffentlichungen, unabhängig vom zweijährigen Festivalrhythmus.</p>
     </div>
   </section>
 
   <section id="veroeffentlichungen">
     <div class="wrap">
-      <span class="section-label">Veröffentlichungen</span>
-      <h2>Alle Releases</h2>
+      <span class="section-label" data-i18n="rec.releases">Veröffentlichungen</span>
+      <h2 data-i18n="rec.all">Alle Releases</h2>
       <div class="release-quicknav">
         <a href="#records-release-1">1</a>
         <a href="#records-release-2">2</a>
@@ -274,16 +279,16 @@
           </div>
           <div class="release-card">
             <h3>SCHOECK vs. BAUER oder WHAT FUTURES ARE YOU LONGING FOR?</h3>
-            <div class="artist">Komponisten: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Interpreten: Robert Koller (Bariton), Stefan Kägi (Klavier), Gunnar Geisse (Laptop Guitar)</div>
+            <div class="artist" data-i18n="r3.artist">Komponisten: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Interpreten: Robert Koller (Bariton), Stefan Kägi (Klavier), Gunnar Geisse (Laptop Guitar)</div>
             <div class="release-tabs">
-              <button class="tab-btn active" onclick="switchTab('r3','info',this)">Infotext</button>
+              <button class="tab-btn active" onclick="switchTab('r3','info',this)" data-i18n="rec.info">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r3','tracks',this)">Tracklist</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0003" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
               <button type="button" class="details-toggle" onclick="toggleReleaseDetails(this)">Details <span class="arrow">▾</span></button>
             </div>
             <div class="release-details">
             <div class="tab-panel active" id="r3-info">
-              <p class="desc">Im Sommer 2018 gräbt der Schweizer Pianist Stefan Kägi den Liedzyklus Nachhall, op. 70 für Stimme und Orchester des Schweizer Komponisten Othmar Schoeck (1886-1957) aus. Der wegen seiner technischen und interpretatorischen Herausforderung nur selten gespielte Liedzyklus Nachhall, op. 70 liegt hier als Ersteinspielung für Stimme und Klavier vor. Stefan Kägi und Michael Emanuel Bauer, die beide ein großes Faible für k-punk aka Mark Fisher haben, insbesondere für dessen Buch Ghosts of my Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014), finden, dass es doch gar keine schlechte Idee wäre, Schoecks Liedzyklus daher aus dem Geist der Derrida'schen Hauntology neu zu betrachten. Die hier vorliegende Ersteinspielung stellt die beiden Zyklen gegenüber. Unmittelbar nach dem jeweiligen Lied von Othmar Schoeck folgt die entsprechende Fortschreibung von Michael Emanuel Bauer. Bauers Fortschreibung macht auch nicht Halt vor den Texten von Matthias Claudius und Nikolaus Lenau. In der Tradition von Raymond Queneau und der Gruppe Oulipo werden die Texte formal-lettristisch dekonstruiert und neu zusammengesetzt.</p>
+              <p class="desc" data-i18n="r3.desc">Im Sommer 2018 gräbt der Schweizer Pianist Stefan Kägi den Liedzyklus Nachhall, op. 70 für Stimme und Orchester des Schweizer Komponisten Othmar Schoeck (1886-1957) aus. Der wegen seiner technischen und interpretatorischen Herausforderung nur selten gespielte Liedzyklus Nachhall, op. 70 liegt hier als Ersteinspielung für Stimme und Klavier vor. Stefan Kägi und Michael Emanuel Bauer, die beide ein großes Faible für k-punk aka Mark Fisher haben, insbesondere für dessen Buch Ghosts of my Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014), finden, dass es doch gar keine schlechte Idee wäre, Schoecks Liedzyklus daher aus dem Geist der Derrida'schen Hauntology neu zu betrachten. Die hier vorliegende Ersteinspielung stellt die beiden Zyklen gegenüber. Unmittelbar nach dem jeweiligen Lied von Othmar Schoeck folgt die entsprechende Fortschreibung von Michael Emanuel Bauer. Bauers Fortschreibung macht auch nicht Halt vor den Texten von Matthias Claudius und Nikolaus Lenau. In der Tradition von Raymond Queneau und der Gruppe Oulipo werden die Texte formal-lettristisch dekonstruiert und neu zusammengesetzt.</p>
             </div>
             <div class="tab-panel" id="r3-tracks">
               <ul class="tracklist">
@@ -330,9 +335,9 @@
           </div>
           <div class="release-card">
             <h3>AN EARTH SYMPHONY</h3>
-            <div class="artist">Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (Dirigent) · Jung-Eun Shin (Violine)</div>
+            <div class="artist" data-i18n="r2.artist">Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (Dirigent) · Jung-Eun Shin (Violine)</div>
             <div class="release-tabs">
-              <button class="tab-btn active" onclick="switchTab('r2','info',this)">Infotext</button>
+              <button class="tab-btn active" onclick="switchTab('r2','info',this)" data-i18n="rec.info">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r2','tracks',this)">Tracklist</button>
               <button class="tab-btn" onclick="switchTab('r2','trailer',this)">Trailer</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0002" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
@@ -340,7 +345,7 @@
             </div>
             <div class="release-details">
             <div class="tab-panel active" id="r2-info">
-              <p class="desc">Mit der zweiten Veröffentlichung in der Live-Reihe unseres Labels präsentieren wir die Einspielung der Augsburger Philharmoniker unter Domonkos Héja und mit Jung-Eun Shin an der Solo-Violine der 4. Sinfonie („An Earth Symphony") von Tobias PM Schneid. Tobias PM Schneids „Earth Symphony" ist kein verklärender Hymnus auf den Planeten Erde, sondern ein großorchestraler Aufschrei, ein Fanal, um auch im Konzertsaal auf die prekäre Klimasituation und die Dringlichkeit eines bewussten und achtsamen Umgangs mit den Ressourcen dieses Planeten zu verweisen. Die fünf Sätze der Sinfonie – Magma, Water, Tree, Desert und Air – kommentieren auf je eigene Weise das „Aus den Fugen geraten"-Sein unseres Ökosystems, und thematisieren die Zersetzungsprozesse, denen dieses System durch menschliches Handeln ausgesetzt ist. Kein musikalischer Ökothriller, sondern ein Mahnmal mit der Aufforderung verantwortungsbewusst zu handeln.</p>
+              <p class="desc" data-i18n="r2.desc">Mit der zweiten Veröffentlichung in der Live-Reihe unseres Labels präsentieren wir die Einspielung der Augsburger Philharmoniker unter Domonkos Héja und mit Jung-Eun Shin an der Solo-Violine der 4. Sinfonie („An Earth Symphony") von Tobias PM Schneid. Tobias PM Schneids „Earth Symphony" ist kein verklärender Hymnus auf den Planeten Erde, sondern ein großorchestraler Aufschrei, ein Fanal, um auch im Konzertsaal auf die prekäre Klimasituation und die Dringlichkeit eines bewussten und achtsamen Umgangs mit den Ressourcen dieses Planeten zu verweisen. Die fünf Sätze der Sinfonie – Magma, Water, Tree, Desert und Air – kommentieren auf je eigene Weise das „Aus den Fugen geraten"-Sein unseres Ökosystems, und thematisieren die Zersetzungsprozesse, denen dieses System durch menschliches Handeln ausgesetzt ist. Kein musikalischer Ökothriller, sondern ein Mahnmal mit der Aufforderung verantwortungsbewusst zu handeln.</p>
             </div>
             <div class="tab-panel" id="r2-tracks">
               <ul class="tracklist">
@@ -369,7 +374,7 @@
             <h3>ZENTAUR – QUARTET</h3>
             <div class="artist">string quartets by aDevantgarde composers · Zentaur-Quartett</div>
             <div class="release-tabs">
-              <button class="tab-btn active" onclick="switchTab('r1','info',this)">Infotext</button>
+              <button class="tab-btn active" onclick="switchTab('r1','info',this)" data-i18n="rec.info">Infotext</button>
               <button class="tab-btn" onclick="switchTab('r1','tracks',this)">Tracklist</button>
               <button class="tab-btn" onclick="switchTab('r1','trailer',this)">Trailer</button>
               <a class="stream-btn" href="https://adevantgarde.lnk.to/ar0001" target="_blank" rel="noopener"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M9 8l6 4-6 4z"/></svg>Stream</a>
@@ -377,9 +382,9 @@
             </div>
             <div class="release-details">
             <div class="tab-panel active" id="r1-info">
-              <p class="desc">Das im Jahr 2023 neu gegründete Label aDevantgarde records aus München widmet sich zeitgenössischer Musik mit vielfältigen Erscheinungsformen und Stilistiken. Das Debütalbum versammelt dreizehn Streichquartette, die zwischen 1997 und 2019 entstanden sind. Die CD ist das erste Produkt dieser neuen Reihe.</p>
-              <p class="desc">Das Zentaur-Quartett spielte Werke von Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch und Bernhard Weidner ein, die einen Querschnitt durch mehr als dreißig Jahre aDevantgarde darstellen.</p>
-              <p class="desc">Annette Fritz (1. Violine), Marc Kaufmann (2. Violine), Katharina Schmauder (Viola) und Caio de Azevedo (Violoncello) stellen mit dieser CD-Produktion einmal mehr ihr herausragendes Können und Engagement für zeitgenössische Kompositionen unter Beweis.</p>
+              <p class="desc" data-i18n="r1.desc1">Das im Jahr 2023 neu gegründete Label aDevantgarde records aus München widmet sich zeitgenössischer Musik mit vielfältigen Erscheinungsformen und Stilistiken. Das Debütalbum versammelt dreizehn Streichquartette, die zwischen 1997 und 2019 entstanden sind. Die CD ist das erste Produkt dieser neuen Reihe.</p>
+              <p class="desc" data-i18n="r1.desc2">Das Zentaur-Quartett spielte Werke von Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch und Bernhard Weidner ein, die einen Querschnitt durch mehr als dreißig Jahre aDevantgarde darstellen.</p>
+              <p class="desc" data-i18n="r1.desc3">Annette Fritz (1. Violine), Marc Kaufmann (2. Violine), Katharina Schmauder (Viola) und Caio de Azevedo (Violoncello) stellen mit dieser CD-Produktion einmal mehr ihr herausragendes Können und Engagement für zeitgenössische Kompositionen unter Beweis.</p>
             </div>
             <div class="tab-panel" id="r1-tracks">
               <ul class="tracklist">
@@ -414,7 +419,6 @@
   <footer>
     <div class="wrap">
       <span>© aDevantgarde records</span>
-      <span>Mockup-Entwurf, Stand Juli 2026</span>
     </div>
   </footer>
 </div>
@@ -425,12 +429,12 @@
 <div class="page" id="page-festival">
   <header>
           <div class="wrap">
-        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite" data-i18n-aria="aria.home"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
         <div class="header-bottom-row">
           <div class="year-block">
             <div class="year-toggle">
               <a href="#festival" class="year-big">Festival 2027</a>
-              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre" data-i18n-aria="aria.years">▾</button>
             </div>
             <div class="year-dropdown">
               <div class="year-dropdown-list"></div>
@@ -439,21 +443,21 @@
           <nav class="header-nav">
           <div class="nav-item">
             <div class="nav-item-toggle">
-              <a href="#ueber-uns">Über uns</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+              <a href="#ueber-uns" data-i18n="nav.about">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns" data-i18n-aria="aria.about">▾</button>
             </div>
             <div class="nav-dropdown">
-              <a href="#off-season">Kommende Veranstaltungen</a>
-              <a href="#intro">Über uns</a>
+              <a href="#off-season" data-i18n="nav.events">Kommende Veranstaltungen</a>
+              <a href="#intro" data-i18n="nav.about">Über uns</a>
               <a href="#team">Team</a>
-              <a href="#presse">Presse</a>
-              <a href="#kontakt">Kontakt</a>
+              <a href="#presse" data-i18n="nav.press">Presse</a>
+              <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
             </div>
           </div>
           <div class="nav-item">
             <div class="nav-item-toggle">
               <a href="#records">aDevantgarde records</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records" data-i18n-aria="aria.records">▾</button>
             </div>
             <div class="nav-dropdown">
               <a href="#records-release-3">Schoeck vs. Bauer</a>
@@ -462,23 +466,26 @@
             </div>
           </div>
           </nav>
+          <div class="lang-switch" role="group" aria-label="Sprache / Language">
+            <button type="button" data-lang="de" onclick="setLang('de')">DE</button><span aria-hidden="true">/</span><button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </div>
   </header>
 
   <section class="fest-stage" id="festStage" aria-label="19. aDevantgarde-Festival – URGENT">
-    <h1 class="sr-only">19. aDevantgarde-Festival – URGENT</h1>
+    <h1 class="sr-only" data-i18n="fest.h1">19. aDevantgarde-Festival – URGENT</h1>
     <div class="fest-copy" id="festCopy">
       <div class="fest-copy-inner">
-        <p class="fest-lead">Das 19. aDevantgarde-Festival findet unter dem Motto „<strong>URGENT</strong>“ vom 22.06. bis 03.07. in München statt.</p>
-        <p>Wir bringen regionale und internationale Akteure der freien Szene auf die Bühne und präsentieren unterschiedliche Formate – von klassischen Konzerten bis zu einem Escape Room.</p>
-        <p>Das genaue Programm wird im Februar 2027 veröffentlicht.</p>
-        <p>Bleibt auf dem Laufenden auf <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.</p>
+        <p class="fest-lead" data-i18n="fest.lead">Das 19. aDevantgarde-Festival findet unter dem Motto „<strong>URGENT</strong>“ vom 22.06. bis 03.07. in München statt.</p>
+        <p data-i18n="fest.p1">Wir bringen regionale und internationale Akteure der freien Szene auf die Bühne und präsentieren unterschiedliche Formate – von klassischen Konzerten bis zu einem Escape Room.</p>
+        <p data-i18n="fest.p2">Das genaue Programm wird im Februar 2027 veröffentlicht.</p>
+        <p data-i18n="fest.p3">Bleibt auf dem Laufenden auf <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.</p>
       </div>
     </div>
     <img class="fest-stamp" id="festStamp" src="urgent-stamp.png" alt="URGENT – Stempel" width="1600" height="1210">
-    <button type="button" class="fest-hint" id="festHint" aria-label="Weiterlesen">
-      <span>scrollen</span>
+    <button type="button" class="fest-hint" id="festHint" aria-label="Weiterlesen" data-i18n-aria="aria.hint">
+      <span data-i18n="fest.scroll">scrollen</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
     </button>
   </section>
@@ -491,33 +498,33 @@
 <div class="page" id="page-archiv-2025">
   <header>
           <div class="wrap">
-        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite" data-i18n-aria="aria.home"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2025">
             <div class="year-toggle">
               <a href="#archiv-2025" class="year-big">Festival 2025</a>
-              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre" data-i18n-aria="aria.years">▾</button>
             </div>
             <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
           </div>
           <nav class="header-nav">
           <div class="nav-item">
             <div class="nav-item-toggle">
-              <a href="#ueber-uns">Über uns</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+              <a href="#ueber-uns" data-i18n="nav.about">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns" data-i18n-aria="aria.about">▾</button>
             </div>
             <div class="nav-dropdown">
-              <a href="#off-season">Kommende Veranstaltungen</a>
-              <a href="#intro">Über uns</a>
+              <a href="#off-season" data-i18n="nav.events">Kommende Veranstaltungen</a>
+              <a href="#intro" data-i18n="nav.about">Über uns</a>
               <a href="#team">Team</a>
-              <a href="#presse">Presse</a>
-              <a href="#kontakt">Kontakt</a>
+              <a href="#presse" data-i18n="nav.press">Presse</a>
+              <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
             </div>
           </div>
           <div class="nav-item">
             <div class="nav-item-toggle">
               <a href="#records">aDevantgarde records</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records" data-i18n-aria="aria.records">▾</button>
             </div>
             <div class="nav-dropdown">
               <a href="#records-release-3">Schoeck vs. Bauer</a>
@@ -526,12 +533,15 @@
             </div>
           </div>
           </nav>
+          <div class="lang-switch" role="group" aria-label="Sprache / Language">
+            <button type="button" data-lang="de" onclick="setLang('de')">DE</button><span aria-hidden="true">/</span><button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </div>
   </header>
 
 
-  <div class="archiv-banner">Archiv — 18. aDevantgarde-Festival 2025</div>
+  <div class="archiv-banner" data-i18n="arch.2025">Archiv — 18. aDevantgarde-Festival 2025</div>
 
   <div class="wp-wrap">
     <div class="wp-hero">
@@ -662,33 +672,33 @@
 <div class="page" id="page-archiv-2023">
   <header>
           <div class="wrap">
-        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
+        <a href="#ueber-uns" class="logo-link" aria-label="Zur Startseite" data-i18n-aria="aria.home"><img class="site-logo" src="aDevantgarde-logo.png" alt="aDevantgarde"></a>
         <div class="header-bottom-row">
           <div class="year-block" data-default-year="2023">
             <div class="year-toggle">
               <a href="#archiv-2023" class="year-big">Festival 2023</a>
-              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre">▾</button>
+              <button type="button" class="year-arrow-btn" onclick="toggleYearDropdown(this)" aria-label="Weitere Jahre" data-i18n-aria="aria.years">▾</button>
             </div>
             <div class="year-dropdown"><div class="year-dropdown-list"></div></div>
           </div>
           <nav class="header-nav">
           <div class="nav-item">
             <div class="nav-item-toggle">
-              <a href="#ueber-uns">Über uns</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns">▾</button>
+              <a href="#ueber-uns" data-i18n="nav.about">Über uns</a>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Unterseiten von Über uns" data-i18n-aria="aria.about">▾</button>
             </div>
             <div class="nav-dropdown">
-              <a href="#off-season">Kommende Veranstaltungen</a>
-              <a href="#intro">Über uns</a>
+              <a href="#off-season" data-i18n="nav.events">Kommende Veranstaltungen</a>
+              <a href="#intro" data-i18n="nav.about">Über uns</a>
               <a href="#team">Team</a>
-              <a href="#presse">Presse</a>
-              <a href="#kontakt">Kontakt</a>
+              <a href="#presse" data-i18n="nav.press">Presse</a>
+              <a href="#kontakt" data-i18n="nav.contact">Kontakt</a>
             </div>
           </div>
           <div class="nav-item">
             <div class="nav-item-toggle">
               <a href="#records">aDevantgarde records</a>
-              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records">▾</button>
+              <button type="button" class="nav-arrow-btn" onclick="toggleNavDropdown(this)" aria-label="Alben von aDevantgarde records" data-i18n-aria="aria.records">▾</button>
             </div>
             <div class="nav-dropdown">
               <a href="#records-release-3">Schoeck vs. Bauer</a>
@@ -697,28 +707,147 @@
             </div>
           </div>
           </nav>
+          <div class="lang-switch" role="group" aria-label="Sprache / Language">
+            <button type="button" data-lang="de" onclick="setLang('de')">DE</button><span aria-hidden="true">/</span><button type="button" data-lang="en" onclick="setLang('en')">EN</button>
+          </div>
         </div>
       </div>
   </header>
 
 
-  <div class="archiv-banner">Archiv — 17. aDevantgarde-Festival 2023 · BIEDER_MEIER_X</div>
+  <div class="archiv-banner" data-i18n="arch.2023">Archiv — 17. aDevantgarde-Festival 2023 · BIEDER_MEIER_X</div>
 
   <div class="flipbook-wrap">
-    <h1 class="flipbook-title">Programmheft <span>BIEDER_MEIER_X</span></h1>
+    <h1 class="flipbook-title" data-i18n="flip.title">Programmheft <span>BIEDER_MEIER_X</span></h1>
     <div class="flipbook-stage">
       <div class="flip-page-under"><img id="fpImgUnder" alt=""></div>
       <div class="flip-page-active" id="fpActive" onclick="flipbookNext()"><img id="fpImgActive" alt=""></div>
     </div>
     <div class="flipbook-controls">
-      <button type="button" onclick="flipbookPrev()" aria-label="Vorherige Seite">‹</button>
+      <button type="button" onclick="flipbookPrev()" aria-label="Vorherige Seite" data-i18n-aria="aria.prev">‹</button>
       <span id="flipbookPageIndicator" class="flipbook-page-indicator">1 / 52</span>
-      <button type="button" onclick="flipbookNext()" aria-label="Nächste Seite">›</button>
+      <button type="button" onclick="flipbookNext()" aria-label="Nächste Seite" data-i18n-aria="aria.next">›</button>
     </div>
-    <p class="flipbook-hint">Klick auf das Bild oder nutze die Pfeile zum Umblättern.</p>
+    <p class="flipbook-hint" data-i18n="flip.hint">Klick auf das Bild oder nutze die Pfeile zum Umblättern.</p>
   </div>
 </div>
 
+<script>
+  // ===== Sprachumschaltung DE / EN =====
+  // Deutsch steht direkt im HTML (Quelle). Elemente mit data-i18n="schlüssel" werden bei "EN" durch EN[schlüssel] ersetzt,
+  // beim Zurückwechseln wird der deutsche Originaltext wiederhergestellt. Dynamische Texte (Team, Termine, Videos) nutzen t().
+  const EN = {
+    'nav.about':'About us', 'nav.events':'Upcoming events', 'nav.press':'Press', 'nav.contact':'Contact',
+    'hon.title':'Honorary members', 'hon.chair':'(Honorary Chair)', 'hon.and':'and',
+    'media.title':'Media', 'media.yt':'Go to YouTube channel ↗',
+    'videos.loading':'Loading videos …', 'videos.none':'No videos available at the moment.',
+    'team.loading':'Loading team …',
+    'off.empty':'No confirmed events at the moment — please check back soon.',
+    'off.legend':'Concerts by <span class="offseason-own-tag">aDevantgarde</span> and by our members',
+    'intro.1':'We are an association of Munich-based composers with a shared passion for new music. We are driven by the wish to strengthen the local scene and connect it internationally.',
+    'intro.2':'aDevantgarde was founded in 1991, on the initiative of Wilhelm Killmayer, by his students as A/DEvantgarde – Projekte Neuer Musik e.V. Originally we saw ourselves as a counter-movement to the classic new-music festival. That format hardly exists in that form anymore – but we stayed the course and keep doing what excites us: fresh ideas at a high artistic level, established and experimental.',
+    'intro.3':'Every two years we present this at our aDevantgarde Festival. In between, we run concert projects in our off-season programme – for example the concert series “Neuer Hoargartn”.',
+    'press.intro':'Press information on the upcoming festival will follow shortly. For press enquiries: <a href="mailto:presse@adevantgarde.de" class="contact-email">presse@adevantgarde.de</a>',
+    'press.files':'Press releases',
+    'contact.general':'General', 'contact.general.t':'Questions about the association and the festival.',
+    'contact.member':'Become a member', 'contact.member.t':'Informal email with a short introduction.',
+    'contact.press.t':'Press enquiries and media material.',
+    'contact.note':'Unfortunately, we cannot accept unsolicited applications from performers, artists or agencies.',
+    'legal.imprint':'Legal notice', 'legal.privacy':'Privacy policy', 'legal.statutes':'Statutes (PDF)', 'legal.members':'Members’ area:',
+    'rec.hero':'Our label permanently documents productions from the festival’s orbit — as physical and digital releases, independent of the festival’s two-year rhythm.',
+    'rec.releases':'Releases', 'rec.all':'All releases', 'rec.info':'Info',
+    'r3.artist':'Composers: Michael Emanuel Bauer, Othmar Schoeck, Gunnar Geisse<br>Performers: Robert Koller (baritone), Stefan Kägi (piano), Gunnar Geisse (laptop guitar)',
+    'r3.desc':'In the summer of 2018, the Swiss pianist Stefan Kägi unearthed the song cycle Nachhall, op. 70 for voice and orchestra by the Swiss composer Othmar Schoeck (1886–1957). Rarely performed because of its technical and interpretive demands, Nachhall, op. 70 is presented here as a first recording in the version for voice and piano. Stefan Kägi and Michael Emanuel Bauer, who both have a great fondness for k-punk aka Mark Fisher – in particular for his book Ghosts of My Life. Writings on Depression, Hauntology and Lost Futures (Zero Books 2014) – felt it would be no bad idea to look at Schoeck’s song cycle anew in the spirit of Derrida’s hauntology. This first recording juxtaposes the two cycles: immediately after each song by Othmar Schoeck follows the corresponding continuation by Michael Emanuel Bauer. Bauer’s continuation does not stop short of the texts by Matthias Claudius and Nikolaus Lenau either: in the tradition of Raymond Queneau and the Oulipo group, the texts are deconstructed in a formal, lettrist manner and reassembled.',
+    'r2.artist':'Tobias PM Schneid · Augsburger Philharmoniker · Domonkos Héja (conductor) · Jung-Eun Shin (violin)',
+    'r2.desc':'With the second release in our label’s live series, we present the recording of Tobias PM Schneid’s Symphony No. 4 (“An Earth Symphony”) by the Augsburger Philharmoniker under Domonkos Héja, with Jung-Eun Shin as solo violinist. Schneid’s “Earth Symphony” is not a transfigured hymn to planet Earth but a large-orchestra outcry, a beacon meant to draw attention – even in the concert hall – to the precarious climate situation and the urgency of a conscious and mindful use of this planet’s resources. The symphony’s five movements – Magma, Water, Tree, Desert and Air – each comment in their own way on our ecosystem being “out of joint” and address the processes of decay to which this system is exposed through human action. Not a musical eco-thriller, but a memorial and a call to act responsibly.',
+    'r1.desc1':'The label aDevantgarde records, founded in Munich in 2023, is dedicated to contemporary music in its many forms and styles. The debut album gathers thirteen string quartets written between 1997 and 2019. The CD is the first product of this new series.',
+    'r1.desc2':'The Zentaur Quartet recorded works by Carl Christian Bettendorf, Caio de Azevedo, Sandeep Bhagwati, Christian Dieck, Nina Deuse, Moritz Eggert, Markus Lehmann-Horn, Helga Pogatschar, Jacopo Salvatori, Johannes X. Schachtner, Katharina Schmauder, Alexander Strauch and Bernhard Weidner, offering a cross-section of more than thirty years of aDevantgarde.',
+    'r1.desc3':'Annette Fritz (1st violin), Marc Kaufmann (2nd violin), Katharina Schmauder (viola) and Caio de Azevedo (cello) once again demonstrate, with this CD production, their outstanding skill and commitment to contemporary composition.',
+    'fest.h1':'19th aDevantgarde Festival – URGENT',
+    'fest.lead':'The 19th aDevantgarde Festival takes place in Munich from 22 June to 3 July under the motto “<strong>URGENT</strong>”.',
+    'fest.p1':'We bring regional and international players of the independent scene to the stage and present a variety of formats – from classical concerts to an escape room.',
+    'fest.p2':'The detailed programme will be published in February 2027.',
+    'fest.p3':'Stay up to date on <a href="https://www.instagram.com/adevantgarde_festival" target="_blank" rel="noopener">Instagram</a>.',
+    'fest.scroll':'scroll',
+    'arch.2025':'Archive — 18th aDevantgarde Festival 2025',
+    'arch.2023':'Archive — 17th aDevantgarde Festival 2023 · BIEDER_MEIER_X',
+    'flip.title':'Programme booklet <span>BIEDER_MEIER_X</span>',
+    'flip.hint':'Click the image or use the arrows to turn the pages.',
+    'aria.home':'Go to homepage', 'aria.about':'Sections of About us', 'aria.records':'Albums of aDevantgarde records',
+    'aria.years':'More years', 'aria.hint':'Continue reading', 'aria.prev':'Previous page', 'aria.next':'Next page'
+  };
+  // Texte, die per JavaScript erzeugt werden (beide Sprachen)
+  const T = {
+    de:{ 'off.more':'mehr Infos ↗', 'team.view':'Website ansehen ↗', 'team.private':'Privat', 'photo':'Foto', 'uhr':' Uhr' },
+    en:{ 'off.more':'more info ↗', 'team.view':'View website ↗', 'team.private':'Private', 'photo':'Photo', 'uhr':'' }
+  };
+  let LANG = 'de';
+  try{ const saved = localStorage.getItem('ade-lang'); if(saved === 'en' || saved === 'de') LANG = saved; }catch(e){}
+  function t(key){ return (T[LANG] && T[LANG][key]) || T.de[key] || key; }
+
+  // Datum/Zeit aus dem Sheet (deutsches Format) für Englisch umformen
+  function fmtDate(d){
+    if(LANG !== 'en' || !d) return d;
+    const m = d.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/);
+    if(!m) return d;
+    const mon = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+m[2]-1];
+    return +m[1] + ' ' + mon + ' ' + m[3];
+  }
+  function fmtTime(z){
+    if(!z) return '';
+    const s = z.replace(/^(\d{1,2}:\d{2}):\d{2}$/, '$1').replace(/\s*uhr\s*$/i, '');
+    if(LANG === 'en'){
+      const m = s.match(/^(\d{1,2}):(\d{2})$/);
+      if(m){ let hh = +m[1]; const ap = hh >= 12 ? 'pm' : 'am'; hh = hh % 12 || 12; return hh + ':' + m[2] + ' ' + ap; }
+      return s;
+    }
+    return s + t('uhr');
+  }
+  // Funktionsbezeichnungen aus dem Team-Sheet: optionale Spalte F ("Funktion EN") hat Vorrang, sonst Übersetzungsliste
+  function roleLabel(p){
+    if(LANG !== 'en') return p.funktion;
+    if(p.funktionEn) return p.funktionEn;
+    return p.funktion
+      .replace(/Künstlerische Leitung/g, 'Artistic Direction')
+      .replace(/2\. Vorstandsvorsitzende[rn]?/g, 'Deputy Chair')
+      .replace(/1\. Vorstandsvorsitzende[rn]?/g, 'Chair of the Board')
+      .replace(/Vorstandsvorsitzende[rn]?/g, 'Chair of the Board')
+      .replace(/Schatzmeister(in)?/g, 'Treasurer')
+      .replace(/Kuratorium/g, 'Curatorial Board');
+  }
+
+  function applyI18n(root){
+    root = root || document;
+    const nodes = (root.matches && root.matches('[data-i18n]')) ? [root] : [];
+    root.querySelectorAll('[data-i18n]').forEach(n => nodes.push(n));
+    nodes.forEach(el => {
+      if(el.dataset.de === undefined) el.dataset.de = el.innerHTML;
+      const key = el.getAttribute('data-i18n');
+      el.innerHTML = (LANG === 'en' && EN[key] !== undefined) ? EN[key] : el.dataset.de;
+    });
+    const arias = (root.matches && root.matches('[data-i18n-aria]')) ? [root] : [];
+    root.querySelectorAll('[data-i18n-aria]').forEach(n => arias.push(n));
+    arias.forEach(el => {
+      if(el.dataset.deAria === undefined) el.dataset.deAria = el.getAttribute('aria-label') || '';
+      const key = el.getAttribute('data-i18n-aria');
+      el.setAttribute('aria-label', (LANG === 'en' && EN[key] !== undefined) ? EN[key] : el.dataset.deAria);
+    });
+  }
+  function setLang(lang){
+    LANG = (lang === 'en') ? 'en' : 'de';
+    try{ localStorage.setItem('ade-lang', LANG); }catch(e){}
+    document.documentElement.lang = LANG;
+    applyI18n(document);
+    document.querySelectorAll('.lang-switch button').forEach(b => {
+      const on = b.getAttribute('data-lang') === LANG;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    if(window.renderDynamic) window.renderDynamic();
+  }
+  // Direkt beim Laden anwenden (Deutsch merken, ggf. auf Englisch umstellen)
+  setLang(LANG);
+</script>
 <script>
   // ---- Simple hash-based router across the three "pages" ----
   const pageIds = ['ueber-uns', 'records', 'festival', 'archiv-2025', 'archiv-2023'];
@@ -835,10 +964,29 @@
   const ABOUT_SHEET_ID = '1lBDxbKKC5cGMT1FcwX_Nt1vn6yRoThiDZH3PY6hjh_0';
   const TEAM_SHEET_TAB = 'Team';
 
+  let teamData = [];
+  let offseasonData = [];
+
   function formatPhotoCredit(credit){
     if(!credit) return '';
-    if(/^privat$/i.test(credit)) return 'Privat';
+    if(/^privat$/i.test(credit)) return t('team.private');
     return credit.startsWith('©') ? credit : `© ${credit}`;
+  }
+
+  function renderTeam(){
+    const grid = document.getElementById('teamGrid');
+    if(!grid || !teamData.length) return; // Platzhaltertext bleibt stehen
+    grid.innerHTML = teamData.map(p => {
+      const inner = `
+        <span class="photo-content">${p.bild ? `<img src="${driveImageUrl(p.bild)}" alt="${p.name}" onerror="this.parentElement.textContent='${t('photo')}'">` : t('photo')}</span>
+        ${p.credit ? `<span class="photo-credit">${formatPhotoCredit(p.credit)}</span>` : ''}
+        ${p.website ? `<span class="photo-overlay">${t('team.view')}</span>` : ''}
+      `;
+      const photo = p.website
+        ? `<a class="photo" href="${p.website}" target="_blank" rel="noopener">${inner}</a>`
+        : `<div class="photo">${inner}</div>`;
+      return `<div class="team-card">${photo}<h3>${p.name}</h3><div class="role">${roleLabel(p)}</div></div>`;
+    }).join('');
   }
 
   async function loadTeam(){
@@ -851,21 +999,11 @@
       const json = JSON.parse(text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1));
       const rows = json.table.rows || [];
       const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
-      const team = rows.map(r => ({
-        name: val(r,0), funktion: val(r,1), bild: val(r,2), website: val(r,3), credit: val(r,4)
-      })).filter(t => t.name);
-      if(!team.length) return; // Platzhaltertext bleibt stehen
-      grid.innerHTML = team.map(t => {
-        const inner = `
-          <span class="photo-content">${t.bild ? `<img src="${driveImageUrl(t.bild)}" alt="${t.name}" onerror="this.parentElement.textContent='Foto'">` : 'Foto'}</span>
-          ${t.credit ? `<span class="photo-credit">${formatPhotoCredit(t.credit)}</span>` : ''}
-          ${t.website ? `<span class="photo-overlay">Website ansehen ↗</span>` : ''}
-        `;
-        const photo = t.website
-          ? `<a class="photo" href="${t.website}" target="_blank" rel="noopener">${inner}</a>`
-          : `<div class="photo">${inner}</div>`;
-        return `<div class="team-card">${photo}<h3>${t.name}</h3><div class="role">${t.funktion}</div></div>`;
-      }).join('');
+      // Spalten: A Name · B Funktion · C Bild · D Internetseite · E Credits Bild · F Funktion (EN, optional)
+      teamData = rows.map(r => ({
+        name: val(r,0), funktion: val(r,1), bild: val(r,2), website: val(r,3), credit: val(r,4), funktionEn: val(r,5)
+      })).filter(p => p.name);
+      renderTeam();
     } catch(err){
       console.error('Team konnte nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
     }
@@ -889,11 +1027,6 @@
     return m ? `https://drive.google.com/thumbnail?id=${m[0]}&sz=w600` : link;
   }
 
-  function formatOffSeasonTime(zeit){
-    if(!zeit) return '';
-    const trimmed = zeit.replace(/^(\d{1,2}:\d{2}):\d{2}$/, '$1');
-    return /uhr/i.test(trimmed) ? trimmed : `${trimmed} Uhr`;
-  }
 
   async function loadOffSeasonEvents(){
     const listEl = document.getElementById('offseasonList');
@@ -924,18 +1057,29 @@
         titel: val(r,2), datum: val(r,3), zeit: val(r,4), beschreibung: val(r,5),
         link: val(r,6), foto: val(r,7), ort: val(r,8), bestaetigt: isChecked(r,9), eigen: isChecked(r,10)
       })).filter(e => e.titel && e.bestaetigt);
-      if(!events.length) return; // Platzhaltertext bleibt stehen
+      offseasonData = events;
+      renderOffSeason();
+    } catch(err){
+      console.error('Off-Season-Termine konnten nicht geladen werden, Platzhaltertext bleibt aktiv.', err);
+    }
+  }
+
+  function renderOffSeason(){
+    const listEl = document.getElementById('offseasonList');
+    const events = offseasonData;
+    if(!listEl || !events.length) return; // Platzhaltertext bleibt stehen
+    try{
       listEl.innerHTML = events.map(e => `
         <div class="offseason-item${e.eigen ? ' is-own' : ''}">
           ${e.foto ? `<div class="offseason-photo"><img src="${driveImageUrl(e.foto)}" alt="${e.titel}" loading="lazy"></div>` : ''}
           <div class="offseason-content">
             ${e.eigen ? `<span class="offseason-own-tag">aDevantgarde</span>` : ''}
             <div class="offseason-date">
-              <span class="offseason-date-d">${e.datum}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${formatOffSeasonTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
+              <span class="offseason-date-d">${fmtDate(e.datum)}</span>${e.zeit ? `<span class="offseason-date-sep">·</span><span class="offseason-date-t">${fmtTime(e.zeit)}</span>` : ''}${e.ort ? `<span class="offseason-date-sep">·</span><span class="offseason-date-o">${e.ort}</span>` : ''}
             </div>
             ${(e.beschreibung || e.link) ? `<div class="offseason-title-row" role="button" tabindex="0" aria-expanded="false" onclick="toggleOffseasonItem(this)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();toggleOffseasonItem(this)}"><h3>${e.titel}</h3><span class="offseason-chevron-wrap" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></span></div>` : `<div class="offseason-title-row"><h3>${e.titel}</h3></div>`}
             ${e.beschreibung ? `<p>${e.beschreibung}</p>` : ''}
-            ${e.link ? `<a class="offseason-link" href="${e.link}" target="_blank" rel="noopener">mehr Infos ↗</a>` : ''}
+            ${e.link ? `<a class="offseason-link" href="${e.link}" target="_blank" rel="noopener">${t('off.more')}</a>` : ''}
           </div>
         </div>
       `).join('');
@@ -966,6 +1110,7 @@
     });
   }
   window.addEventListener('resize', syncOffSeasonPhotoHeights);
+  window.renderDynamic = function(){ renderTeam(); renderOffSeason(); };
   loadOffSeasonEvents();
 
   // YouTube-Videokarussell: Videolinks werden manuell im Tabellenblatt "Videos" gepflegt
@@ -1082,7 +1227,7 @@
       const val = (r,i) => (r.c[i] && r.c[i].v != null) ? String(r.c[i].v).trim() : '';
       videoList = rows.map(r => ({ titel: '', id: extractYoutubeId(val(r,0)) })).filter(v => v.id);
       if(!videoList.length){
-        container.innerHTML = '<p class="videos-status">Aktuell keine Videos hinterlegt.</p>';
+        container.innerHTML = '<p class="videos-status" data-i18n="videos.none">Aktuell keine Videos hinterlegt.</p>'; applyI18n(container);
         return;
       }
       renderVideoStage();
